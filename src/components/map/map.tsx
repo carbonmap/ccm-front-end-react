@@ -3,9 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, MapConsumer } from 'react-leafl
 import { LeafletMouseEvent } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-// import icon from 'leaflet/dist/images/marker-icon.png';
-// import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
 
 interface State {
     markers: Array<Array<number>>
@@ -24,19 +21,12 @@ class map extends Component <{}, State> {
     }
 
     render() {
-        // let DefaultIcon = L.icon({
-        //     iconUrl: icon,
-        //     shadowUrl: iconShadow
-        // });
-        // L.Marker.prototype.options.icon = DefaultIcon;
 
         let myMarkers = null;
 
         if (this.state.markers) {
             myMarkers = this.state.markers.map((position, idx) => {
-                console.log(1);
                 console.log(position);
-                console.log(2);
                 // return <Marker key={`marker-${idx}`} position={position}></Marker>
             })
         }
@@ -66,13 +56,7 @@ class map extends Component <{}, State> {
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     />
-                    {/*{this.state.markers.map((position, idx) =>*/}
-                    {/*    <Marker key={`marker-${idx}`} position={position}>*/}
-                    {/*        <Popup>*/}
-                    {/*            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>*/}
-                    {/*        </Popup>*/}
-                    {/*    </Marker>*/}
-                    {/*)}*/}
+
                     { myMarkers }
 
                 </MapContainer>
