@@ -20,6 +20,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.3",
+    "react-responsive": "^8.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
@@ -66,6 +67,7 @@
   "devDependencies": {
     "@capacitor/cli": "2.4.7",
     "@types/react-redux": "^7.1.16",
+    "@types/react-responsive": "^8.0.2",
     "@types/webpack-env": "^1.16.0"
   },
   "description": "An Ionic project"

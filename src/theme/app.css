@@ -1,0 +1,29 @@
+.menu-container {
+  width: 30%;
+  height: 100%;
+  transition-duration: 0.3s;
+}
+.menu-tag-mobile {
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  background-color: #ccc;
+}
+.spinner-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .menu-container {
+    width: 100%;
+    height: 100%;
+  }
+}

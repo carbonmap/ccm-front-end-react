@@ -1,0 +1,11 @@
+.side-menu {
+  transition-duration: 0.3s;
+  border-top: 2px solid var(--ion-color-primary);
+}
+
+@media only screen and (min-width: 768px) {
+  .side-menu {
+    border-top: none;
+    border-left: 2px solid var(--ion-color-primary);
+  }
+}

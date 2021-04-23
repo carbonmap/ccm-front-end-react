@@ -1,13 +1,22 @@
-import { IonButton, IonContent, IonIcon, IonInput, IonItem, IonLabel } from '@ionic/react';
+import { IonButton, IonIcon, IonInput, IonItem } from '@ionic/react';
 import React from 'react';
+import './searchBar.css';
 
-const searchBar: React.FC = () => (
-    <IonItem slot="end" style={{ width: '20%', marginLeft: 'auto' }}>
-        {/* <IonLabel position="stacked">Label</IonLabel> */}
-        <IonInput placeholder="Search" />
-        <IonIcon name="search-outline"></IonIcon>
-        <IonButton slot="end">Featured</IonButton>
-    </IonItem>
-);
+import { useDispatch, useSelector } from 'react-redux';
+import { menuOpen, menuClosed } from '../../actions';
+import { RootState } from '../../reducers';
 
-export default searchBar;
+const SearchBar: React.FC = () => {
+    const isOpen = useSelector( (state: RootState) => state.menuOpen);
+    const dispatch = useDispatch();
+
+    return (
+        <IonItem slot="end" className="search-bar">
+            <IonInput onFocus={() => dispatch(menuOpen())} onBlur={() => dispatch(menuClosed())} placeholder="Search" />
+            <IonIcon name="search-outline"></IonIcon>
+            {/* <IonButton slot="end" onClick={() => dispatch(isOpen ? menuClosed() : menuOpen())}>Featured</IonButton> */}
+        </IonItem>
+    );
+    }
+
+export default SearchBar;
