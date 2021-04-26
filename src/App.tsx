@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IonApp, IonHeader, IonText } from '@ionic/react';
+import { IonApp, IonHeader, IonText, IonIcon } from '@ionic/react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { endLoading, menuOpen } from './actions';
+import { endLoading, menuClosed, menuOpen } from './actions';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -35,8 +35,7 @@ import { RootState } from './reducers';
 import { handleWindowSizeChange } from './helper/checkScreenSize/checkScreenSize';
 
 const App: React.FC = (props) => {
-  const [data, setData] = useState(null);
-  const [menuHeight, setMenuHeight] = useState<Number | null>(null);
+  const [inputVal, setInputVal] = useState('');
 
   const menuContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -47,35 +46,28 @@ const App: React.FC = (props) => {
 
   let reqURL = 'https://github.com/carbonmap/ccm-front-end/blob/master/dummy_data/reporting_entities/index.json';
 
-  // useEffect(() => {
-  //   fetch(reqURL)
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       setData(json)
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(() => {
-  //       dispatch(endLoading())
-  //     })
-  // }, [])
+  const mobileMenuTabStyle = (
+    isOpen ? 'translateY(-47vh) translateX(50%)' : 'translateY(0%) translateX(50%)'
+  )
+  const desktopMenuTabStyle = (
+    isOpen ? 'translateX(-30vw)' : 'translateX(0)'
+  )
 
   useEffect(() => {
     setTimeout(() => {
       dispatch(endLoading())
-
-      handleWindowSizeChange(dispatch);
-
-      // let height = menuContainerRef.current.offsetHeight;
-
-      // setMenuHeight(height)
-
-      window.addEventListener('resize', () => handleWindowSizeChange(dispatch));
-      return () => {
-          window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
-      }
     }, 3000);
 
+    handleWindowSizeChange(dispatch);
+
+    window.addEventListener('resize', () => handleWindowSizeChange(dispatch));
+    return () => {
+        window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
+    }
+
   },[])
+
+  const propsTest = "hi";
 
   // Need to check menu height and change translateY depending on height
   return (
@@ -91,8 +83,8 @@ const App: React.FC = (props) => {
              <Toolbar />
            </IonHeader>
            <div ref={menuContainerRef} className="ion-align-self-end menu-container">
-             <SearchBar />
-              {
+             <SearchBar inputVal={inputVal} setInputVal={setInputVal} />
+              {/* {
                 isMobile ?
                   isOpen ?
                     null
@@ -102,7 +94,14 @@ const App: React.FC = (props) => {
                     </div>
                 :
                   null
-              }
+              } */}
+              <div className="chevron-container" onClick={isOpen ? () => dispatch(menuClosed()) : () => dispatch(menuOpen())} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
+                <div className="menu-icon-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
+                  <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
+                  {/* <IonIcon name="chevron-up" className="toggle-menu-icon"></IonIcon> */}
+                </div>
+                {/* <IonIcon name="chevron-back"></IonIcon> */}
+              </div>
              <SideMenu />
            </div>
          </IonApp>

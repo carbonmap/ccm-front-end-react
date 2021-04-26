@@ -1,6 +1,6 @@
 import React from 'react';
 import './sideMenu.css';
-import { IonContent, IonText, IonTitle } from '@ionic/react';
+import { IonContent, IonText, IonTitle, IonIcon } from '@ionic/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 
@@ -10,7 +10,7 @@ const SideMenu: React.FC = (props) => {
     const isMobile = useSelector( (state: RootState) => state.isMobile);
 
     const mobileMenuStyle = (
-        isOpen ? 'translateY(40%)' : 'translateY(100%)'
+        isOpen ? 'translateY(40vh)' : 'translateY(100vh)'
     )
     const desktopMenuStyle = (
         isOpen ? 'translateX(0%)' : 'translateX(100%)'
@@ -18,6 +18,10 @@ const SideMenu: React.FC = (props) => {
 
     return (
         <IonContent className="ion-align-self-end side-menu" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
+            {/* <div className="chevron-container">
+                <IonIcon name="chevron-forward" className="toggle-menu-tab" style={{ transform: isOpen ? 'rotateX(0deg)' : 'rotateX(180deg)' }}></IonIcon>
+                <IonIcon name="chevron-back"></IonIcon>
+            </div> */}
             <IonTitle>Featured</IonTitle>
             {/* <IonList> */}
                 <div style={{  }}>
