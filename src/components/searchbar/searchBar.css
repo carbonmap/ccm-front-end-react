@@ -1,5 +1,11 @@
 .search-bar {
-  width: "100%";
+  width: 100%;
   margin-bottom: 0;
   /* height: 50px; */
+}
+
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  .search-bar {
+    height: 10vh;
+  }
 }

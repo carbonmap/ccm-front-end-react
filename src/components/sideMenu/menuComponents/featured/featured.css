@@ -1,0 +1,21 @@
+.featured-title-main {
+  margin: 20px 0 10px 0;
+  font-size: 32px;
+}
+.featured-el-selector {
+  padding: 16px;
+  border: solid 1px #ccc;
+  width: 90%;
+  margin: 10px 0 10px 5%;
+  cursor: pointer;
+}
+.featured-el-title {
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+.featured-el-details {
+  display: flex;
+}
+.featured-el-text {
+  margin-right: 20%;
+}

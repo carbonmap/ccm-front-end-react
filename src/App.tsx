@@ -32,7 +32,7 @@ import SearchBar from './components/searchbar/searchBar';
 import Spinner from './components/UI/spinner/spinner';
 import { RootState } from './reducers';
 
-import { handleWindowSizeChange } from './helper/checkScreenSize/checkScreenSize';
+import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 
 const App: React.FC = (props) => {
   const [inputVal, setInputVal] = useState('');
@@ -44,13 +44,11 @@ const App: React.FC = (props) => {
   const isMobile = useSelector( (state: RootState) => state.isMobile);
   const dispatch = useDispatch();
 
-  let reqURL = 'https://github.com/carbonmap/ccm-front-end/blob/master/dummy_data/reporting_entities/index.json';
-
   const mobileMenuTabStyle = (
-    isOpen ? 'translateY(-47vh) translateX(50%)' : 'translateY(0%) translateX(50%)'
+    isOpen ? 'translateY(-50vh) translateX(50%)' : 'translateY(0%) translateX(50%)'
   )
   const desktopMenuTabStyle = (
-    isOpen ? 'translateX(-30vw)' : 'translateX(0)'
+    isOpen ? 'translateX(-24vw)' : 'translateX(0)'
   )
 
   useEffect(() => {
@@ -67,8 +65,6 @@ const App: React.FC = (props) => {
 
   },[])
 
-  const propsTest = "hi";
-
   // Need to check menu height and change translateY depending on height
   return (
     <IonApp style={{ width: '100vw' }}>
@@ -84,23 +80,10 @@ const App: React.FC = (props) => {
            </IonHeader>
            <div ref={menuContainerRef} className="ion-align-self-end menu-container">
              <SearchBar inputVal={inputVal} setInputVal={setInputVal} />
-              {/* {
-                isMobile ?
-                  isOpen ?
-                    null
-                  :
-                    <div className="menu-tag-mobile" onClick={() => dispatch(menuOpen())}>
-                      <IonText>Tap to View Featured Locations</IonText>
-                    </div>
-                :
-                  null
-              } */}
               <div className="chevron-container" onClick={isOpen ? () => dispatch(menuClosed()) : () => dispatch(menuOpen())} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
-                <div className="menu-icon-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
+                <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
                   <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
-                  {/* <IonIcon name="chevron-up" className="toggle-menu-icon"></IonIcon> */}
                 </div>
-                {/* <IonIcon name="chevron-back"></IonIcon> */}
               </div>
              <SideMenu />
            </div>

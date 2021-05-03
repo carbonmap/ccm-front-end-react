@@ -1,17 +1,7 @@
 .menu-container {
-  width: 30%;
+  width: 24%;
   height: 100%;
   transition-duration: 0.3s;
-}
-.menu-tag-mobile {
-  height: 40px;
-  width: 100%;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  background-color: #ccc;
 }
 .spinner-container {
   height: 100vh;
@@ -20,7 +10,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .chevron-container {
   position: absolute;
   z-index: 1000;
@@ -32,7 +21,7 @@
   transition-duration: 0.3s;
   cursor: pointer;
 }
-.menu-icon-wrapper {
+.menu-toggle-wrapper {
   transition-duration: 0.3s;
   transition-delay: 0.2s;
   transform-origin: center;
@@ -49,7 +38,6 @@
     height: 100%;
   }
   .chevron-container {
-    /* align-self: center; */
     right: 50vw;
     bottom: 0;
     border-top-right-radius: 10px;
@@ -57,7 +45,5 @@
     padding: 0;
     padding-right: 12px;
     padding-left: 12px;
-    /* transform: rotateX(90deg); */
-    /* background-color: #000; */
   }
 }

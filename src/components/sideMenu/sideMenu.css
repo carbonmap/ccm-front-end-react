@@ -1,6 +1,7 @@
 .side-menu {
   transition-duration: 0.3s;
-  /* border-top: 1px solid var(--ion-color-primary); */
+  width: 100%;
+  top: 31vh;
   height: 50vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -8,7 +9,7 @@
 @media only screen and (min-width: 768px) {
   .side-menu {
     height: 100%;
+    top: 0;
     border-top: none;
-    /* border-left: 1px solid var(--ion-color-primary); */
   }
 }
