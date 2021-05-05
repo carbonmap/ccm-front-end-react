@@ -25,10 +25,10 @@ import './theme/variables.css';
 
 import './theme/app.css';
 
-import Toolbar from './components/toolbar/toolbar';
+import Toolbar from './components/toolbar/Toolbar';
 import SideMenu from './components/sideMenu/SideMenu';
 import Map from './components/map/map';
-import SearchBar from './components/searchbar/searchBar';
+import SearchBar from './components/searchbar/SearchBar';
 import Spinner from './components/UI/spinner/spinner';
 import { RootState } from './reducers';
 
@@ -65,7 +65,6 @@ const App: React.FC = (props) => {
 
   },[])
 
-  // Need to check menu height and change translateY depending on height
   return (
     <IonApp style={{ width: '100vw' }}>
 
