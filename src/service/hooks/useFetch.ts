@@ -24,10 +24,9 @@ export const useFetch = async({ url, init }: RequestProps) => {
         if (response.status === 200) {
             // Extract json
             const rawData: string[] = await response.json();
-            console.log("rawData " + rawData);
             setData(rawData);
-            // data = rawData;
-        } else {
+            console.log(rawData)
+          } else {
             console.error(`Error ${response.status} ${response.statusText}`);
         }
         } catch (error) {
@@ -36,6 +35,5 @@ export const useFetch = async({ url, init }: RequestProps) => {
     }
     fetchApi();
   }, [JSON.stringify(url), JSON.stringify(init)]);
-  console.log("data " + data);
   return data;
 };
