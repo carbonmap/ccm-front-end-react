@@ -25,10 +25,10 @@ import './theme/variables.css';
 
 import './theme/app.css';
 
-import Toolbar from './components/toolbar/Toolbar';
-import SideMenu from './components/sideMenu/SideMenu';
+import Toolbar from './components/toolbar/toolbar';
+import SideMenu from './components/sideMenu/sideMenu';
 import Map from './components/map/map';
-import SearchBar from './components/searchbar/SearchBar';
+import SearchBar from './components/searchbar/searchBar';
 import Spinner from './components/UI/spinner/spinner';
 import { RootState } from './reducers';
 
@@ -86,6 +86,7 @@ const App: React.FC = (props) => {
               </div>
              <SideMenu />
            </div>
+           <Map />
          </IonApp>
       }
     </IonApp>
