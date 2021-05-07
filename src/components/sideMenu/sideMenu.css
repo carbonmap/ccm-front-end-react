@@ -1,7 +1,7 @@
 .side-menu {
   transition-duration: 0.3s;
   width: 100%;
-  top: 31vh;
+  top: 40vh;
   height: 50vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -10,6 +10,6 @@
   .side-menu {
     height: 100%;
     top: 0;
-    border-top: none;
+    --padding-top: 10%;
   }
 }

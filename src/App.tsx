@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IonApp, IonHeader, IonText, IonIcon } from '@ionic/react';
+import { IonApp, IonHeader, IonText, IonIcon, IonReorderGroup } from '@ionic/react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { endLoading, menuClosed, menuOpen } from './actions';
@@ -35,7 +35,8 @@ import { RootState } from './reducers';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 
 const App: React.FC = (props) => {
-  const [inputVal, setInputVal] = useState('');
+  const [inputVal, setInputVal] = useState<string>('');
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const menuContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -45,7 +46,7 @@ const App: React.FC = (props) => {
   const dispatch = useDispatch();
 
   const mobileMenuTabStyle = (
-    isOpen ? 'translateY(-50vh) translateX(50%)' : 'translateY(0%) translateX(50%)'
+    isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
   )
   const desktopMenuTabStyle = (
     isOpen ? 'translateX(-24vw)' : 'translateX(0)'
@@ -77,16 +78,24 @@ const App: React.FC = (props) => {
            <IonHeader>
              <Toolbar />
            </IonHeader>
-           <div ref={menuContainerRef} className="ion-align-self-end menu-container">
-             <SearchBar inputVal={inputVal} setInputVal={setInputVal} />
-              <div className="chevron-container" onClick={isOpen ? () => dispatch(menuClosed()) : () => dispatch(menuOpen())} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
-                <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
-                  <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
-                </div>
-              </div>
-             <SideMenu />
-           </div>
            <Map />
+
+           <div ref={menuContainerRef} className="ion-align-self-end menu-container" style={{ backgroundColor: isSearching ? '#ccc' : 'transparent' }}>
+             <SearchBar inputVal={inputVal} setInputVal={setInputVal} setIsSearching={setIsSearching} isSearching={isSearching} />
+             {
+                isSearching ? 
+                  null
+                :
+                  <>
+                    <div className="chevron-container" onClick={isOpen ? () => dispatch(menuClosed()) : () => dispatch(menuOpen())} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
+                      <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
+                        <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
+                      </div>
+                    </div>
+                      <SideMenu />
+                  </>
+              }
+           </div>
          </IonApp>
       }
     </IonApp>

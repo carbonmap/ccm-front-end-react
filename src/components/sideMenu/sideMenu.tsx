@@ -5,13 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 import Featured from './menuComponents/featured/Featured';
 
-
 const SideMenu: React.FC = (props) => {
     const isOpen = useSelector( (state: RootState) => state.menuOpen);
     const isMobile = useSelector( (state: RootState) => state.isMobile);
 
     const mobileMenuStyle = (
-        isOpen ? 'translateY(0vh)' : 'translateY(100vh)'
+        isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
     )
     const desktopMenuStyle = (
         isOpen ? 'translateX(0%)' : 'translateX(100%)'

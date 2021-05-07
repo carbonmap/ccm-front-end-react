@@ -1,11 +1,43 @@
-.search-bar {
+.search-bar-container {
+  position: absolute;
+  z-index: 100;
   width: 100%;
-  margin-bottom: 0;
-  /* height: 50px; */
+}
+.search-bar {
+  margin: 4px 0 0 2%;
+  padding: 0;
+  margin-bottom: 2px;
+  width: 96%;
+}
+.icon-container {
+  margin-right: 10px;
+}
+
+.suggestion-container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* border: 1px solid red; */
+  width: 96%;
+  margin-left: 2%;
+
+  height: fit-content;
+  overflow: hidden;
+}
+.search-suggestion-el {
+  width: 100%;
+  cursor: pointer;
+  /* border-radius: 5px; */
+}
+.search-menu-container {
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) and (orientation: portrait) {
   .search-bar {
-    height: 10vh;
+    margin-bottom: 2px;
+    width: 96%;
+    margin-left: 2%;
   }
 }
