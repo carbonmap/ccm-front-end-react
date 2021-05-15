@@ -3,7 +3,7 @@ import './sideMenu.css';
 import { IonContent, IonText, IonTitle, IonIcon } from '@ionic/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
-import Featured from './menuComponents/featured/Featured';
+import Featured from './MenuComponents/Featured/Featured';
 
 const SideMenu: React.FC = (props) => {
     const isOpen = useSelector( (state: RootState) => state.menuOpen);

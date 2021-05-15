@@ -9,7 +9,7 @@ interface State {
     markers: Array<Array<number>>
 }
 
-class map extends Component <{}, State> {
+class Map extends Component <{}, State> {
     state = {
         markers: [[52.20, 0.12]]
     }
@@ -63,4 +63,4 @@ class map extends Component <{}, State> {
     }
 }
 
-export default map;
+export default Map;

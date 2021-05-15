@@ -25,14 +25,15 @@ import './theme/variables.css';
 
 import './theme/app.css';
 
-import Toolbar from './components/toolbar/toolbar';
-import SideMenu from './components/sideMenu/sideMenu';
-import Map from './components/map/map';
-import SearchBar from './components/searchbar/searchBar';
-import Spinner from './components/UI/spinner/spinner';
+import Toolbar from './components/Toolbar';
+import SideMenu from './components/SideMenu';
+import Map from './components/Map';
+import SearchBar from './components/Searchbar';
+import Spinner from './components/UI/Spinner/Spinner';
 import { RootState } from './reducers';
 
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
+import { useFetch } from './service/hooks/useFetch';
 
 const App: React.FC = (props) => {
   const [inputVal, setInputVal] = useState<string>('');
@@ -64,6 +65,16 @@ const App: React.FC = (props) => {
         window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
     }
 
+  },[])
+
+
+  const data = useFetch({
+    url: "https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json",
+    init: {}
+  }) 
+
+  useEffect(() => {
+    console.log(data);
   },[])
 
   return (
