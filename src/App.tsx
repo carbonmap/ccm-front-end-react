@@ -33,11 +33,12 @@ import Spinner from './components/UI/Spinner/Spinner';
 import { RootState } from './reducers';
 
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
-import { useFetch } from './service/hooks/useFetch';
+// import { useFetch } from './service/hooks/useFetch';
 
 const App: React.FC = (props) => {
   const [inputVal, setInputVal] = useState<string>('');
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [urlStr, setUrlStr] = useState<any>([]);
 
   const menuContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -48,15 +49,21 @@ const App: React.FC = (props) => {
 
   const mobileMenuTabStyle = (
     isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
-  )
+  );
   const desktopMenuTabStyle = (
     isOpen ? 'translateX(-24vw)' : 'translateX(0)'
-  )
+  );
+
+  // const data = useFetch("https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json");
+
+  // useEffect(() => {
+  //   if(data !== null) {
+  //     setUrlStr(data)
+  //     console.log(data)
+  //   }    
+  // },[data]);
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(endLoading())
-    }, 3000);
 
     handleWindowSizeChange(dispatch);
 
@@ -65,22 +72,12 @@ const App: React.FC = (props) => {
         window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
     }
 
-  },[])
-
-
-  const data = useFetch({
-    url: "https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json",
-    init: {}
-  }) 
-
-  useEffect(() => {
-    console.log(data);
-  },[])
+  },[]);
 
   return (
     <IonApp style={{ width: '100vw' }}>
 
-      {isLoading ?
+      {urlStr.length > 0 ?
           <div className="spinner-container">
             <Spinner /> 
           </div>
@@ -103,7 +100,10 @@ const App: React.FC = (props) => {
                         <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
                       </div>
                     </div>
-                      <SideMenu />
+                      <SideMenu 
+                        urlStr={urlStr}
+                        setUrlStr={setUrlStr}
+                      />
                   </>
               }
            </div>

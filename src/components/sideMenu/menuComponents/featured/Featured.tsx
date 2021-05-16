@@ -2,9 +2,13 @@ import { IonText, IonTitle } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
-import { useFetch } from '../../../../service/hooks/useFetch';
+// import { useFetch } from '../../../../service/hooks/useFetch';
 
-const Featured: React.FC = () => {
+interface PageProps {
+    urlStr: any
+}
+
+const Featured: React.FC<PageProps> = (props) => {
     // const [jsonData, setJsonData] = useState<string>();
 
     // const data = useFetch({
