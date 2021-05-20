@@ -1,13 +1,15 @@
 import React from 'react';
 import './sideMenu.css';
-import { IonContent } from '@ionic/react';
+import { IonCard, IonChip, IonContent, IonIcon, IonLabel, IonToolbar } from '@ionic/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../reducers';
+import { RootState } from '../../../redux/reducers';
 import Featured from './MenuComponents/Featured/Featured';
+import { chevronDown } from 'ionicons/icons'
+import FeaturedLocationEl from './MenuComponents/Featured/FeaturedElement/FeaturedLocationEl';
 
 interface PageProps {
-    featuredEntities: string[],
-    isOpen: boolean
+    featuredEntities: any[],
+    isOpen: boolean;
 }
 
 const SideMenu: React.FC<PageProps> = (props) => {    
@@ -21,11 +23,12 @@ const SideMenu: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <IonContent className="ion-align-self-end side-menu" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }} onClick={() => console.log(props.featuredEntities)} >
+        <div className="ion-align-self-end side-menu ion-padding-top" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }} onClick={() => console.log(props.featuredEntities)} >
             <Featured 
                 featuredEntities={props.featuredEntities}
-            />
-        </IonContent>
+                isOpen={props.isOpen}
+            /> 
+        </div>
     )
 }
 

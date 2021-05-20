@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { IonIcon } from '@ionic/react';
+import { IonContent, IonIcon } from '@ionic/react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
-import { RootState } from '../../reducers';
+import { RootState } from '../../redux/reducers';
 import { useSelector } from 'react-redux';
 
 interface PageProps {
@@ -24,7 +24,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isSearching ? '#ccc' : 'transparent' }}>
+        <div className="ion-align-self-end menu-container">
             <SearchBar 
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
@@ -33,11 +33,6 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 setIsOpen={setIsOpen}
                 featuredEntities={props.featuredEntities}
             />
-            {
-                isSearching ? 
-                    null
-                :
-                    <>
                     {/* <div className="chevron-container" onClick={() => setIsOpen(!isOpen)} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
                         <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
                         <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
@@ -47,8 +42,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                             featuredEntities={props.featuredEntities}
                             isOpen={isOpen}
                         />
-                    </>
-            }
+
         </div>
     );
 };

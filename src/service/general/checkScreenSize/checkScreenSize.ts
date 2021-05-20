@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { Action } from 'redux';
-import { screenLg, screenSm } from '../../../actions';
+import { screenLg, screenSm } from '../../../redux/actions';
 
     export function handleWindowSizeChange(dispatch: Dispatch<Action>) {
         if(window.innerWidth < 768) {
