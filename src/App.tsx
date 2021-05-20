@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { IonApp, IonHeader, IonText, IonIcon, IonReorderGroup } from '@ionic/react';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { endLoading, menuClosed, menuOpen } from './actions';
-
+import React, { useEffect, useState } from 'react';
+import { IonApp, IonHeader } from '@ionic/react';
+import { useDispatch } from 'react-redux';
+import Toolbar from './components/Toolbar';
+import Map from './components/Map';
+import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
+import SearchPane from './components/SearchPane';
+import Spinner from './components/UI/Spinner/Spinner';
+import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
 /* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
@@ -19,99 +20,47 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
 /* Theme variables */
 import './theme/variables.css';
-
 import './theme/app.css';
 
-import Toolbar from './components/Toolbar';
-import SideMenu from './components/SideMenu';
-import Map from './components/Map';
-import SearchBar from './components/Searchbar';
-import Spinner from './components/UI/Spinner/Spinner';
-import { RootState } from './reducers';
+const App: React.FC = () => {
+  const [featuredEntities, setFeaturedEntities] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
-// import { useFetch } from './service/hooks/useFetch';
-
-const App: React.FC = (props) => {
-  const [inputVal, setInputVal] = useState<string>('');
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [urlStr, setUrlStr] = useState<any>([]);
-
-  const menuContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-
-  const isLoading = useSelector( (state: RootState)  => state.isLoading);
-  const isOpen = useSelector( (state: RootState) => state.menuOpen);
-  const isMobile = useSelector( (state: RootState) => state.isMobile);
   const dispatch = useDispatch();
 
-  const mobileMenuTabStyle = (
-    isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
-  );
-  const desktopMenuTabStyle = (
-    isOpen ? 'translateX(-24vw)' : 'translateX(0)'
-  );
-
-  // const data = useFetch("https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json");
-
-  // useEffect(() => {
-  //   if(data !== null) {
-  //     setUrlStr(data)
-  //     console.log(data)
-  //   }    
-  // },[data]);
-
   useEffect(() => {
+    fetchFeatured(setFeaturedEntities, setIsLoading);
 
     handleWindowSizeChange(dispatch);
-
+    
     window.addEventListener('resize', () => handleWindowSizeChange(dispatch));
     return () => {
         window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
     }
-
   },[]);
 
   return (
-    <IonApp style={{ width: '100vw' }}>
-
-      {urlStr.length > 0 ?
+    <IonApp>
+      {
+        isLoading ? 
           <div className="spinner-container">
             <Spinner /> 
           </div>
-         : 
-         <IonApp style={{ width: '100%', height: '100%' }}>
-           <IonHeader>
-             <Toolbar />
-           </IonHeader>
-           <Map />
-
-           <div ref={menuContainerRef} className="ion-align-self-end menu-container" style={{ backgroundColor: isSearching ? '#ccc' : 'transparent' }}>
-             <SearchBar inputVal={inputVal} setInputVal={setInputVal} setIsSearching={setIsSearching} isSearching={isSearching} />
-             {
-                isSearching ? 
-                  null
-                :
-                  <>
-                    <div className="chevron-container" onClick={isOpen ? () => dispatch(menuClosed()) : () => dispatch(menuOpen())} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
-                      <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
-                        <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
-                      </div>
-                    </div>
-                      <SideMenu 
-                        urlStr={urlStr}
-                        setUrlStr={setUrlStr}
-                      />
-                  </>
-              }
-           </div>
-         </IonApp>
-      }
+        : 
+          <>
+            <IonHeader>
+              <Toolbar />
+            </IonHeader>
+            <Map />
+            <SearchPane 
+              featuredEntities={featuredEntities}
+            />
+          </>
+      } 
     </IonApp>
-
   );
-}
+};
 
 export default App;
