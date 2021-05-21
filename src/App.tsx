@@ -22,8 +22,8 @@ import './theme/variables.css';
 
 import Toolbar from './components/toolbar/toolbar';
 import SideMenu from './components/sideMenu/sideMenu';
-import Map from './components/map/map';
 import SearchBar from './components/searchbar/searchBar';
+import Basemap from "./components/Basemap/Basemap";
 
 const App: React.FC = (props) => {
   return (
@@ -34,7 +34,7 @@ const App: React.FC = (props) => {
         <SearchBar />
         <IonContent>
           <SideMenu />
-          <Map />
+          <Basemap />
         </IonContent>
       </IonApp>
   );
