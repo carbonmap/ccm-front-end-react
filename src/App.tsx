@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { IonApp, IonHeader } from '@ionic/react';
 import { useDispatch } from 'react-redux';
 import Toolbar from './components/Toolbar';
-import Map from './components/Map';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
+import BaseMap from './components/Basemap/Basemap';
 import Spinner from './components/UI/Spinner/Spinner';
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
@@ -53,7 +53,7 @@ const App: React.FC = () => {
             <IonHeader>
               <Toolbar />
             </IonHeader>
-            <Map />
+            <BaseMap />
             <SearchPane 
               featuredEntities={featuredEntities}
             />
