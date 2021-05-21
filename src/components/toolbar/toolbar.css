@@ -1,0 +1,8 @@
+.toolbar {
+  height: 7vh;
+}
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  .toolbar {
+    height: 9vh;
+  }
+}
