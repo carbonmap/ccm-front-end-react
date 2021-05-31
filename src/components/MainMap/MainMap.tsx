@@ -1,9 +1,8 @@
-import React, {Component, useEffect, useState, useRef } from 'react';
-import {MapContainer, TileLayer, Marker, Popup, MapConsumer, GeoJSON} from 'react-leaflet';
+import React, {Component} from 'react';
+import {MapContainer, TileLayer, Marker, Popup, MapConsumer} from 'react-leaflet';
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import {geoJSON, Icon} from 'leaflet';
 import GeojsonLayer from "./GeojsonLayer";
-import initialGeoJsonFileNames from "./models/index.json";
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 
@@ -20,7 +19,6 @@ interface GeoDataObject {
 class MainMap extends Component <{}, State> {
     state = {
         markers: [[52.20, 0.12]],
-        initialGeoJsonFileNames: initialGeoJsonFileNames,
         geoData: []
     }
 
@@ -30,29 +28,36 @@ class MainMap extends Component <{}, State> {
         this.setState({markers});
     }
 
-    addGeoJsonLayers = () => {
-        // const { initialGeoJsonFileNames } = this.props;
+    addGeoJsonLayers = (defaultGeoData: any) => {
         let tempGeoData: JSX.Element[] = this.state.geoData;
-        const defaultGeoData: Array<any> = fetchGeoData();
         defaultGeoData.map((geoDataContent: GeoDataObject, item: number) => {
             const geoData_ = geoDataContent["features"][0];
-            tempGeoData.push(<GeojsonLayer key={"geo_json_layer_id_${item}"} geoData={geoData_}/>);
+            const _id = `geo_json_layer_id_${item}`;
+            tempGeoData.push(
+                <GeojsonLayer
+                    key={_id}
+                    geoData={geoData_}/>
+            );
         })
-        console.log(1);
         this.setState({geoData: tempGeoData})
+        console.log("Geo Data in the state");
         console.log(this.state.geoData);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         console.log('did mount');
-        this.addGeoJsonLayers();
+        const defaultGeoData: any = await fetchGeoData();
+        this.addGeoJsonLayers(defaultGeoData);
     }
 
     render() {
-        // let GeoJsonLayers = null;
-        // if (this.state.geoData) {
-        //     GeoJsonLayers = this.state.geoData;
-        // }
+        console.log("Rendering map");
+        let GeoJsonLayers = null;
+        if (this.state.geoData.length > 0) {
+            console.log(this.state.geoData);
+            console.log(999);
+            GeoJsonLayers = this.state.geoData;
+        }
 
         return (
             <div>
@@ -63,10 +68,10 @@ class MainMap extends Component <{}, State> {
                     minZoom={5}
                     style={{height: '1000px', width: '100%'}}
                 >
-                    {this.state.geoData}
+                    {GeoJsonLayers}
                     <MapConsumer>
                         {(map) => {
-                            console.log("basemap center:", map.getCenter());
+                            // console.log("basemap center:", map.getCenter());
                             map.on("click", (e) => {
                                 this.addMarker(e);
                             });
@@ -79,16 +84,16 @@ class MainMap extends Component <{}, State> {
                         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     />
 
-                    {this.state.markers.map((position: any, idx: any) =>
-                        <Marker key={`marker-${idx}`}
-                                position={position}
-                                icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
-                        >
-                            <Popup>
-                                <span>Hi! I am an entity</span>
-                            </Popup>
-                        </Marker>
-                    )}
+                    {/*{this.state.markers.map((position: any, idx: any) =>*/}
+                    {/*    <Marker key={`marker-${idx}`}*/}
+                    {/*            position={position}*/}
+                    {/*            icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}*/}
+                    {/*    >*/}
+                    {/*        <Popup>*/}
+                    {/*            <span>Hi! I am an entity</span>*/}
+                    {/*        </Popup>*/}
+                    {/*    </Marker>*/}
+                    {/*)}*/}
 
                 </MapContainer>
             </div>
@@ -98,75 +103,3 @@ class MainMap extends Component <{}, State> {
 
 export default MainMap;
 
-
-// const MainMap: React.FC<> = (props) => {
-//     const [markers, setMarkers] = useState([[52.20, 0.12]]);
-//     const [geoData, setGeoData] = useState([]);
-//     const initialGeoJsonFileNames = useRef()
-//
-//      const addMarker = (e: any) => {
-//         markers.push(e.latlng);
-//         setMarkers(markers);
-//     }
-//
-//     useEffect(() => {
-//  // addGeoJsonLayers = () => {
-// //         const { initialGeoJsonFileNames } = this.props;
-// //         let tempGeoData: JSX.Element[] = this.state.geoData;
-// //         initialGeoJsonFileNames.map((file_path: string) => {
-// //             const geoData_ = uniNameToDataMap[file_path]["features"][0];
-// //             tempGeoData.push(<GeojsonLayer key={file_path} geoData={geoData_}/>);
-// //         })
-// //         console.log(1);
-// //         this.setState({geoData: tempGeoData})
-// //         console.log(this.state.geoData);
-// //     }
-//         props.initialGeoJsonFileNames
-//
-//     }, [])
-//
-//     return (
-//         <div>
-//            <MapContainer
-//                 center={[52.20, 0.12]}
-//                 zoom={13}
-//                 maxZoom={18}
-//                 minZoom={5}
-//                 style={{height: '1000px', width: '100%'}}
-//        >
-//                <GeojsonLayer key={file_path} geoData={geoData_}/>
-//                 {GeoJsonLayers === 0 : }
-//
-//                 <MapConsumer>
-//                     {(map) => {
-//                         console.log("basemap center:", map.getCenter());
-//                         map.on("click", (e) => {
-//                             addMarker(e);
-//                         });
-//                         return null;
-//                     }}
-//
-//                 </MapConsumer>
-//                 <TileLayer
-//                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-//                 />
-//
-//                 {markers.map((position: any, idx: any) =>
-//                     <Marker key={`marker-${idx}`}
-//                             position={position}
-//                             icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
-//                     >
-//                         <Popup>
-//                             <span>Hi! I am an entity</span>
-//                         </Popup>
-//                     </Marker>
-//                 )}
-//
-//             </MapContainer>
-//         </div>
-//
-//     );
-// };
-//
-// export default MainMap;
