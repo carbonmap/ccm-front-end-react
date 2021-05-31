@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { GeoJSON, FeatureGroup, Popup } from 'react-leaflet';
-import Basemap from "./Basemap";
+import MainMap from "./MainMap";
+import initialGeoJsonFileNames from "./models/index.json";
 
 interface GeojsonDataProps {
     geoData: any
-
 }
 
+interface State {
+    isVisible: boolean
+}
 
-class GeojsonLayer extends Component <GeojsonDataProps> {
+class GeojsonLayer extends Component <GeojsonDataProps, State> {
+
+    state = {
+        isVisible: false
+    }
+
     render() {
         console.log('render')
         console.info(this.props.geoData);
@@ -16,8 +24,9 @@ class GeojsonLayer extends Component <GeojsonDataProps> {
         return (
             <FeatureGroup>
                 {
-
-                    <GeoJSON key={this.props.geoData["properties"]["id"]} data={this.props.geoData}>
+                    <GeoJSON key={this.props.geoData["properties"]["id"]}
+                             data={this.props.geoData}
+                    >
                         <Popup>{this.props.geoData["properties"]["id"]}</Popup>
                     </GeoJSON>
                 }

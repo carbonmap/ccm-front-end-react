@@ -23,7 +23,10 @@ const SideMenu: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <div className="ion-align-self-end side-menu ion-padding-top" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }} onClick={() => console.log(props.featuredEntities)} >
+        <div className="ion-align-self-end side-menu ion-padding-top"
+             slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}
+             onClick={() => console.log(props.featuredEntities)}
+        >
             <Featured 
                 featuredEntities={props.featuredEntities}
                 isOpen={props.isOpen}

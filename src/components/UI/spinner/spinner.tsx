@@ -1,6 +1,6 @@
 import './spinner.css';
 
-const spinner: React.FC = () => (
+const Spinner: React.FC = () => (
     <div className="loading-ellipsis">
         <div></div>
         <div></div>
@@ -9,4 +9,4 @@ const spinner: React.FC = () => (
     </div>
 );
 
-export default spinner;
+export default Spinner;
