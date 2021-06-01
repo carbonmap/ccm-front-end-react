@@ -10,6 +10,7 @@ interface PageProps {
     setIsSearching: (isSearching: boolean) => void;
     setIsOpen: (isOpen: boolean) => void;
     featuredEntities: string[];
+    selectedLocation: void;
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
@@ -19,7 +20,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
     };
 
     const handleMenuClose = () => {
-        props.setIsOpen(false);
+        // props.setIsOpen(false);
         props.setIsSearching(false);
     };
 
@@ -28,14 +29,19 @@ const SearchBar: React.FC<PageProps> = (props) => {
             <IonSearchbar 
                 className="search-bar" 
                 onFocus={() => handleSearchSelect()}  
+                // onBlur={() => props.setIsSearching(false)}
                 value={props.inputVal} 
                 showCancelButton={props.isSearching ? "always" : "never"}
                 onIonCancel={() => handleMenuClose()}
             />
-            <SearchSuggestions 
-                featuredEntities={props.featuredEntities}
-                isSearching={props.isSearching}
-            />
+            {props.isSearching ?
+                <SearchSuggestions 
+                    featuredEntities={props.featuredEntities}
+                    isSearching={props.isSearching}
+                />  
+            : 
+                null
+            }
         </div>
     );
 };

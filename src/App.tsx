@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { IonApp, IonHeader } from '@ionic/react';
 import { useDispatch } from 'react-redux';
-import Toolbar from './components/Toolbar';
+import Toolbar from './components/toolbar';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
 import BaseMap from './components/Basemap/Basemap';
-import Spinner from './components/UI/Spinner/Spinner';
+import Spinner from './components/UI/spinner/spinner';
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
