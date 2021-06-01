@@ -25,3 +25,10 @@ export const menuClosed = () => {
         type: 'CLOSED'
     }
 }
+
+export const selectLocation = (location: object) => {
+    return {
+        type: 'SET_LOCATION',
+        payload: location
+    }
+}

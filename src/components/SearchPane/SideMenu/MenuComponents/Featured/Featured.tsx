@@ -6,6 +6,7 @@ import './featured.css';
 interface PageProps {
     featuredEntities: string[];
     isOpen: boolean;
+    setIsSearching: (isSearching: boolean) => void;
 }
 
 const Featured: React.FC<PageProps> = (props) => {
@@ -20,10 +21,12 @@ const Featured: React.FC<PageProps> = (props) => {
                         <FeaturedEl 
                             key={index}
                             index={index}
+                            entity={entity}
                             title={entity.name}
                             actions={2}
                             posts={2}
                             isOpen={props.isOpen}
+                            setIsSearching={props.setIsSearching}
                         />
                     )
                 })

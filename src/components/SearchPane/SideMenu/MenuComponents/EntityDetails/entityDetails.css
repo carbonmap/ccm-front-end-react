@@ -1,0 +1,46 @@
+.data-accordion {
+  border: 2px solid green;
+  width: 100%;
+  margin-bottom: 4px;
+  /* height: 200px; */
+}
+.accordion-title-container {
+  display: flex;
+  cursor: pointer;
+  /* justify-content: space-around; */
+}
+.accordion-title {
+  font-size: 24px;
+}
+.accordion-title-bold {
+  font-weight: 600;
+}
+
+.accordion-post-list {
+  overflow-y: scroll;
+  height: fit-content;
+}
+.accordion-post {
+  position: relative;
+}
+.accordion-post-title {
+  display: flex;
+}
+.accordion-post-text-container {
+  max-height: 8vh;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.accordion-post-readmore {
+  cursor: pointer;
+  font-weight: 600;
+}
+.accordion-post-readmore-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-image: linear-gradient(transparent, #fff);
+  height: 50%;
+  align-items: flex-end;
+  display: flex;
+}

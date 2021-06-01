@@ -15,6 +15,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const isMobile = useSelector( (state: RootState) => state.isMobile);
+    const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
     const mobileMenuTabStyle = (
         isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
@@ -24,7 +25,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <div className="ion-align-self-end menu-container">
+        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen ? '#fff' : 'transparent' }}>
             <SearchBar 
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
@@ -32,16 +33,15 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 isSearching={isSearching} 
                 setIsOpen={setIsOpen}
                 featuredEntities={props.featuredEntities}
+                selectedLocation={selectedLocation}
             />
-                    {/* <div className="chevron-container" onClick={() => setIsOpen(!isOpen)} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
-                        <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
-                        <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
-                        </div>
-                    </div> */}
-                        <SideMenu 
-                            featuredEntities={props.featuredEntities}
-                            isOpen={isOpen}
-                        />
+            <SideMenu 
+                featuredEntities={props.featuredEntities}
+                isOpen={isOpen}
+                selectedLocation={selectedLocation}
+                isSearching={isSearching}
+                setIsSearching={setIsSearching}
+            />
 
         </div>
     );

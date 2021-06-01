@@ -5,6 +5,7 @@
   z-index: 1000;
   position: absolute;
   margin-top: 7vh;
+  /* background-color: #fff; */
 }
 .spinner-container {
   height: 100vh;
