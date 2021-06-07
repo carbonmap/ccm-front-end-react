@@ -1,16 +1,13 @@
-.search-bar-container {
-  /* position: absolute; */
-  z-index: 100;
+.search-overlay-container {
+  position: absolute;
+  z-index: 1000;
   width: 100%;
 }
 .search-bar {
-  margin: 4px 0 0 2%;
   padding: 0;
-  margin-bottom: 2px;
   width: 96%;
-}
-.icon-container {
-  margin-right: 10px;
+  margin: 4px 0 0 2%;
+  margin-bottom: 2px;
 }
 
 .suggestion-container {
@@ -20,6 +17,7 @@
   margin-left: 2%;
   height: fit-content;
   overflow: hidden;
+  background-color: red;
 }
 .search-suggestion-el {
   width: 100%;

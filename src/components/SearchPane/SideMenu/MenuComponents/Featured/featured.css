@@ -1,3 +1,10 @@
+.featured-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+  position: absolute;
+  z-index: 500;
+}
 .featured-title-main {
   margin: 20px 0 10px 0;
   font-size: 32px;

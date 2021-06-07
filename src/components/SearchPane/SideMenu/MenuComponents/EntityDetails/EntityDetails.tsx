@@ -1,4 +1,4 @@
-import { IonText, IonTitle } from '@ionic/react';
+import { IonText, IonTitle, IonIcon } from '@ionic/react';
 import React from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
@@ -7,11 +7,14 @@ import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityA
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
 
 interface PageProps {
-
+    isOpen: boolean;
+    closeMenu: Function;
+    isSearching: boolean;
+    isMobile: boolean;
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
-
+    const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
 
     const actions = (
@@ -41,30 +44,43 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         />
     );
 
+    const mobileMenuStyle = (
+        props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
+    );
+    const desktopMenuStyle = (
+        props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
+    );
+
     return (
-        <div className="ion-padding">
-            <>
-                <img 
-                    src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
-                />
-                <IonTitle className="ion-text-left">{selectedEntity.name}</IonTitle>
-                <IonText>15 Market Hill, Cambridge</IonText>
-                <DataAccordion 
-                    title="CO2e in 2020"
-                    titleData="24t"
-                    bottomView={<IonText>Hello</IonText>}
-                />
-                <DataAccordion 
-                    title="actions"
-                    titleData="2"
-                    bottomView={actions}
-                />
-                <DataAccordion 
-                    title="posts"
-                    titleData={selectedEntity.emissions.length}
-                    bottomView={posts}
-                />
-            </>
+        <div className="entity-details-container" /*style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}*/>
+           {props.isMobile ?
+                null
+            :
+               <div className="close-menu-icon" onClick={() => props.closeMenu()} style={{ display: props.isSearching ? 'none' : 'flex' }}>
+                    <IonIcon name="close"></IonIcon>
+                </div>
+            }
+            <img 
+                src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
+            />
+            <IonText className="ion-no-padding ion-text-left">{selectedEntity.name}</IonText>
+            <br />
+            <IonText>15 Market Hill, Cambridge</IonText>
+            <DataAccordion 
+                title="CO2e in 2020"
+                titleData="24t"
+                bottomView={<IonText>Hello</IonText>}
+            />
+            <DataAccordion 
+                title="actions"
+                titleData="2"
+                bottomView={actions}
+            />
+            <DataAccordion 
+                title="posts"
+                titleData={selectedEntity.emissions.length} 
+                bottomView={posts}
+            />
         </div>
     );
 };

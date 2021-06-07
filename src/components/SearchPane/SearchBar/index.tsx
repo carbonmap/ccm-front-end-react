@@ -1,5 +1,6 @@
-import { IonSearchbar } from '@ionic/react';
+import { IonIcon, IonSearchbar } from '@ionic/react';
 import React from 'react';
+import Featured from '../SideMenu/MenuComponents/Featured/Featured';
 import './searchBar.css';
 import SearchSuggestions from './SearchSuggestions/SearchSuggestions';
 
@@ -8,37 +9,42 @@ interface PageProps {
     setInputVal: (inputVal: string) => void;
     isSearching: boolean;
     setIsSearching: (isSearching: boolean) => void;
-    setIsOpen: (isOpen: boolean) => void;
     featuredEntities: string[];
     selectedLocation: void;
+    openMenu: Function;
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
     const handleSearchSelect = () => {
-        props.setIsOpen(true);
         props.setIsSearching(true);
     };
 
     const handleMenuClose = () => {
-        // props.setIsOpen(false);
         props.setIsSearching(false);
     };
 
     return (
-        <div className="search-bar-container">
-            <IonSearchbar 
-                className="search-bar" 
-                onFocus={() => handleSearchSelect()}  
-                // onBlur={() => props.setIsSearching(false)}
-                value={props.inputVal} 
-                showCancelButton={props.isSearching ? "always" : "never"}
-                onIonCancel={() => handleMenuClose()}
-            />
+        <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent' }}>
+                <div className="search-bar-container">
+                    <IonSearchbar 
+                        className="search-bar" 
+                        onFocus={() => handleSearchSelect()}  
+                        value={props.inputVal} 
+                        showCancelButton={props.isSearching ? "always" : "never"}
+                        onIonCancel={() => handleMenuClose()}
+                    />
+                </div>
             {props.isSearching ?
+            <>
                 <SearchSuggestions 
                     featuredEntities={props.featuredEntities}
                     isSearching={props.isSearching}
                 />  
+                <Featured 
+                    featuredEntities={props.featuredEntities}
+                    openMenu={props.openMenu}
+                /> 
+            </>
             : 
                 null
             }
