@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {MapContainer, TileLayer, Marker, Popup, MapConsumer} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, MapConsumer } from 'react-leaflet';
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import {geoJSON, Icon} from 'leaflet';
 import GeojsonLayer from "./GeojsonLayer";
@@ -8,7 +8,8 @@ import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 interface State {
     markers: Array<Array<number>>,
-    geoData: JSX.Element[]
+    geoData: JSX.Element[],
+
 }
 
 interface GeoDataObject {
@@ -16,10 +17,12 @@ interface GeoDataObject {
     features: Array<any>
 }
 
+
 class MainMap extends Component <{}, State> {
     state = {
         markers: [[52.20, 0.12]],
-        geoData: []
+        geoData: [],
+
     }
 
     addMarker = (e: any) => {
@@ -36,7 +39,8 @@ class MainMap extends Component <{}, State> {
             tempGeoData.push(
                 <GeojsonLayer
                     key={_id}
-                    geoData={geoData_}/>
+                    geoData={geoData_}
+                />
             );
         })
         this.setState({geoData: tempGeoData})
@@ -55,8 +59,8 @@ class MainMap extends Component <{}, State> {
         let GeoJsonLayers = null;
         if (this.state.geoData.length > 0) {
             console.log(this.state.geoData);
-            console.log(999);
             GeoJsonLayers = this.state.geoData;
+
         }
 
         return (
@@ -67,6 +71,7 @@ class MainMap extends Component <{}, State> {
                     maxZoom={18}
                     minZoom={5}
                     style={{height: '1000px', width: '100%'}}
+
                 >
                     {GeoJsonLayers}
                     <MapConsumer>
