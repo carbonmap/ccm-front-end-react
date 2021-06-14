@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { IonCard, IonButton, IonCardHeader, createGesture, IonIcon, IonText } from '@ionic/react';
+import { IonCard, createGesture, IonIcon } from '@ionic/react';
 import '../entityDetails.css';
 import EntityDetails from '../EntityDetails';
 import { remove } from 'ionicons/icons';
@@ -28,6 +28,20 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
           c.dataset.open = "true";
         }
       };
+
+      const openDrawer = () => {
+        let c = drawerRef.current;
+
+        c.style.transition = ".5s ease-in";
+        c.style.transform = `translateY(${-350}px) `;
+        c.dataset.open = "true";
+      };
+
+    useEffect(() => {
+      if(props.selectedLocation) {
+        openDrawer();
+      }
+    }, [props.selectedLocation])
 
     useEffect(() => {
         let c = drawerRef.current;

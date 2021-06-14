@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { screenLg, screenSm } from '../../../redux/actions';
 
     export function handleWindowSizeChange(dispatch: Dispatch<Action>) {
-        if(window.innerWidth < 768) {
+        if(window.innerWidth < 1024) {
             dispatch(screenSm())
             console.log("Small Screen")
         } else {

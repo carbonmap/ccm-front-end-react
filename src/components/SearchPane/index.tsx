@@ -47,21 +47,33 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 openMenu={openMenu}
             />
             {isMobile ?
-                <MobileDrawer 
-                    isOpen={isOpen}
-                    closeMenu={closeMenu}
-                    isSearching={isSearching}
-                    isMobile={isMobile}
-                    selectedLocation={selectedLocation}
-                />
+                <>
+                    {selectedLocation ?
+                        <MobileDrawer 
+                            isOpen={isOpen}
+                            closeMenu={closeMenu}
+                            isSearching={isSearching}
+                            isMobile={isMobile}
+                            selectedLocation={selectedLocation}
+                        />
+                    :
+                        null
+                    }
+                </>
             :
-                <SideMenu 
-                    featuredEntities={props.featuredEntities}
-                    isOpen={isOpen}
-                    selectedLocation={selectedLocation}
-                    isSearching={isSearching}
-                    closeMenu={closeMenu}
-                />
+                <>
+                    {selectedLocation ?
+                        <SideMenu 
+                            featuredEntities={props.featuredEntities}
+                            isOpen={isOpen}
+                            selectedLocation={selectedLocation}
+                            isSearching={isSearching}
+                            closeMenu={closeMenu}
+                        />
+                    :
+                        null
+                    }
+                </>
             }
         </div>
     );

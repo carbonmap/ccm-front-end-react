@@ -1,4 +1,4 @@
-import { IonTitle } from '@ionic/react';
+import { IonTitle, IonContent, IonText } from '@ionic/react';
 import React from 'react';
 import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
@@ -12,7 +12,7 @@ const Featured: React.FC<PageProps> = (props) => {
 
     return (
         <div className="featured-container">
-            <IonTitle className="featured-title-main" color="primary">Featured</IonTitle>
+            <IonText className="featured-title-main" color="primary">Featured</IonText>
             {
                 props.featuredEntities.map((entity: any, index) => {
                     return (
