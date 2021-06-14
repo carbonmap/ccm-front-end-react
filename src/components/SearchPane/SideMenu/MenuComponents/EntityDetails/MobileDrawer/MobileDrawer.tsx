@@ -24,7 +24,8 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
           c.dataset.open = "false";
         } else {
           c.style.transition = ".5s ease-in";
-          c.style.transform = `translateY(${-350}px) `;
+          c.style.transform = `translateY(${-68}vh) `;
+          // c.style.transform = `translateY(${-350}px) `;
           c.dataset.open = "true";
         }
       };
@@ -33,7 +34,8 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         let c = drawerRef.current;
 
         c.style.transition = ".5s ease-in";
-        c.style.transform = `translateY(${-350}px) `;
+        c.style.transform = `translateY(${-68}vh) `;
+        // c.style.transform = `translateY(${-350}px) `;
         c.dataset.open = "true";
       };
 

@@ -52,7 +52,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <div className="entity-details-container" /*style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}*/>
+        <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
            {props.isMobile ?
                 null
             :

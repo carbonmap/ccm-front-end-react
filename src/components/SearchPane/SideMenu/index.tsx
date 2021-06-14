@@ -25,7 +25,7 @@ const SideMenu: React.FC<PageProps> = (props) => {
     return (
         // <>
         //     {props.selectedLocation ?
-                <div className="ion-align-self-end side-menu ion-padding-top" slot="end" /*style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}*/>
+                <div className="ion-align-self-end side-menu ion-padding-top" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
                     <EntityDetails 
                         isOpen={props.isOpen}
                         closeMenu={props.closeMenu}
