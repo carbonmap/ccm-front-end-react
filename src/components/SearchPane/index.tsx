@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
 import { useSelector } from 'react-redux';
+import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
 
 interface PageProps {
     featuredEntities: string[]
@@ -24,25 +25,54 @@ const SearchPane: React.FC<PageProps> = (props) => {
         isOpen ? 'translateX(-24vw)' : 'translateX(0)'
     );
 
+    const openMenu = () => {
+        setIsSearching(false);
+        setIsOpen(true);
+    };
+    const closeMenu = () => {
+        setIsOpen(false); 
+    };
+
     return (
-        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen ? '#fff' : 'transparent' }}>
+        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
             <SearchBar 
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
                 setIsSearching={setIsSearching} 
                 isSearching={isSearching} 
-                setIsOpen={setIsOpen}
                 featuredEntities={props.featuredEntities}
                 selectedLocation={selectedLocation}
+                openMenu={openMenu}
             />
-            <SideMenu 
-                featuredEntities={props.featuredEntities}
-                isOpen={isOpen}
-                selectedLocation={selectedLocation}
-                isSearching={isSearching}
-                setIsSearching={setIsSearching}
-            />
-
+            {isMobile ?
+                <>
+                    {selectedLocation ?
+                        <MobileDrawer 
+                            isOpen={isOpen}
+                            closeMenu={closeMenu}
+                            isSearching={isSearching}
+                            isMobile={isMobile}
+                            selectedLocation={selectedLocation}
+                        />
+                    :
+                        null
+                    }
+                </>
+            :
+                <>
+                    {selectedLocation ?
+                        <SideMenu 
+                            featuredEntities={props.featuredEntities}
+                            isOpen={isOpen}
+                            selectedLocation={selectedLocation}
+                            isSearching={isSearching}
+                            closeMenu={closeMenu}
+                        />
+                    :
+                        null
+                    }
+                </>
+            }
         </div>
     );
 };

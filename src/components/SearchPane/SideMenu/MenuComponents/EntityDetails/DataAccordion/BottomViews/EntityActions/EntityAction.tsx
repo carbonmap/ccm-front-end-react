@@ -1,4 +1,4 @@
-import { IonButton, IonText } from '@ionic/react';
+import { IonText } from '@ionic/react';
 import React from 'react';
 
 interface PageProps {
@@ -8,7 +8,6 @@ interface PageProps {
 const EntityAction: React.FC<PageProps> = (props) => {
     return (
         <div>
-            {/* <IonButton>Click</IonButton> */}
             <IonText>{props.action}</IonText>
         </div>
     );

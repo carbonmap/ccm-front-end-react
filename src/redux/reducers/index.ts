@@ -2,7 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import loadingReducer from './isLoading';
 import menuReducer from './menuOpen';
 import mobilereducer from './isMobile';
-import locationReducer from './selectedLocaiton';
+import locationReducer from './selectedLocation';
 
 const rootReducer = combineReducers({
     isMobile: mobilereducer,

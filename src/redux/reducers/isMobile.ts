@@ -1,10 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { DESKTOP, MOBILE } from '../../constants/actionTypes'
 
 const mobileReducer = (state = false, action: PayloadAction) => {
     switch(action.type) {
-        case 'DESKTOP':
+        case DESKTOP:
             return false;
-        case 'MOBILE':
+        case MOBILE:
             return true;
         default: return state;
     }

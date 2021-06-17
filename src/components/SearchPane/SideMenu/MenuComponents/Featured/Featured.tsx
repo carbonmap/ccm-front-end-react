@@ -1,20 +1,18 @@
-import { IonTitle } from '@ionic/react';
+import { IonTitle, IonContent, IonText } from '@ionic/react';
 import React from 'react';
 import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
 
 interface PageProps {
     featuredEntities: string[];
-    isOpen: boolean;
-    setIsSearching: (isSearching: boolean) => void;
+    openMenu: Function
 }
 
 const Featured: React.FC<PageProps> = (props) => {
 
     return (
-        // <div className="featured-container">
-        <>
-            <IonTitle className="featured-title-main" color="primary">Featured</IonTitle>
+        <div className="featured-container">
+            <IonText className="featured-title-main" color="primary">Featured</IonText>
             {
                 props.featuredEntities.map((entity: any, index) => {
                     return (
@@ -25,14 +23,12 @@ const Featured: React.FC<PageProps> = (props) => {
                             title={entity.name}
                             actions={2}
                             posts={2}
-                            isOpen={props.isOpen}
-                            setIsSearching={props.setIsSearching}
+                            openMenu={props.openMenu}
                         />
                     )
                 })
             }
-        </>
-        // </div>
+        </div>
     );
 };
 

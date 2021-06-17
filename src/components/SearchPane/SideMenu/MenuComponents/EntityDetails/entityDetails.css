@@ -1,13 +1,16 @@
+.entity-details-container {
+  padding: 0 16px 16px 16px;
+  overflow-y: scroll;
+  height: 64vh;
+}
 .data-accordion {
   border: 2px solid green;
   width: 100%;
   margin-bottom: 4px;
-  /* height: 200px; */
 }
 .accordion-title-container {
   display: flex;
   cursor: pointer;
-  /* justify-content: space-around; */
 }
 .accordion-title {
   font-size: 24px;
@@ -15,7 +18,6 @@
 .accordion-title-bold {
   font-weight: 600;
 }
-
 .accordion-post-list {
   overflow-y: scroll;
   height: fit-content;
@@ -43,4 +45,47 @@
   height: 50%;
   align-items: flex-end;
   display: flex;
+}
+.close-menu-icon {
+  background-color: #fff;
+  padding: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 24vw;
+  top: 0;
+  cursor: pointer;
+}
+
+.bottom-drawer {
+  position: absolute;
+  right: -16px;
+  bottom: -68vh;
+  /* height: 400px; */
+  /* min-height: 100%; */
+  height: 68vh;
+  max-height: 80vh;
+  min-height: 80vh;
+  border-radius: 30px;
+  width: 100vw;
+  /* overflow-y: scroll; */
+}
+.entity-detail-title {
+  font-weight: 600;
+  font-size: 24px;
+}
+.drawer-open {
+  transition: 0.5s ease-in;
+  transform: translateY(-68vh);
+}
+.drawer-closed {
+  transition: 0.5s ease-out;
+}
+
+@media only screen and (max-width: 768px) {
+  .entity-details-container {
+    padding: 16px 16px 16px 16px;
+    max-height: 72vh;
+  }
 }
