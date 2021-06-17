@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { IonCard, createGesture, IonIcon } from '@ionic/react';
 import '../entityDetails.css';
 import EntityDetails from '../EntityDetails';
@@ -13,29 +13,29 @@ interface PageProps {
 }
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
+    const [drawerClass, setDrawerClass] = useState("drawer-closed");
+
     const drawerRef = useRef<any>();
     const dragRef = useRef<any>();
 
     const toggleDrawer = () => {
+      console.log(drawerClass)
         let c = drawerRef.current;
         if (c.dataset.open === "true") {
+          setDrawerClass("drawer-closed");
           c.style.transition = ".5s ease-out";
           c.style.transform = "";
           c.dataset.open = "false";
         } else {
           c.style.transition = ".5s ease-in";
           c.style.transform = `translateY(${-68}vh) `;
-          // c.style.transform = `translateY(${-350}px) `;
           c.dataset.open = "true";
         }
       };
 
       const openDrawer = () => {
         let c = drawerRef.current;
-
-        c.style.transition = ".5s ease-in";
-        c.style.transform = `translateY(${-68}vh) `;
-        // c.style.transform = `translateY(${-350}px) `;
+        setDrawerClass("drawer-open")
         c.dataset.open = "true";
       };
 
@@ -68,7 +68,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
                 let position = height - event.currentY;
                 c.style.transition = ".5s ease-out";
                 if (position > 100 && c.dataset.open != "true") {
-                //   c.style.transform = `translateY(${-74}vh) `;
                   c.dataset.open = "true";
                 }
               }
@@ -77,7 +76,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
     }, [])
     
     return (
-        <IonCard className="bottom-drawer" ref={drawerRef}>
+        <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
             <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
                 <IonIcon 
                   ref={dragRef}
@@ -86,7 +85,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
                   onClick={toggleDrawer} 
                 />
             </div>
-            {/* <div className="entity-details-wrapper"> */}
               {props.selectedLocation ?
                   <EntityDetails 
                       isOpen={props.isOpen}
@@ -97,7 +95,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
               : 
                   null
               }
-            {/* </div> */}
         </IonCard>
     );
 };

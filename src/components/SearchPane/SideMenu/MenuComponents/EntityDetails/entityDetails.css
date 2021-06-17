@@ -75,6 +75,13 @@
   font-weight: 600;
   font-size: 24px;
 }
+.drawer-open {
+  transition: 0.5s ease-in;
+  transform: translate(-68vh);
+}
+.drawer-closed {
+  transition: 0.5s ease-out;
+}
 
 @media only screen and (max-width: 768px) {
   .entity-details-container {
@@ -82,9 +89,3 @@
     max-height: 72vh;
   }
 }
-
-/* @media only screen and (min-width: 768px) {
-  .entity-details-container {
-    padding: 8vh 16px 16px 16px;
-  }
-} */
