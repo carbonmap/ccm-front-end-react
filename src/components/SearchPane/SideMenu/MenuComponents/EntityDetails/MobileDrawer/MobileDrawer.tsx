@@ -23,7 +23,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         let c = drawerRef.current;
         if (c.dataset.open === "true") {
           setDrawerClass("drawer-closed");
-          c.style.transition = ".5s ease-out";
           c.style.transform = "";
           c.dataset.open = "false";
         } else {
