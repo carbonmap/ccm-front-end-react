@@ -18,8 +18,11 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
     const drawerRef = useRef<any>();
     const dragRef = useRef<any>();
 
+    // Styles changed by both class and by ref as transform needs to change depending on users mouse position to be able to drag the drawer
+    // Ref styles override css styles so once the user drages the drawer the css transform style is ignored
+
     const toggleDrawer = () => {
-      console.log(drawerClass)
+      // styles ref directly
         let c = drawerRef.current;
         if (c.dataset.open === "true") {
           setDrawerClass("drawer-closed");
@@ -32,6 +35,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         }
       };
 
+      // Initially open drawer using css class
       const openDrawer = () => {
         let c = drawerRef.current;
         setDrawerClass("drawer-open")
@@ -48,6 +52,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         let c = drawerRef.current;
         let height = window.innerHeight;
 
+        // Change drawer position by dragging - styles ref directly
         const gesture = createGesture({
             el: dragRef.current,
             gestureName: "my-swipe",

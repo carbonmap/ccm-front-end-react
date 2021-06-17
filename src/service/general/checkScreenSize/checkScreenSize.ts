@@ -1,13 +1,12 @@
 import React, { Dispatch } from 'react';
 import { Action } from 'redux';
 import { screenLg, screenSm } from '../../../redux/actions';
+import { mobileDeviceWidth } from '../../../constants';
 
-    export function handleWindowSizeChange(dispatch: Dispatch<Action>) {
-        if(window.innerWidth < 1025) {
-            dispatch(screenSm())
-            console.log("Small Screen")
-        } else {
-            dispatch(screenLg())
-            console.log("large screen")
-        }
-    }
+export function handleWindowSizeChange(dispatch: Dispatch<Action>) {
+    if(window.innerWidth < mobileDeviceWidth) {
+        dispatch(screenSm());
+    } else {
+        dispatch(screenLg());
+    };
+};

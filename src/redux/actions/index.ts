@@ -1,34 +1,36 @@
+import * as Constants from '../../constants/actionTypes';
+
 export const screenSm = () => {
     return {
-        type: 'MOBILE'
+        type: Constants.MOBILE
     }
 }
 export const screenLg = () => {
     return {
-        type: 'DESKTOP'
+        type: Constants.DESKTOP
     }
 }
 
 export const endLoading = () => {
     return {
-        type: 'LOADED'
+        type: Constants.LOADED
     }
 }
 
 export const menuOpen = () => {
     return {
-        type: 'OPEN'
+        type: Constants.OPEN
     }
 }
 export const menuClosed = () => {
     return {
-        type: 'CLOSED'
+        type: Constants.CLOSED
     }
 }
 
 export const selectLocation = (location: object) => {
     return {
-        type: 'SET_LOCATION',
+        type: Constants.SET_LOCATION,
         payload: location
     }
 }

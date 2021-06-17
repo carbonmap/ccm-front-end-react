@@ -1,4 +1,4 @@
-import { IonText, IonTitle, IonIcon } from '@ionic/react';
+import { IonText, IonIcon } from '@ionic/react';
 import React from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';

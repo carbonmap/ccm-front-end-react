@@ -10,8 +10,6 @@ interface PageProps {
     featuredEntities: string[]
 }
 
-// POTENTIAL: Create 2 side menus, 1 for featured/suggestions, 1 for selected entities and display the featured menu as the highest component
-
 const SearchPane: React.FC<PageProps> = (props) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [inputVal, setInputVal] = useState<string>('');
