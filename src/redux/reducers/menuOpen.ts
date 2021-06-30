@@ -1,10 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import { OPEN, CLOSED } from '../../constants/actionTypes'
 
 const menuReducer = (state = false, action: PayloadAction) => {
     switch(action.type) {
-        case 'OPEN':
+        case OPEN:
             return true;
-        case 'CLOSED':
+        case CLOSED:
             return false;
         default:
             return state;
