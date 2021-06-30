@@ -53,7 +53,7 @@ const App: React.FC = () => {
             <IonHeader>
               <Toolbar />
             </IonHeader>
-            <MainMap />
+            <MainMap  />
             <SearchPane 
               featuredEntities={featuredEntities}
             />

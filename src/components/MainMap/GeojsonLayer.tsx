@@ -1,60 +1,78 @@
 import React, { Component } from 'react';
 import { GeoJSON, FeatureGroup, Popup } from 'react-leaflet';
 
+import './geojsonlayer.css';
 
-// type toggleSideMenuHandlerType = () => void;
+
 interface GeojsonDataProps {
     geoData: any
-    // toggleSideMenuHandler: toggleSideMenuHandlerType
 }
 
-const invisible = 'rgba(0,0,0,0)';
-const visible = '#05B8CC';
+const INVISIBLE = 'rgba(0,0,0,0)';
 
 
 interface State {
-    colour: string
+    visible: boolean
 }
+// type PropsType = GeojsonDataProps & GeojsonProps;
 
 class GeojsonLayer extends Component <GeojsonDataProps, State> {
 
     state = {
-        colour: invisible
+        visible: false
     }
 
-    toggleVisibility = () => {
-        console.log("Toggling a json layer");
-        let newColour = invisible;
-        if (this.state.colour === invisible) {
-            newColour = visible;
-        }
-
-        this.setState({
-            colour: newColour
-        })
-    }
-
-    setVisibility = () => {
+    defaultStyle = () => {
         return {
-            // fillOpacity: 0.5,
-            color: this.state.colour
+            color: INVISIBLE,
+            weight: 3,
+            opacity: 1,
+            fillColor: INVISIBLE,
+
+            // dashArray: '8 5'
         }
     }
+
+    changeLayerColor = (event: any) => {
+
+        let newStyle: object = {
+            color: INVISIBLE,
+            fillColor: INVISIBLE,
+            fillOpacity: 0,
+            weight: 0,
+        };
+        let newStatus: boolean = false;
+
+        // set the new visible colour
+        if (this.state.visible === false) {
+            newStyle = {
+                color: '#008468',
+                fillColor: '#008468',
+                fillOpacity: 0.1,
+                weight: 2,
+            };
+            newStatus = true;
+        }
+
+        event.target.setStyle(newStyle);
+        this.setState({
+            visible: newStatus
+        })
+    };
 
     render() {
-        console.log(this.state.colour);
-        console.log(this.props.geoData);
         return (
-
             <FeatureGroup eventHandlers={{
-                click: () => {
-                    this.toggleVisibility()
+                click: (event) => {
+                   this.changeLayerColor(event)
                 }
-            }}>
+            }}
+            >
                 {
                     <GeoJSON key={this.props.geoData["properties"]["id"]}
                              data={this.props.geoData}
-                             style={this.setVisibility}
+                             style={this.defaultStyle}
+
                     >
                         <Popup>{this.props.geoData["properties"]["id"]}</Popup>
                     </GeoJSON>
