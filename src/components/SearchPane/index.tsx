@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
 import { useSelector } from 'react-redux';
+import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
 
 interface PageProps {
     featuredEntities: string[]
@@ -15,6 +16,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const isMobile = useSelector( (state: RootState) => state.isMobile);
+    const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
     const mobileMenuTabStyle = (
         isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
@@ -23,26 +25,54 @@ const SearchPane: React.FC<PageProps> = (props) => {
         isOpen ? 'translateX(-24vw)' : 'translateX(0)'
     );
 
+    const openMenu = () => {
+        setIsSearching(false);
+        setIsOpen(true);
+    };
+    const closeMenu = () => {
+        setIsOpen(false); 
+    };
+
     return (
-        <div className="ion-align-self-end menu-container">
+        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
             <SearchBar 
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
                 setIsSearching={setIsSearching} 
                 isSearching={isSearching} 
-                setIsOpen={setIsOpen}
                 featuredEntities={props.featuredEntities}
+                selectedLocation={selectedLocation}
+                openMenu={openMenu}
             />
-                    {/* <div className="chevron-container" onClick={() => setIsOpen(!isOpen)} style={{ transform: isMobile ? mobileMenuTabStyle : desktopMenuTabStyle }}>
-                        <div className="menu-toggle-wrapper" style={{ transform: isMobile ? isOpen ? 'rotate(90deg)' : 'rotate(90deg) rotateY(180deg)' : isOpen ? 'rotateY(0)' : 'rotateY(180deg)' }}>
-                        <IonIcon name="chevron-forward" className="toggle-menu-icon"></IonIcon>
-                        </div>
-                    </div> */}
+            {isMobile ?
+                <>
+                    {selectedLocation ?
+                        <MobileDrawer 
+                            isOpen={isOpen}
+                            closeMenu={closeMenu}
+                            isSearching={isSearching}
+                            isMobile={isMobile}
+                            selectedLocation={selectedLocation}
+                        />
+                    :
+                        null
+                    }
+                </>
+            :
+                <>
+                    {selectedLocation ?
                         <SideMenu 
                             featuredEntities={props.featuredEntities}
                             isOpen={isOpen}
+                            selectedLocation={selectedLocation}
+                            isSearching={isSearching}
+                            closeMenu={closeMenu}
                         />
-
+                    :
+                        null
+                    }
+                </>
+            }
         </div>
     );
 };
