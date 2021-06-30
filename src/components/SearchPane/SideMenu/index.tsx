@@ -23,15 +23,18 @@ const SideMenu: React.FC<PageProps> = (props) => {
     );
 
     return (
-        <div className="ion-align-self-end side-menu ion-padding-top" slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
-            <EntityDetails 
+        <div className="ion-align-self-end side-menu ion-padding-top"
+             slot="end" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}
+
+        >
+            <EntityDetails
                 isOpen={props.isOpen}
                 closeMenu={props.closeMenu}
                 isSearching={props.isSearching}
                 isMobile={isMobile}
             />
         </div>
-    );
-};
+    )
+}
 
 export default SideMenu;

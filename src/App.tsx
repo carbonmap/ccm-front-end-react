@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Toolbar from './components/toolbar';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
-import BaseMap from './components/Basemap/Basemap';
+import MainMap from "./components/MainMap/MainMap";
 import Spinner from './components/UI/spinner/spinner';
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
@@ -46,14 +46,14 @@ const App: React.FC = () => {
       {
         isLoading ? 
           <div className="spinner-container">
-            <Spinner /> 
+            <Spinner />
           </div>
         : 
           <>
             <IonHeader>
               <Toolbar />
             </IonHeader>
-            <BaseMap />
+            <MainMap />
             <SearchPane 
               featuredEntities={featuredEntities}
             />

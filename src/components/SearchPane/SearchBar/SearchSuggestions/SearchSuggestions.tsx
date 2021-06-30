@@ -18,11 +18,13 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
     };
 
     return (
-        <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
+        <div className="suggestion-container"
+             style={ props.isSearching ? searchStyles : hiddenStyles }>
             {
                 props.featuredEntities.map((entity: any, index) => {
                     return (
-                        <IonItem key={index} className="search-suggestion-el">{entity.name}</IonItem>
+                        <IonItem key={index}
+                                 className="search-suggestion-el">{entity.name}</IonItem>
                     )
                 })
             }
