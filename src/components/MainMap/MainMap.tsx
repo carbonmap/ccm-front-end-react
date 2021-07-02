@@ -6,13 +6,30 @@ import GeojsonLayer from "./GeojsonLayer";
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 
-interface State {
-    markers: Array<Array<number>>,
-    geoData: JSX.Element[],
-
+const styleInvisible = {
+    color: "#00eab8",
+    fillOpacity: 0,
+    weight: 2
+}
+const styleVisible = {
+    color: '#008468',
+    fillOpacity: 0.1,
+    weight: 2,
 }
 
-interface GeoDataObject {
+interface GeoDataLayerDetails {
+    [geoDataId: string]: {
+        layerObject: JSX.Element | undefined,
+        geoDataInfo: any
+    }
+}
+
+interface State {
+    markers: Array<Array<number>>,
+    geoData: GeoDataLayerDetails
+}
+
+interface GeoDataFetched {
     type: string,
     features: Array<any>
 }
@@ -21,8 +38,7 @@ interface GeoDataObject {
 class MainMap extends Component <{}, State> {
     state = {
         markers: [[52.20, 0.12]],
-        geoData: [],
-
+        geoData: {}
     }
 
     addMarker = (e: any) => {
@@ -32,16 +48,20 @@ class MainMap extends Component <{}, State> {
     }
 
     addGeoJsonLayers = (defaultGeoData: any) => {
-        let tempGeoData: JSX.Element[] = this.state.geoData;
-        defaultGeoData.map((geoDataContent: GeoDataObject, item: number) => {
+
+        let tempGeoData: GeoDataLayerDetails = this.state.geoData;
+        defaultGeoData.map((geoDataContent: GeoDataFetched, item: number) => {
             const geoData_ = geoDataContent["features"][0];
-            const _id = `geo_json_layer_id_${item}`;
-            tempGeoData.push(
-                <GeojsonLayer
-                    key={_id}
-                    geoData={geoData_}
-                />
-            );
+            const geoDataId = geoData_["properties"]["id"];
+            const _domElementId = `geo_json_layer_${geoDataId}`;
+            tempGeoData[geoDataId] = {"layerObject": undefined, "geoDataInfo": {}};
+            tempGeoData[geoDataId]["layerObject"] = <GeojsonLayer
+                key={_domElementId}
+                geoData={geoData_}
+                style= {styleInvisible}
+                processGeoJsonLayersVisibility={this.processGeoJsonLayersVisibility}
+                visible={false}/>
+            tempGeoData[geoDataId]["geoDataInfo"] = geoData_;
         })
         this.setState({geoData: tempGeoData})
         console.log("Geo Data in the state");
@@ -49,18 +69,61 @@ class MainMap extends Component <{}, State> {
     }
 
     async componentDidMount() {
-        console.log('did mount');
+        // console.log('did mount');
         const defaultGeoData: any = await fetchGeoData();
+        // console.log(defaultGeoData);
         this.addGeoJsonLayers(defaultGeoData);
     }
 
-    render() {
-        console.log("Rendering map");
-        let GeoJsonLayers = null;
-        if (this.state.geoData.length > 0) {
-            console.log(this.state.geoData);
-            GeoJsonLayers = this.state.geoData;
+    processGeoJsonLayersVisibility = (_id: string, currentLayerVisible: boolean) => {
+        console.log(_id);
+        let existingGeoData: GeoDataLayerDetails = this.state.geoData;
+        let newGeoData: GeoDataLayerDetails = {};
 
+
+        Object.keys(existingGeoData).forEach((key: string)=>{
+            console.log(`rendering ${key}`);
+            if (key !== _id || currentLayerVisible) {
+                const geoData_ = existingGeoData[key]["geoDataInfo"];
+                const geoDataId = geoData_["properties"]["id"];
+                const _domElementId = `geo_json_layer_${geoDataId}`;
+                newGeoData[geoDataId] = {"layerObject": undefined, "geoDataInfo": {}};
+                newGeoData[geoDataId]["layerObject"] = <GeojsonLayer
+                    key={_domElementId}
+                    geoData={geoData_}
+                    style= {styleInvisible}
+                    processGeoJsonLayersVisibility={this.processGeoJsonLayersVisibility}
+                    visible={false}/>
+                newGeoData[geoDataId]["geoDataInfo"] = geoData_;
+            } else {
+                const geoData_ = existingGeoData[key]["geoDataInfo"];
+                const geoDataId = geoData_["properties"]["id"];
+                const _domElementId = `geo_json_layer_${geoDataId}`;
+                newGeoData[geoDataId] = {"layerObject": undefined, "geoDataInfo": {}};
+                newGeoData[geoDataId]["layerObject"] = <GeojsonLayer
+                    key={_domElementId}
+                    geoData={geoData_}
+                    style= {styleVisible}
+                    processGeoJsonLayersVisibility={this.processGeoJsonLayersVisibility}
+                    visible={true}/>
+                newGeoData[geoDataId]["geoDataInfo"] = geoData_;
+            }
+        })
+        this.setState({geoData: newGeoData})
+        console.log("Geo Data in the state");
+        console.log(this.state.geoData);
+
+    }
+
+    render() {
+        // console.log("Rendering map");
+        let GeoJsonLayers = null;
+        if (Object.keys(this.state.geoData).length > 0) {
+            console.log(this.state.geoData);
+
+            GeoJsonLayers = Object.values(this.state.geoData).map((item: any) => {
+                return item["layerObject"];
+            })
         }
 
         return (
@@ -71,7 +134,6 @@ class MainMap extends Component <{}, State> {
                     maxZoom={18}
                     minZoom={5}
                     style={{height: '1000px', width: '100%'}}
-
                 >
                     {GeoJsonLayers}
                     <MapConsumer>
