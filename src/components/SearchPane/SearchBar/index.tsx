@@ -9,7 +9,7 @@ interface PageProps {
     setInputVal: (inputVal: string) => void;
     isSearching: boolean;
     setIsSearching: (isSearching: boolean) => void;
-    featuredEntities: string[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     selectedLocation: void;
     openMenu: Function;
 }

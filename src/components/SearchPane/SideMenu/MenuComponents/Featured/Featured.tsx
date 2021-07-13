@@ -4,7 +4,7 @@ import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
 
 interface PageProps {
-    featuredEntities: string[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     openMenu: Function
 }
 

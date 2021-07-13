@@ -5,7 +5,7 @@ import { RootState } from '../../../redux/reducers';
 import EntityDetails from './MenuComponents/EntityDetails/EntityDetails';
 
 interface PageProps {
-    featuredEntities: any[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     isOpen: boolean;
     selectedLocation: any;
     isSearching: boolean;

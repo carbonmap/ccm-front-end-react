@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonIcon } from '@ionic/react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
 
 interface PageProps {
-    featuredEntities: string[]
+    featuredEntities: {id: string, name: string, emissions: string[]}[]
+    slug: string
 }
 
 const SearchPane: React.FC<PageProps> = (props) => {
@@ -32,6 +33,16 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const closeMenu = () => {
         setIsOpen(false); 
     };
+
+    useEffect(() => {
+        if(props.slug) {
+            // console.log(props.slug)
+            const entityID = props.featuredEntities.find((entity) => entity.id === props.slug)
+            // for(let i = 0; i < props.featuredEntities.length; i++) {
+                
+            // }
+        }
+    }, [props.slug])
 
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>

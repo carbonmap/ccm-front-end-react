@@ -5,11 +5,9 @@ import {geoJSON, Icon} from 'leaflet';
 import GeojsonLayer from "./GeojsonLayer";
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
-
 interface State {
     markers: Array<Array<number>>,
     geoData: JSX.Element[],
-
 }
 
 interface GeoDataObject {
@@ -18,7 +16,7 @@ interface GeoDataObject {
 }
 
 
-class MainMap extends Component <{}, State> {
+class MainMap extends Component <{slug: string}, State> {
     state = {
         markers: [[52.20, 0.12]],
         geoData: [],
@@ -62,6 +60,8 @@ class MainMap extends Component <{}, State> {
             GeoJsonLayers = this.state.geoData;
 
         }
+
+        const slug = this.props.slug;
 
         return (
             <div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GeoJSON, FeatureGroup, Popup } from 'react-leaflet';
 
-import './geojsonlayer.css';
+// import './geojsonlayer.css';
 
 
 interface GeojsonDataProps {
