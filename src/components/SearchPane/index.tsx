@@ -3,7 +3,7 @@ import { IonContent, IonIcon } from '@ionic/react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
 
 interface PageProps {
@@ -16,6 +16,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const [inputVal, setInputVal] = useState<string>('');
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const dispatch = useDispatch();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
@@ -36,11 +37,11 @@ const SearchPane: React.FC<PageProps> = (props) => {
 
     useEffect(() => {
         if(props.slug) {
-            // console.log(props.slug)
-            const entityID = props.featuredEntities.find((entity) => entity.id === props.slug)
-            // for(let i = 0; i < props.featuredEntities.length; i++) {
-                
-            // }
+            const matchedEntity = props.featuredEntities.find((entity) => entity.id === props.slug)
+            if(matchedEntity != undefined) {
+                openMenu();
+                dispatch({ type: 'SET_LOCATION', payload: matchedEntity });
+            }
         }
     }, [props.slug])
 
