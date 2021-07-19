@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import { MapContainer, TileLayer, Marker, Popup, MapConsumer, Polygon, FeatureGroup } from 'react-leaflet';
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
-import {geoJSON, Icon} from 'leaflet';
-import GeojsonLayer from "./GeojsonLayer";
+import React, { useState, useEffect} from 'react';
+import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 
@@ -17,46 +15,26 @@ interface GeoDataObject {
     features: Array<any>
 }
 
+const MainMap: React.FC = () => {
+    const [markers, setMarkers] = useState([[52.2, 0.12]]);
+    const [geoData, setGeoData] = useState([]);
+    const [visibleEntity, setVisibleEntity] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
-class MainMap extends Component <{slug:string}, State> {
-    state = {
-        markers: [[52.20, 0.12]],
-        geoData: [],
-        visibleEntity: "net.theleys"
-    }
+    let location = useLocation();
+    let history = useHistory();
 
-    addMarker = (e: any) => {
-        const { markers } = this.state;
-        markers.push(e.latlng);
-        this.setState({markers});
-    }
+    const handleGeoDataCoords = async() => {
+        const defaultGeoData: any = await fetchGeoData();
 
-    addGeoJsonLayers = (defaultGeoData: any) => {
-        let tempGeoData: JSX.Element[] = this.state.geoData;
-        defaultGeoData.map((geoDataContent: GeoDataObject, item: number) => {
-            const geoData_ = geoDataContent["features"][0];
-            const _id = `geo_json_layer_id_${item}`;
-            tempGeoData.push(
-                <GeojsonLayer
-                    key={_id}
-                    geoData={geoData_}
-                />
-            );
-        })
-        this.setState({geoData: tempGeoData})
-        console.log("Geo Data in the state");
-        // console.log(this.state.geoData);
-    }
-
-    handleGeoDataCoords = (defaultGeoData:any) => {
         let newGeoData = defaultGeoData;
         for(let i = 0; i < newGeoData.length; i++) {
             if(newGeoData[i].features[0].geometry.type === "MultiPolygon") {
 
                 const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
                 for(let i = 0; i < multiPolygonArr.length; i++) {
-                    multiPolygonArr[i][0].map((entity:string[]) => {
-                        return entity.reverse();
+                    multiPolygonArr[i][0].map((polyCoords:string[]) => {
+                        return polyCoords.reverse();
                     });
                 }; 
             } else if (newGeoData[i].features[0].geometry.type === "Polygon") {
@@ -67,77 +45,70 @@ class MainMap extends Component <{slug:string}, State> {
         };
 
         console.log(newGeoData)
-        this.setState({
-            geoData: newGeoData
-        });
+        setGeoData(newGeoData);
+        setIsLoading(false);
     };
 
-    async componentDidMount() {
+    useEffect(() => {
+            if(geoData.length > 0) {
+                const matchedEntity:any = geoData.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
+                if(matchedEntity != undefined) {
+                    setVisibleEntity(matchedEntity.features[0].properties.id);
+                };  
+            }
+    },[location,geoData]);
+
+    useEffect(() => {
         console.log('did mount');
-        const defaultGeoData: any = await fetchGeoData();
-        // console.log(defaultGeoData)
-        this.handleGeoDataCoords(defaultGeoData);
-        // this.addGeoJsonLayers(defaultGeoData);
-    }
-
-    render() {
-        console.log("Rendering map");
-        let GeoJsonLayers = null;
-        if (this.state.geoData.length > 0) {
-            // console.log(this.state.geoData);
-            GeoJsonLayers = this.state.geoData;
-
+        if(isLoading) {
+            handleGeoDataCoords();
         }
+    }, [])
 
         return (
-            <div>
-                <MapContainer
-                    center={[52.20, 0.12]}
-                    zoom={13}
-                    maxZoom={18}
-                    minZoom={5}
-                    style={{height: '1000px', width: '100%'}}
-
-                >
-                    {this.state.geoData.length > 0 ?
-                        this.state.geoData.map((entity:any) => {
-                            const features = entity.features[0];
-                            const coords = features.geometry.coordinates;
-                            const id = features.properties.id;
-                            return (
-                                <FeatureGroup
-                                    eventHandlers={{
-                                        click: (event) => {
-                                            this.setState({
-                                                visibleEntity: id
-                                            })
-                                        // this.changeLayerColor(event)
-                                    }}}
+            <MapContainer
+                center={[52.20, 0.12]}
+                zoom={13}
+                maxZoom={18}
+                minZoom={5}
+                style={{height: '1000px', width: '100%'}}
+            >
+                {geoData.length > 0 ?
+                    geoData.map((entity:any) => {
+                        const features = entity.features[0];
+                        const coords = features.geometry.coordinates;
+                        const id = features.properties.id;
+                        return (
+                            <FeatureGroup
+                                eventHandlers={{
+                                    click: (event) => {
+                                        setVisibleEntity(id);
+                                        history.push(`/${id}`)
+                                }}}
+                            >
+                                <Polygon 
+                                    pathOptions={{
+                                        color: visibleEntity === id ? '#008468' : '#00eab8',
+                                        fillOpacity: 0.4,
+                                    }}
+                                    positions={coords}
                                 >
-                                    <Polygon 
-                                        pathOptions={{
-                                            color: this.state.visibleEntity === id ? '#008468' : '#00eab8',
-                                            fillOpacity: 0.4,
-                                        }}
-                                        positions={coords}
-                                    >
-                                        <Popup>{features.properties.id}</Popup>
-                                    </Polygon>
-                                </FeatureGroup>
-                            )
-                        })
-                    :
-                        null
-                    }
-                    <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-                    />
-
-                </MapContainer>
-            </div>
+                                    <Popup>
+                                            {features.properties.id}
+                                    </Popup>
+                                </Polygon>
+                            </FeatureGroup>
+                        )
+                    })
+                :
+                    null
+                }
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                />
+            </MapContainer>
         );
-    };
 };
 
 export default MainMap;

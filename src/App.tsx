@@ -53,9 +53,7 @@ const App: React.FC = () => {
     const { id } = props.match.params;
     return (
       <>
-        <MainMap
-          slug={id}  
-        />
+        <MainMap/>
         <SearchPane 
           featuredEntities={featuredEntities}
           slug={id}
@@ -80,7 +78,7 @@ const App: React.FC = () => {
 
               <Switch>
                 <Route path="/" exact component={Map} />
-                <Route path="/:id" exact component={Map} />
+                <Route path="/:id" component={Map} />
               </Switch>
             </>
         } 
