@@ -5,6 +5,7 @@ import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
+import { useHistory } from 'react-router';
 
 interface PageProps {
     featuredEntities: {id: string, name: string, emissions: string[]}[]
@@ -16,6 +17,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const [inputVal, setInputVal] = useState<string>('');
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    let history = useHistory();
     const dispatch = useDispatch();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
@@ -33,6 +35,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
     };
     const closeMenu = () => {
         setIsOpen(false); 
+        history.replace("/")
     };
 
     useEffect(() => {

@@ -47,8 +47,6 @@ const App: React.FC = () => {
     }
   },[]);
 
-  console.log(featuredEntities)
-
   const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const { id } = props.match.params;
     return (

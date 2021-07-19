@@ -44,22 +44,24 @@ const MainMap: React.FC = () => {
             }
         };
 
-        console.log(newGeoData)
         setGeoData(newGeoData);
         setIsLoading(false);
     };
 
     useEffect(() => {
+        if(location.pathname === "/") {
+            setVisibleEntity("");
+        } else {
             if(geoData.length > 0) {
                 const matchedEntity:any = geoData.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
                 if(matchedEntity != undefined) {
                     setVisibleEntity(matchedEntity.features[0].properties.id);
                 };  
-            }
+            };
+        };
     },[location,geoData]);
 
     useEffect(() => {
-        console.log('did mount');
         if(isLoading) {
             handleGeoDataCoords();
         }

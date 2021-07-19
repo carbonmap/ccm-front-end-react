@@ -1,9 +1,17 @@
-@media only screen and (max-width: 768px) {
-  .side-menu {
-    /* height: 100%; */
-    /* margin-top: 40vh; */
-    /* height: 80%; */
-    /* top: 0; */
-    /* --padding-top: 10%; */
-  }
+.close-menu-icon {
+  background-color: #ddd;
+  /* padding: 14px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+  /* right: 24vw; */
+  /* top: 0; */
+  cursor: pointer;
+  position: absolute;
+  z-index: 3000;
+  width: 2vw;
+  height: 2vw;
+  left: -2vw;
+  top: 4vh;
 }
