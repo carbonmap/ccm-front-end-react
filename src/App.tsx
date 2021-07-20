@@ -5,7 +5,7 @@ import Toolbar from './components/toolbar';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
 // import MainMap from "./components/MainMap/MainMap";
-import Map from "./components/MainMap/MapFunc";
+import MapFunc from "./components/MainMap/MapFunc";
 
 import Spinner from './components/UI/spinner/spinner';
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
@@ -30,10 +30,13 @@ const App: React.FC = () => {
   const [featuredEntities, setFeaturedEntities] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetchFeatured(setFeaturedEntities, setIsLoading);
+
+
 
     handleWindowSizeChange(dispatch);
     
@@ -55,7 +58,7 @@ const App: React.FC = () => {
             <IonHeader>
               <Toolbar />
             </IonHeader>
-            <Map  />
+            <MapFunc  />
             <SearchPane 
               featuredEntities={featuredEntities}
             />

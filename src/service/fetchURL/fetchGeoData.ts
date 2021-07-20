@@ -1,4 +1,4 @@
-const fetchGeoData = async () => {
+export const fetchGeoData = (setGeojson: any) => {
     let geoData : Array<any> = [];
     return fetch("https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json")
         .then((response) => {
@@ -26,12 +26,10 @@ const fetchGeoData = async () => {
                     })
                     .then(data => {
                         geoData.push(data);
+                        setGeojson(geoData)
                     })
             }))
-            return geoData;
-        })
-        .then((response) => {
-            return geoData;
+
         })
         .catch((error) => {
             console.error(error)

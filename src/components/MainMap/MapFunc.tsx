@@ -1,39 +1,31 @@
-import React, { useState, useEffect } from "react";
-import L, { LatLngTuple } from "leaflet";
-import fetchGeoData from "../../service/fetchURL/fetchGeoData";
+import React, { useState, useEffect, useRef } from "react";
+import L, {LatLngTuple, TileLayer, Map} from "leaflet";
+import fetchGeoData  from "../../service/fetchURL/fetchGeoData";
+
+// interface cityDataProps {
+//     cityData: Array<any>
+// }
+
+const MapFunc: React.FC = () => {
+
+    const [data, setData] = useState<string[]>([]);
 
 
-const useFetch = () => {
-    const [data, setData] = useState(null);
 
-    // const fetchData = async () => {
-    //     const dataCollection = await fetchGeoData();
-    //     setData(dataCollection);
-    // };
+    // Create the map ref:
+    const mapRef = useRef<any>();
 
-
-    // empty array as second argument equivalent to componentDidMount
-    useEffect(() => {
-        fetchGeoData();
-
-        const dataCollection = fetchGeoData();
-            setData(data);
+    // Create the tile ref:
+    const tileRef = useRef<any>();
 
 
-    }, []);
+    const layerRef = useRef<any>()
 
-    return data;
-};
-
-
-const Map = () => {
-
+    
     // Create our map tile layer:
-    const MAP_TILE = L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
+    tileRef.current = L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
 
-    // Define the styles that are to be passed to the map instance:
+    // Define the styles
     const mapStyles = {
         overflow: "hidden",
         width: "100%",
@@ -44,18 +36,64 @@ const Map = () => {
     const mapParams = {
         center: __center,
         zoom: 13,
-        // zoomControl: false,
+        zoomControl: false,
         // maxBounds: L.latLngBounds(L.latLng(-150, -240), L.latLng(150, 240)),
-        layers: [MAP_TILE]
+        closePopupOnClick: false,
+        layers: [tileRef.current]
     };
 
-    // This useEffect hook runs when the component is first mounted,
-    // similar to componentDidMount() lifecycle method of class-based
-    // components:
+
+    // Map creation
     useEffect(() => {
-        useFetch();
-        const map = L.map("map", mapParams);
+
+        // fetchGeoData(setData);
+
+        mapRef.current = L.map("map", mapParams);
+
+
     }, []);
+
+    // Control
+    useEffect(() => {
+
+        mapRef.current.on("zoomstart", () => {
+            console.log("ZOOM STARTED");
+        });
+
+
+        // Pass a baseLayers object to the layer control:
+        L.control.layers({
+            OpenStreetMap: tileRef.current
+
+        }).addTo(mapRef.current); // Add the control to our map instance
+
+
+        // Create the zoom control:
+        L.control.zoom({
+            position: "topright"
+        }).addTo(mapRef.current);
+
+    }, [])
+
+    // Create the layerGroup for the circles layer:
+    useEffect(() => {
+
+        layerRef.current = L.layerGroup().addTo(mapRef.current);
+    }, [])
+
+    useEffect(() => {
+        // First, clear any layers associated with the layerGroup:
+        layerRef.current.clearLayers()
+
+        // Iterate cityData from props:
+        // Array.from(props.cityData).forEach(city => {
+        //     // Create the Leaflet Circle and add to layerGroup:
+        //     L.circle(city.latLng, { radius: 100000 }).addTo(
+        //         layerRef.current
+        //     );
+        // });
+        // Include cityData in our dependency to watch for changes to data:
+    }, [])
 
     return (
         <div>
@@ -64,4 +102,4 @@ const Map = () => {
     )
 }
 
-export default Map
+export default MapFunc;
