@@ -37,7 +37,7 @@ const MainMap: React.FC = () => {
                         return polyCoords.reverse();
                     });
                 }; 
-            } else if (newGeoData[i].features[0].geometry.type === "Polygon") {
+            } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
                 newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
                    return entity.reverse();
                 });
