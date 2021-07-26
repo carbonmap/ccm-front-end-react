@@ -1,11 +1,10 @@
 import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup, Marker } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 
 interface State {
-    markers: Array<Array<number>>,
     geoData: JSX.Element[],
     visibleEntity: string
 }
@@ -16,7 +15,6 @@ interface GeoDataObject {
 }
 
 const MainMap: React.FC = () => {
-    const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +36,7 @@ const MainMap: React.FC = () => {
                             return polyCoords.reverse();
                         });
                     }; 
-                } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                } else if (newGeoData[i].features[0].geometry.type === "Polygon") {
                     newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
                        return entity.reverse();
                     });
@@ -69,8 +67,8 @@ const MainMap: React.FC = () => {
     useEffect(() => {
         if(isLoading) {
             handleGeoDataCoords();
-        }
-    }, [])
+        };
+    }, []);
 
         return (
             <MapContainer
@@ -81,31 +79,42 @@ const MainMap: React.FC = () => {
                 style={{height: '1000px', width: '100%'}}
             >
                 {geoData.length > 0 ?
-                    geoData.map((entity:any) => {
+                    geoData.map((entity:any, index) => {
                         const features = entity.features[0];
-                        const coords = features.geometry.coordinates;
+                        const geometry = features.geometry;
                         const id = features.properties.id;
-                        return (
-                            <FeatureGroup
-                                eventHandlers={{
-                                    click: (event) => {
-                                        setVisibleEntity(id);
-                                        history.push(`/${id}`)
-                                }}}
-                            >
-                                <Polygon 
-                                    pathOptions={{
-                                        color: visibleEntity === id ? '#008468' : '#00eab8',
-                                        fillOpacity: 0.4,
-                                    }}
-                                    positions={coords}
+                        if(geometry.type === "Point") {
+                            return (
+                                <Marker position={geometry.coordinates}>
+                                    <Popup>{features.properties.id}</Popup>
+                                </Marker>
+                            );
+                        } else {
+
+                            return (
+                                <FeatureGroup
+                                    eventHandlers={{
+                                        click: (event) => {
+                                            setVisibleEntity(id);
+                                            history.push(`/${id}`)
+                                            console.log(entity)
+                                    }}}
+                                    key={index}
                                 >
-                                    <Popup>
-                                            {features.properties.id}
-                                    </Popup>
-                                </Polygon>
-                            </FeatureGroup>
-                        )
+                                    <Polygon 
+                                        pathOptions={{
+                                            color: visibleEntity === id ? '#008468' : '#00eab8',
+                                            fillOpacity: 0.4,
+                                        }}
+                                        positions={geometry.coordinates}
+                                    >
+                                        <Popup>
+                                                {features.properties.id}
+                                        </Popup>
+                                    </Polygon>
+                                </FeatureGroup>
+                            );
+                        };
                     })
                 :
                     null
