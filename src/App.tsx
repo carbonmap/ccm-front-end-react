@@ -23,9 +23,15 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/app.css';
+import { 
+  BrowserRouter as Router, 
+  Switch, 
+  Route, 
+  RouteComponentProps
+} from 'react-router-dom';
 
 const App: React.FC = () => {
-  const [featuredEntities, setFeaturedEntities] = useState<string[]>([]);
+  const [featuredEntities, setFeaturedEntities] = useState<{id: string, name: string, emissions: string[]}[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
@@ -41,25 +47,41 @@ const App: React.FC = () => {
     }
   },[]);
 
+  const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
+    const { id } = props.match.params;
+    return (
+      <>
+        <MainMap/>
+        <SearchPane 
+          featuredEntities={featuredEntities}
+          slug={id}
+        />
+      </>
+    );
+  };
+
   return (
-    <IonApp>
-      {
-        isLoading ? 
-          <div className="spinner-container">
-            <Spinner />
-          </div>
-        : 
-          <>
-            <IonHeader>
-              <Toolbar />
-            </IonHeader>
-            <MainMap  />
-            <SearchPane 
-              featuredEntities={featuredEntities}
-            />
-          </>
-      } 
-    </IonApp>
+    <Router>
+      <IonApp>
+        {
+          isLoading ? 
+            <div className="spinner-container">
+              <Spinner />
+            </div>
+          : 
+            <>
+              <IonHeader>
+                <Toolbar />
+              </IonHeader>
+
+              <Switch>
+                <Route path="/" exact component={Map} />
+                <Route path="/:id" component={Map} />
+              </Switch>
+            </>
+        } 
+      </IonApp>
+    </Router>
   );
 };
 

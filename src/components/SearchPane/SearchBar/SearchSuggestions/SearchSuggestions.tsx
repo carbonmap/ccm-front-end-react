@@ -2,7 +2,7 @@ import { IonItem } from '@ionic/react';
 import React from 'react';
 
 interface PageProps {
-    featuredEntities: string[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
 }
 

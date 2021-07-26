@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonIcon } from '@ionic/react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
+import { useHistory } from 'react-router';
 
 interface PageProps {
-    featuredEntities: string[]
+    featuredEntities: {id: string, name: string, emissions: string[]}[]
+    slug: string
 }
 
 const SearchPane: React.FC<PageProps> = (props) => {
@@ -15,6 +17,8 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const [inputVal, setInputVal] = useState<string>('');
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    let history = useHistory();
+    const dispatch = useDispatch();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
@@ -31,7 +35,18 @@ const SearchPane: React.FC<PageProps> = (props) => {
     };
     const closeMenu = () => {
         setIsOpen(false); 
+        history.replace("/")
     };
+
+    useEffect(() => {
+        if(props.slug) {
+            const matchedEntity = props.featuredEntities.find((entity) => entity.id === props.slug)
+            if(matchedEntity != undefined) {
+                openMenu();
+                dispatch({ type: 'SET_LOCATION', payload: matchedEntity });
+            }
+        }
+    }, [props.slug])
 
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
