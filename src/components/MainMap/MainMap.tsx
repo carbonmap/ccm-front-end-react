@@ -27,25 +27,30 @@ const MainMap: React.FC = () => {
     const handleGeoDataCoords = async() => {
         const defaultGeoData: any = await fetchGeoData();
 
-        let newGeoData = defaultGeoData;
-        for(let i = 0; i < newGeoData.length; i++) {
-            if(newGeoData[i].features[0].geometry.type === "MultiPolygon") {
-
-                const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
-                for(let i = 0; i < multiPolygonArr.length; i++) {
-                    multiPolygonArr[i][0].map((polyCoords:string[]) => {
-                        return polyCoords.reverse();
+        try {
+            let newGeoData = defaultGeoData;
+            for(let i = 0; i < newGeoData.length; i++) {
+                if(newGeoData[i].features[0].geometry.type === "MultiPolygon") {
+    
+                    const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
+                    for(let i = 0; i < multiPolygonArr.length; i++) {
+                        multiPolygonArr[i][0].map((polyCoords:string[]) => {
+                            return polyCoords.reverse();
+                        });
+                    }; 
+                } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                    newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
+                       return entity.reverse();
                     });
-                }; 
-            } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
-                newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
-                   return entity.reverse();
-                });
-            }
-        };
-
-        setGeoData(newGeoData);
-        setIsLoading(false);
+                }
+            };
+    
+            setGeoData(newGeoData);
+            setIsLoading(false);
+        } catch (error) {
+            alert("Sorry, something went wrong");
+            console.log(error);
+        }
     };
 
     useEffect(() => {
