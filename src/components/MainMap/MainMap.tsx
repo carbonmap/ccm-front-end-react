@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
+import Message from "../Message/Message";
 
 
 interface State {
@@ -19,7 +20,8 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState([])
 
     let location = useLocation();
     let history = useHistory();
@@ -64,6 +66,8 @@ const MainMap: React.FC = () => {
     useEffect(() => {
         if(isLoading) {
             handleGeoDataCoords();
+        } else {
+            throw new Error('No entities to dislay')
         }
     }, [])
 
