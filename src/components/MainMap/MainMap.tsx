@@ -1,6 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '../../redux/store';
+
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 import Message from "../Message/Message";
 
@@ -20,11 +23,16 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+
 
     let location = useLocation();
     let history = useHistory();
+
+
+    const isDialogOpen = useSelector( (state: RootState) => state.errorReducer.isDialogOpen)
+
+    const error = useSelector(state => state.errorReducer.error);
 
     const handleGeoDataCoords = async() => {
         const defaultGeoData: any = await fetchGeoData();

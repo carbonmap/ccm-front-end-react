@@ -34,3 +34,20 @@ export const selectLocation = (location: object) => {
         payload: location
     }
 }
+
+export function setError(error: string){
+
+    return {
+        type: Constants.SET_ERROR,
+        error: error
+    }
+
+}
+
+export function hideError(){
+
+    return {
+        type: Constants.HIDE_ERROR
+    }
+
+}

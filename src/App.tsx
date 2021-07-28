@@ -28,8 +28,7 @@ import {
   BrowserRouter as Router, 
   Switch, 
   Route, 
-  RouteComponentProps,
-    Redirect,
+  RouteComponentProps
 } from 'react-router-dom';
 
 const App: React.FC = () => {
@@ -77,12 +76,13 @@ const App: React.FC = () => {
               </IonHeader>
 
               <Switch>
+
                 <Route path="/" exact component={Map} />
                 <Route path="/:id" component={Map} />
                   {/*<Route path="/404" exact*/}
                   {/*       component={NotFoundPage} />*/}
                   {/*<Redirect to="/404" />*/}
-                  <Route component={NotFoundPage} />
+                  <Route path="*" component={NotFoundPage} />
               </Switch>
             </>
         } 
