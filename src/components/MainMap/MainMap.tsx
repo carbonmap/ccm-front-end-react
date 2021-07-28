@@ -2,10 +2,11 @@ import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import type { RootState, AppDispatch } from '../../redux/store';
+import type { RootState } from '../../redux/store';
 
 import fetchGeoData from "../../service/fetchURL/fetchGeoData";
-import Message from "../Message/Message";
+
+import AlertMessage from "../Message/AlertMessage";
 
 
 interface State {
@@ -23,16 +24,16 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     let location = useLocation();
     let history = useHistory();
 
+    //
+    // const isError = useSelector( (state: RootState) => state.isError);
+    // const { error, isOpen } = isError;
 
-    const isDialogOpen = useSelector( (state: RootState) => state.errorReducer.isDialogOpen)
-
-    const error = useSelector(state => state.errorReducer.error);
 
     const handleGeoDataCoords = async() => {
         const defaultGeoData: any = await fetchGeoData();
@@ -71,11 +72,11 @@ const MainMap: React.FC = () => {
         };
     },[location,geoData]);
 
+
     useEffect(() => {
         if(isLoading) {
+            console.log('dhd')
             handleGeoDataCoords();
-        } else {
-            throw new Error('No entities to dislay')
         }
     }, [])
 
@@ -98,9 +99,9 @@ const MainMap: React.FC = () => {
                                     click: (event) => {
                                         setVisibleEntity(id);
                                         history.push(`/${id}`)
-                                }}}
+                                    }}}
                             >
-                                <Polygon 
+                                <Polygon
                                     pathOptions={{
                                         color: visibleEntity === id ? '#008468' : '#00eab8',
                                         fillOpacity: 0.4,
@@ -108,13 +109,13 @@ const MainMap: React.FC = () => {
                                     positions={coords}
                                 >
                                     <Popup>
-                                            {features.properties.id}
+                                        {features.properties.id}
                                     </Popup>
                                 </Polygon>
                             </FeatureGroup>
                         )
                     })
-                :
+                    :
                     null
                 }
                 <TileLayer
@@ -122,7 +123,7 @@ const MainMap: React.FC = () => {
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 />
             </MapContainer>
-        );
-};
+        )
+}
 
 export default MainMap;
