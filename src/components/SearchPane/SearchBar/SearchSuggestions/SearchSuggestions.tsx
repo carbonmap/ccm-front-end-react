@@ -2,7 +2,7 @@ import { IonItem } from '@ionic/react';
 import React from 'react';
 
 interface PageProps {
-    featuredEntities: {id: string, name: string, emissions: string[]}[];
+    emissionsData: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
 }
 
@@ -21,7 +21,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         <div className="suggestion-container"
              style={ props.isSearching ? searchStyles : hiddenStyles }>
             {
-                props.featuredEntities.map((entity: any, index) => {
+                props.emissionsData.map((entity: any, index) => {
                     return (
                         <IonItem key={index}
                                  className="search-suggestion-el">{entity.name}</IonItem>

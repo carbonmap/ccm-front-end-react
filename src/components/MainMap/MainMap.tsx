@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import fetchGeoData from "../../service/fetchURL/fetchGeoData";
+import { fetchFeaturedGeoData } from "../../service/fetchURL/fetchGeoData";
+import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
 
 
 interface State {
@@ -15,9 +16,8 @@ interface GeoDataObject {
     features: Array<any>
 }
 
-const MainMap: React.FC = () => {
-    const [markers, setMarkers] = useState([[52.2, 0.12]]);
-    const [geoData, setGeoData] = useState([]);
+const MainMap: React.FC<{geoData:JSX.Element[]}> = (props) => {
+    const [geoDataConfig, setGeoDataConfig] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,12 +25,12 @@ const MainMap: React.FC = () => {
     let history = useHistory();
 
     const handleGeoDataCoords = async() => {
-        const defaultGeoData: any = await fetchGeoData();
-
         try {
-            let newGeoData = defaultGeoData;
+            let newGeoData:any = props.geoData;
+            
             for(let i = 0; i < newGeoData.length; i++) {
-                if(newGeoData[i].features[0].geometry.type === "MultiPolygon") {
+                const geoJsonType = newGeoData[i].features[0].geometry.type
+                if(geoJsonType === "MultiPolygon") {
     
                     const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
                     for(let i = 0; i < multiPolygonArr.length; i++) {
@@ -38,14 +38,14 @@ const MainMap: React.FC = () => {
                             return polyCoords.reverse();
                         });
                     }; 
-                } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                } else if (geoJsonType === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
                     newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
                        return entity.reverse();
                     });
                 }
             };
-    
-            setGeoData(newGeoData);
+
+            setGeoDataConfig(newGeoData);
             setIsLoading(false);
         } catch (error) {
             alert("Sorry, something went wrong");
@@ -57,14 +57,14 @@ const MainMap: React.FC = () => {
         if(location.pathname === "/") {
             setVisibleEntity("");
         } else {
-            if(geoData.length > 0) {
-                const matchedEntity:any = geoData.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
+            if(geoDataConfig.length > 0) {
+                const matchedEntity:any = geoDataConfig.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
                 if(matchedEntity != undefined) {
                     setVisibleEntity(matchedEntity.features[0].properties.id);
                 };  
             };
         };
-    },[location,geoData]);
+    },[location,geoDataConfig]);
 
     useEffect(() => {
         if(isLoading) {
@@ -80,13 +80,14 @@ const MainMap: React.FC = () => {
                 minZoom={5}
                 style={{height: '1000px', width: '100%'}}
             >
-                {geoData.length > 0 ?
-                    geoData.map((entity:any) => {
+                {geoDataConfig.length > 0 ?
+                    geoDataConfig.map((entity:any, index) => {
                         const features = entity.features[0];
                         const coords = features.geometry.coordinates;
                         const id = features.properties.id;
                         return (
                             <FeatureGroup
+                                key={index}
                                 eventHandlers={{
                                     click: (event) => {
                                         setVisibleEntity(id);

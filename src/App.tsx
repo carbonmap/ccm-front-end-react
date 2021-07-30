@@ -27,17 +27,15 @@ import {
   BrowserRouter as Router, 
   Switch, 
   Route, 
-  RouteComponentProps
+  RouteComponentProps,
+  useLocation
 } from 'react-router-dom';
+import { fetchIndividualEntity } from './service/fetchURL/individualEntity/fetchIndividualEntity';
 
 const App: React.FC = () => {
-  const [featuredEntities, setFeaturedEntities] = useState<{id: string, name: string, emissions: string[]}[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchFeatured(setFeaturedEntities, setIsLoading);
 
     handleWindowSizeChange(dispatch);
     
@@ -48,14 +46,71 @@ const App: React.FC = () => {
   },[]);
 
   const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
-    const { id } = props.match.params;
+    const [featuredEntities, setFeaturedEntities] = useState<{id: string, name: string, emissions: string[]}[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [geoData, setGeoData] = useState<any[]>([]);
+    const [emissionsData, setEmissionsData] = useState<any[]>([]);
+
+    const location = useLocation();
+
+    const handleFeaturedLocations = async() => {
+      const featured = await fetchFeatured();
+      setFeaturedEntities(featured);
+
+      const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
+        return (
+          fetchIndividualEntity(`reporting_entities/${entityID}.json`)
+        )
+      }));
+
+      const featuredGeoData:any = await Promise.all(featured.map((entityID) => {
+        return (
+          fetchIndividualEntity(`geojson/${entityID}.geojson`)
+        )
+      }));
+
+      setEmissionsData(featuredEmissionsData);
+      setGeoData(featuredGeoData);
+
+      setIsLoading(false);
+    };
+
+    const handleIndividualEntity = async() => {
+      const entityID = location.pathname.substring(1,location.pathname.length);
+      const fetchedGeoData:any[] = await fetchIndividualEntity(`geojson/${entityID}.geojson`);
+      const fetchedEmissionsData:any[] = await fetchIndividualEntity(`reporting_entities/${entityID}.json`);
+
+      setGeoData([fetchedGeoData]);
+      setEmissionsData([fetchedEmissionsData]);
+
+      setIsLoading(false);
+
+    };
+
+    useEffect(() => {
+      if(location.pathname === "/") {
+        handleFeaturedLocations();
+      } else {
+        handleIndividualEntity();
+      };
+    }, []);
+  
     return (
       <>
-        <MainMap/>
-        <SearchPane 
-          featuredEntities={featuredEntities}
-          slug={id}
-        />
+        {isLoading ?
+          <div className="spinner-container">
+            <Spinner />
+          </div>
+        :
+          <>
+            <MainMap
+              geoData={geoData}
+            />
+            <SearchPane 
+              emissionsData={emissionsData}
+            />
+          </>
+        }
       </>
     );
   };
@@ -63,23 +118,16 @@ const App: React.FC = () => {
   return (
     <Router>
       <IonApp>
-        {
-          isLoading ? 
-            <div className="spinner-container">
-              <Spinner />
-            </div>
-          : 
-            <>
-              <IonHeader>
-                <Toolbar />
-              </IonHeader>
+        <>
+          <IonHeader>
+            <Toolbar />
+          </IonHeader>
 
-              <Switch>
-                <Route path="/" exact component={Map} />
-                <Route path="/:id" component={Map} />
-              </Switch>
-            </>
-        } 
+          <Switch>
+            <Route path="/" exact component={Map} />
+            <Route path="/:id" component={Map} />
+          </Switch>
+        </>
       </IonApp>
     </Router>
   );

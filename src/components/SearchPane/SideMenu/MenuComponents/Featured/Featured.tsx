@@ -4,7 +4,7 @@ import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
 
 interface PageProps {
-    featuredEntities: {id: string, name: string, emissions: string[]}[];
+    emissionsData: {id: string, name: string, emissions: string[]}[];
     openMenu: Function
 }
 
@@ -14,7 +14,7 @@ const Featured: React.FC<PageProps> = (props) => {
         <div className="featured-container">
             <IonText className="featured-title-main" color="primary">Featured</IonText>
             {
-                props.featuredEntities.map((entity: any, index) => {
+                props.emissionsData.map((entity: any, index) => {
                     return (
                         <FeaturedEl 
                             key={index}

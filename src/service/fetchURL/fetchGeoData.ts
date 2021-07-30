@@ -1,4 +1,4 @@
-const fetchGeoData = async () => {
+export const fetchFeaturedGeoData = async () => {
     let geoData : Array<any> = [];
     return fetch("https://raw.githubusercontent.com/carbonmap/ccm-front-end/master/dummy_data/reporting_entities/index.json")
         .then((response) => {
@@ -37,5 +37,3 @@ const fetchGeoData = async () => {
             console.error(error)
         });
 }
-
-export default fetchGeoData;

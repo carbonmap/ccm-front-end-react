@@ -9,7 +9,7 @@ interface PageProps {
     setInputVal: (inputVal: string) => void;
     isSearching: boolean;
     setIsSearching: (isSearching: boolean) => void;
-    featuredEntities: {id: string, name: string, emissions: string[]}[];
+    emissionsData: {id: string, name: string, emissions: string[]}[];
     selectedLocation: void;
     openMenu: Function;
 }
@@ -37,11 +37,11 @@ const SearchBar: React.FC<PageProps> = (props) => {
             {props.isSearching ?
             <>
                 <SearchSuggestions 
-                    featuredEntities={props.featuredEntities}
+                    emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
                 />  
                 <Featured 
-                    featuredEntities={props.featuredEntities}
+                    emissionsData={props.emissionsData}
                     openMenu={props.openMenu}
                 /> 
             </>
