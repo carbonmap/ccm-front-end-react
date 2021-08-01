@@ -24,13 +24,13 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     let location = useLocation();
     let history = useHistory();
 
-    //
+
     // const isError = useSelector( (state: RootState) => state.isError);
     // const { error, isOpen } = isError;
 
@@ -75,9 +75,8 @@ const MainMap: React.FC = () => {
 
     useEffect(() => {
         if(isLoading) {
-            console.log('dhd')
             handleGeoDataCoords();
-        }
+        } 
     }, [])
 
         return (
@@ -88,7 +87,10 @@ const MainMap: React.FC = () => {
                 minZoom={5}
                 style={{height: '1000px', width: '100%'}}
             >
-                {geoData.length > 0 ?
+
+
+                {
+                    geoData.length > 0 ?
                     geoData.map((entity:any) => {
                         const features = entity.features[0];
                         const coords = features.geometry.coordinates;
@@ -109,15 +111,16 @@ const MainMap: React.FC = () => {
                                     positions={coords}
                                 >
                                     <Popup>
+
                                         {features.properties.id}
                                     </Popup>
                                 </Polygon>
                             </FeatureGroup>
                         )
                     })
-                    :
-                    null
-                }
+                    : <AlertMessage >{'Locations not found'}</AlertMessage>
+                    }
+
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

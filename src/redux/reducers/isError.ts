@@ -2,11 +2,17 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import {  HIDE_ERROR,SET_ERROR } from '../../constants/actionTypes'
 
 
-const errorReducer = (state= {error: null, isOpen: false}, action: PayloadAction) => {
+const initState = {
+    error: null,
+    isOpen: false
+};
+
+const errorReducer = (state= initState, action: PayloadAction) => {
+
     switch(action.type) {
         case SET_ERROR:
             return {
-                error: Error,
+                error: action.payload,
                 isOpen: true
             };
         case HIDE_ERROR:

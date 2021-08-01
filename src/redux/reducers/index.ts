@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
     isLoading: loadingReducer,
     menuOpen: menuReducer,
     selectedLocation: locationReducer,
-    error: errorReducer
+    isError: errorReducer
 
 });
 

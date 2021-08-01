@@ -35,11 +35,11 @@ export const selectLocation = (location: object) => {
     }
 }
 
-export function setError(error: string){
+export function setError(error: any){
 
     return {
         type: Constants.SET_ERROR,
-        error: error
+        payload: error
     }
 
 }

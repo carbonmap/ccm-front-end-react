@@ -6,7 +6,7 @@ import { handleWindowSizeChange } from './service/general/checkScreenSize/checkS
 import SearchPane from './components/SearchPane';
 import MainMap from "./components/MainMap/MainMap";
 import Spinner from './components/UI/spinner/spinner';
-import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -76,13 +76,8 @@ const App: React.FC = () => {
               </IonHeader>
 
               <Switch>
-
                 <Route path="/" exact component={Map} />
                 <Route path="/:id" component={Map} />
-                  {/*<Route path="/404" exact*/}
-                  {/*       component={NotFoundPage} />*/}
-                  {/*<Redirect to="/404" />*/}
-                  <Route path="*" component={NotFoundPage} />
               </Switch>
             </>
         } 
