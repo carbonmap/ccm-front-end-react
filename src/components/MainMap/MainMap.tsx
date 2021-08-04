@@ -24,7 +24,7 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     let location = useLocation();
@@ -38,26 +38,31 @@ const MainMap: React.FC = () => {
     const handleGeoDataCoords = async() => {
         const defaultGeoData: any = await fetchGeoData();
 
-        let newGeoData = defaultGeoData;
-        for(let i = 0; i < newGeoData.length; i++) {
-            if(newGeoData[i].features[0].geometry.type === "MultiPolygon") {
+        try {
+            let newGeoData = defaultGeoData;
+            for (let i = 0; i < newGeoData.length; i++) {
+                if (newGeoData[i].features[0].geometry.type === "MultiPolygon") {
 
-                const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
-                for(let i = 0; i < multiPolygonArr.length; i++) {
-                    multiPolygonArr[i][0].map((polyCoords:string[]) => {
-                        return polyCoords.reverse();
+                    const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
+                    for (let i = 0; i < multiPolygonArr.length; i++) {
+                        multiPolygonArr[i][0].map((polyCoords: string[]) => {
+                            return polyCoords.reverse();
+                        });
+                    }
+                    ;
+                } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                    newGeoData[i].features[0].geometry.coordinates[0].map((entity: string[]) => {
+                        return entity.reverse();
                     });
-                }; 
-            } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
-                newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
-                   return entity.reverse();
-                });
+                }
             }
-        };
 
-        setGeoData(newGeoData);
-        setIsLoading(false);
-    };
+            setGeoData(newGeoData);
+            setIsLoading(false);
+        } catch (error) {
+            throw new Error ('Location not found');
+        }
+    }
 
     useEffect(() => {
         if(location.pathname === "/") {
@@ -76,7 +81,9 @@ const MainMap: React.FC = () => {
     useEffect(() => {
         if(isLoading) {
             handleGeoDataCoords();
-        } 
+        } else {
+            throw new Error('fn')
+        }
     }, [])
 
         return (
@@ -118,7 +125,7 @@ const MainMap: React.FC = () => {
                             </FeatureGroup>
                         )
                     })
-                    : <AlertMessage >{'Locations not found'}</AlertMessage>
+                    : <AlertMessage>{'Location not found'}</AlertMessage>
                     }
 
                 <TileLayer

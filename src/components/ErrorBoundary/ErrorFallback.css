@@ -1,4 +1,7 @@
 .ErrorBoundary {
-    padding-top: 100px;
-    text-align: center;
+    /*padding-top: 100px;*/
+    --text-align: center;
+    --text-align: justify;
+    --backdrop-opacity: 0.2;
+    --background:'#009698';
 }
