@@ -1,7 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import {  HIDE_ERROR,SET_ERROR } from '../../constants/actionTypes'
 
-
 const initState = {
     error: null,
     isOpen: false

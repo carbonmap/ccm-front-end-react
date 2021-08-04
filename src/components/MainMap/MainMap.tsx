@@ -24,7 +24,7 @@ const MainMap: React.FC = () => {
     const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     let location = useLocation();
@@ -81,8 +81,6 @@ const MainMap: React.FC = () => {
     useEffect(() => {
         if(isLoading) {
             handleGeoDataCoords();
-        } else {
-            throw new Error('fn')
         }
     }, [])
 
@@ -126,7 +124,7 @@ const MainMap: React.FC = () => {
                         )
                     })
                     : <AlertMessage>{'Location not found'}</AlertMessage>
-                    }
+                }
 
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
