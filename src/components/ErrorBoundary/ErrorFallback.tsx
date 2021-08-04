@@ -18,6 +18,7 @@ const ErrorFallback: React.FC<IErrorBoundaryProps> = (props) => {
                 <IonHeader>
                     <Toolbar />
                 </IonHeader>
+
                 <MapContainer
                     center={[52.20, 0.12]}
                     zoom={13}
@@ -25,16 +26,16 @@ const ErrorFallback: React.FC<IErrorBoundaryProps> = (props) => {
                     minZoom={5}
                     style={{height: '1000px', width: '100%'}}
                 >
-                <IonContent>
+                    <IonContent>
+                        <IonAlert
+                            isOpen={true}
+                            onDidDismiss={() => {console.log("User notified about locations not found error")}}
+                            cssClass='my-custom-class'
+                            header={props.error.message}
+                            buttons={[{text: 'Try again',handler:() => {props.resetErrorBoundary()} }]}
+                        />
+                    </IonContent>
 
-                    <IonAlert
-                        isOpen={true}
-                        onDidDismiss={() => {console.log("User notified about locations not found error")}}
-                        cssClass='ErrorBoundaryAlert'
-                        header={props.error.message}
-                        buttons={[{text: 'Try again',handler:() => {props.resetErrorBoundary()} }]}
-                    />
-                </IonContent>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
@@ -42,16 +43,6 @@ const ErrorFallback: React.FC<IErrorBoundaryProps> = (props) => {
                 </MapContainer>
 
             </>
-        // <>
-            //     <IonHeader>
-            //         <Toolbar />
-            //     </IonHeader>
-            //     <div className="ErrorBoundary text-center">
-            //         <p color='danger'>{props.error.message}</p>
-            //         <h3>There is something wrong, we are working on it</h3>
-            //         <button  onClick={props.resetErrorBoundary} color="danger">Try again</button>
-            //     </div>
-            // </>
 
     )
 }
