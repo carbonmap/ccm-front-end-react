@@ -1,5 +1,6 @@
 import { IonContent, IonText } from '@ionic/react';
 import React from 'react';
+import { useMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +14,6 @@ interface PageProps {
 }
 
 const FeaturedLocationEl: React.FC<PageProps> = (props) => { 
-
     const dispatch = useDispatch();
 
     const selectEntity = () => {

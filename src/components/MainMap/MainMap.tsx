@@ -1,6 +1,7 @@
-import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { LatLng, LatLngExpression, LatLngTuple, map, polygon } from 'leaflet';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup, useMapEvent, useMap } from 'react-leaflet';
+import { Link, useHistory, useLocation,  } from 'react-router-dom';
 import { fetchFeaturedGeoData } from "../../service/fetchURL/fetchGeoData";
 import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
 
@@ -16,13 +17,38 @@ interface GeoDataObject {
     features: Array<any>
 }
 
-const MainMap: React.FC<{geoData:JSX.Element[]}> = (props) => {
+function AnimateMap({ geoData }:any) {
+    const geometry = geoData[0].features[0].geometry;
+    const coords = geometry.coordinates;
+
+    const location = useLocation();
+    const map = useMap();
+
+    const fitMapView = () => {
+        console.log(coords)
+        map.fitBounds(coords, { 
+            paddingBottomRight: [220,0], 
+            // maxZoom: 18, 
+            animate: true 
+        });
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            fitMapView();
+        }, 100);
+    }, [geoData]);
+  
+    return null;
+};
+
+const MainMap: React.FC<{geoData:any[]}> = (props) => {
     const [geoDataConfig, setGeoDataConfig] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
-    let location = useLocation();
-    let history = useHistory();
+    const location = useLocation();
+    const history = useHistory();
 
     const handleGeoDataCoords = async() => {
         try {
@@ -67,56 +93,61 @@ const MainMap: React.FC<{geoData:JSX.Element[]}> = (props) => {
     },[location,geoDataConfig]);
 
     useEffect(() => {
-        if(isLoading) {
+        // if(isLoading) {
             handleGeoDataCoords();
-        }
-    }, [])
+        // };
+        // console.log(props.geoData.length)
+    }, [props.geoData]);
 
-        return (
-            <MapContainer
-                center={[52.20, 0.12]}
-                zoom={13}
-                maxZoom={18}
-                minZoom={5}
-                style={{height: '1000px', width: '100%'}}
-            >
-                {geoDataConfig.length > 0 ?
-                    geoDataConfig.map((entity:any, index) => {
-                        const features = entity.features[0];
-                        const coords = features.geometry.coordinates;
-                        const id = features.properties.id;
-                        return (
-                            <FeatureGroup
-                                key={index}
-                                eventHandlers={{
-                                    click: (event) => {
-                                        setVisibleEntity(id);
-                                        history.push(`/${id}`)
-                                }}}
-                            >
-                                <Polygon 
-                                    pathOptions={{
-                                        color: visibleEntity === id ? '#008468' : '#00eab8',
-                                        fillOpacity: 0.4,
-                                    }}
-                                    positions={coords}
-                                >
-                                    <Popup>
-                                            {features.properties.id}
-                                    </Popup>
-                                </Polygon>
-                            </FeatureGroup>
-                        )
-                    })
-                :
-                    null
-                }
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-                />
-            </MapContainer>
-        );
+    return (
+        <MapContainer 
+            center={[52.20, 0.12]}
+            zoom={13}
+            maxZoom={18}
+            minZoom={5}
+            style={{height: '1000px', width: '100%'}}
+        >
+            {geoDataConfig.length > 0 ?
+                geoDataConfig.map((entity:any, index) => {
+                    const features = entity.features[0];
+                    const coords = features.geometry.coordinates;
+                    const id = features.properties.id;
+                    return (
+                        <Polygon 
+                            key={index}
+                            pathOptions={{
+                                color: visibleEntity === id ? '#008468' : '#00eab8',
+                                fillOpacity: 0.4,
+                            }}
+                            positions={coords}
+                            eventHandlers={{
+                                click: (event) => {
+                                    setVisibleEntity(id);
+                                    history.push(`/${id}`);
+                                }
+                            }}
+                        >
+                            <Popup>
+                                    {features.properties.id}
+                            </Popup>
+                        </Polygon>
+                    )
+                })
+            :
+                null
+            }
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            />
+            {/* <AnimateOnLoad geoData={props.geoData} /> */}
+            {props.geoData.length === 1 ?
+                <AnimateMap geoData={props.geoData} />
+            :
+                null
+            }
+        </MapContainer>
+    );
 };
 
 export default MainMap;

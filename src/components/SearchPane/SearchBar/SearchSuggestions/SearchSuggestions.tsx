@@ -3,6 +3,7 @@ import React from 'react';
 
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
 }
 
@@ -21,10 +22,12 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         <div className="suggestion-container"
              style={ props.isSearching ? searchStyles : hiddenStyles }>
             {
-                props.emissionsData.map((entity: any, index) => {
+                props.featuredEntities.map((entity: any, index) => {
                     return (
-                        <IonItem key={index}
-                                 className="search-suggestion-el">{entity.name}</IonItem>
+                        <IonItem 
+                            key={index}
+                            className="search-suggestion-el"
+                        >{entity.name}</IonItem>
                     )
                 })
             }

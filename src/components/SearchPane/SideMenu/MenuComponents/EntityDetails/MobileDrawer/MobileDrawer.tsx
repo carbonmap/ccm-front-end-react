@@ -5,11 +5,12 @@ import EntityDetails from '../EntityDetails';
 import { remove } from 'ionicons/icons';
 
 interface PageProps {
-    isOpen: boolean;
-    closeMenu: Function;
-    isSearching: boolean;
-    isMobile: boolean;
-    selectedLocation: any;
+  isOpen: boolean;
+  closeMenu: Function;
+  isSearching: boolean;
+  isMobile: boolean;
+  selectedLocation: any;
+  emissionsData: {id: string, name: string, emissions: string[]}[];
 }
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
@@ -91,10 +92,11 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
             </div>
               {props.selectedLocation ?
                   <EntityDetails 
-                      isOpen={props.isOpen}
-                      closeMenu={props.closeMenu}
-                      isSearching={props.isSearching}
-                      isMobile={props.isMobile}
+                    emissionsData={props.emissionsData}
+                    isOpen={props.isOpen}
+                    closeMenu={props.closeMenu}
+                    isSearching={props.isSearching}
+                    isMobile={props.isMobile}
                   />
               : 
                   null

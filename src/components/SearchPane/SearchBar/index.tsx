@@ -1,5 +1,6 @@
 import { IonIcon, IonSearchbar } from '@ionic/react';
 import React from 'react';
+import { useHistory } from 'react-router';
 import Featured from '../SideMenu/MenuComponents/Featured/Featured';
 import './searchBar.css';
 import SearchSuggestions from './SearchSuggestions/SearchSuggestions';
@@ -10,17 +11,24 @@ interface PageProps {
     isSearching: boolean;
     setIsSearching: (isSearching: boolean) => void;
     emissionsData: {id: string, name: string, emissions: string[]}[];
+    featuredEntities: {id: string, name: string, emissions: string[]}[];
     selectedLocation: void;
     openMenu: Function;
+    setIsOpen: (isOpen: boolean) => void;
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
+    const history = useHistory();
+
     const handleSearchSelect = () => {
         props.setIsSearching(true);
     };
 
     const handleMenuClose = () => {
         props.setIsSearching(false);
+        props.setIsOpen(false);
+
+        history.push("/")
     };
 
     return (
@@ -37,10 +45,12 @@ const SearchBar: React.FC<PageProps> = (props) => {
             {props.isSearching ?
             <>
                 <SearchSuggestions 
+                    featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
                 />  
                 <Featured 
+                    featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     openMenu={props.openMenu}
                 /> 

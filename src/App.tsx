@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IonApp, IonHeader } from '@ionic/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Toolbar from './components/toolbar';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
@@ -31,6 +31,7 @@ import {
   useLocation
 } from 'react-router-dom';
 import { fetchIndividualEntity } from './service/fetchURL/individualEntity/fetchIndividualEntity';
+import { RootState } from './redux/reducers';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -52,10 +53,11 @@ const App: React.FC = () => {
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
 
     const location = useLocation();
+    const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
-      setFeaturedEntities(featured);
+      // setFeaturedEntities(featured);
 
       const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
         return (
@@ -69,7 +71,7 @@ const App: React.FC = () => {
         )
       }));
 
-      setEmissionsData(featuredEmissionsData);
+      setFeaturedEntities(featuredEmissionsData);
       setGeoData(featuredGeoData);
 
       setIsLoading(false);
@@ -80,20 +82,43 @@ const App: React.FC = () => {
       const fetchedGeoData:any[] = await fetchIndividualEntity(`geojson/${entityID}.geojson`);
       const fetchedEmissionsData:any[] = await fetchIndividualEntity(`reporting_entities/${entityID}.json`);
 
+      const featured = await fetchFeatured();
+      
+      const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
+        return (
+          fetchIndividualEntity(`reporting_entities/${entityID}.json`)
+          )
+        }));
+        
+      setFeaturedEntities(featuredEmissionsData);
       setGeoData([fetchedGeoData]);
+      // setEmissionsData(featuredEmissionsData);
       setEmissionsData([fetchedEmissionsData]);
 
       setIsLoading(false);
 
     };
 
+    // useEffect(() => {
+    //   handleIndividualEntity();
+    // }, [selectedLocation])
+
+    // useEffect(() => {
+    //   if(location.pathname !== "/") {
+    //     handleIndividualEntity();
+    //   }
+    // }, [location])
+
     useEffect(() => {
+      console.log("HI")
       if(location.pathname === "/") {
+        console.log("0")
         handleFeaturedLocations();
       } else {
+        console.log("1")
         handleIndividualEntity();
       };
-    }, []);
+    }, [location]);
   
     return (
       <>
@@ -108,6 +133,7 @@ const App: React.FC = () => {
             />
             <SearchPane 
               emissionsData={emissionsData}
+              featuredEntities={featuredEntities}
             />
           </>
         }

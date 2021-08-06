@@ -8,8 +8,8 @@ import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/M
 import { useHistory, useLocation } from 'react-router';
 
 interface PageProps {
-    // featuredEntities: {id: string, name: string, emissions: string[]}[]
-    emissionsData: any[]
+    emissionsData: any[],
+    featuredEntities: any[]
 }
 
 const SearchPane: React.FC<PageProps> = (props) => {
@@ -40,18 +40,15 @@ const SearchPane: React.FC<PageProps> = (props) => {
     };
 
     useEffect(() => {
-        if(location.pathname !== "/") {
-            const matchedEntity = props.emissionsData.find((entity) => entity.id === location.pathname.substring(1,location.pathname.length))
-            if(matchedEntity != undefined) {
-                openMenu();
-                dispatch({ type: 'SET_LOCATION', payload: matchedEntity });
-            };
+        if(location.pathname !== "/" && props.emissionsData) {
+            openMenu();
         };
-    }, [location.pathname])
+    }, [props.emissionsData])
 
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
             <SearchBar 
+                featuredEntities={props.featuredEntities}
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
                 setIsSearching={setIsSearching} 
@@ -59,11 +56,13 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 emissionsData={props.emissionsData}
                 selectedLocation={selectedLocation}
                 openMenu={openMenu}
+                setIsOpen={setIsOpen}
             />
             {isMobile ?
                 <>
-                    {selectedLocation ?
+                    {isOpen && props.emissionsData ?
                         <MobileDrawer 
+                            emissionsData={props.emissionsData}
                             isOpen={isOpen}
                             closeMenu={closeMenu}
                             isSearching={isSearching}
@@ -76,7 +75,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 </>
             :
                 <>
-                    {selectedLocation ?
+                    {isOpen && props.emissionsData ?
                         <SideMenu 
                             emissionsData={props.emissionsData}
                             isOpen={isOpen}
