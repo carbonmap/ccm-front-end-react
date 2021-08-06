@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonIcon } from '@ionic/react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import { RootState } from '../../redux/reducers';
@@ -22,13 +21,6 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const dispatch = useDispatch();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
-
-    const mobileMenuTabStyle = (
-        isOpen ? 'translateY(-54vh) translateX(50%)' : 'translateY(-18vh) translateX(50%)'
-    );
-    const desktopMenuTabStyle = (
-        isOpen ? 'translateX(-24vw)' : 'translateX(0)'
-    );
 
     const openMenu = () => {
         setIsSearching(false);

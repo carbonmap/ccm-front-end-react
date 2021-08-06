@@ -82,25 +82,21 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
     
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
-            <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
-                <IonIcon 
-                  ref={dragRef}
-                  size="large" 
-                  icon={remove} 
-                  onClick={toggleDrawer} 
-                />
-            </div>
-              {/* {props.selectedLocation ? */}
-                  <EntityDetails 
-                    emissionsData={props.emissionsData}
-                    isOpen={props.isOpen}
-                    closeMenu={props.closeMenu}
-                    isSearching={props.isSearching}
-                    isMobile={props.isMobile}
-                  />
-              {/* : 
-                  null
-              } */}
+          <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
+              <IonIcon 
+                ref={dragRef}
+                size="large" 
+                icon={remove} 
+                onClick={toggleDrawer} 
+              />
+          </div>
+              <EntityDetails 
+                emissionsData={props.emissionsData}
+                isOpen={props.isOpen}
+                closeMenu={props.closeMenu}
+                isSearching={props.isSearching}
+                isMobile={props.isMobile}
+              />
         </IonCard>
     );
 };

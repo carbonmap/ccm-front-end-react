@@ -1,4 +1,4 @@
-import { IonTitle, IonContent, IonText } from '@ionic/react';
+import { IonText } from '@ionic/react';
 import React from 'react';
 import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';

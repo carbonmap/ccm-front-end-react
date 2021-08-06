@@ -57,7 +57,6 @@ const App: React.FC = () => {
 
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
-      // setFeaturedEntities(featured);
 
       const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
         return (
@@ -92,22 +91,11 @@ const App: React.FC = () => {
         
       setFeaturedEntities(featuredEmissionsData);
       setGeoData([fetchedGeoData]);
-      // setEmissionsData(featuredEmissionsData);
       setEmissionsData([fetchedEmissionsData]);
 
       setIsLoading(false);
 
     };
-
-    // useEffect(() => {
-    //   handleIndividualEntity();
-    // }, [selectedLocation])
-
-    // useEffect(() => {
-    //   if(location.pathname !== "/") {
-    //     handleIndividualEntity();
-    //   }
-    // }, [location])
 
     useEffect(() => {
       console.log("HI")

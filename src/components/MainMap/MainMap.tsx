@@ -1,5 +1,4 @@
-import { LatLng, LatLngExpression, LatLngTuple, map, polygon } from 'leaflet';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     MapContainer, 
     TileLayer, 
@@ -7,9 +6,7 @@ import {
     Polygon, 
     Marker,
     useMap } from 'react-leaflet';
-import { Link, useHistory, useLocation,  } from 'react-router-dom';
-import { fetchFeaturedGeoData } from "../../service/fetchURL/fetchGeoData";
-import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
+import { useHistory, useLocation,  } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 
@@ -112,7 +109,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 style={{height: '1000px', width: '100%'}}
                 tap={true}
                 dragging={true}
-                
+
             >
                 {geoDataConfig.length > 0 ?
                     geoDataConfig
