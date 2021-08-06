@@ -1,6 +1,12 @@
 import { LatLng, LatLngExpression, LatLngTuple, map, polygon } from 'leaflet';
 import React, { useState, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup, useMapEvent, useMap } from 'react-leaflet';
+import { 
+    MapContainer, 
+    TileLayer, 
+    Popup, 
+    Polygon, 
+    Marker,
+    useMap } from 'react-leaflet';
 import { Link, useHistory, useLocation,  } from 'react-router-dom';
 import { fetchFeaturedGeoData } from "../../service/fetchURL/fetchGeoData";
 import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
@@ -94,8 +100,8 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
     useEffect(() => {
         // if(isLoading) {
             handleGeoDataCoords();
-        };
-    }, []);
+        // };
+    }, [props.geoData]);
 
         return (
             <MapContainer
@@ -105,8 +111,9 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 minZoom={5}
                 style={{height: '1000px', width: '100%'}}
             >
-                {geoData.length > 0 ?
-                    geoData.map((entity:any, index) => {
+                {geoDataConfig.length > 0 ?
+                    geoDataConfig
+                    .map((entity:any, index) => {
                         const features = entity.features[0];
                         const geometry = features.geometry;
                         const id = features.properties.id;
@@ -124,7 +131,6 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                                         click: (event) => {
                                             setVisibleEntity(id);
                                             history.push(`/${id}`)
-                                            console.log(entity)
                                     }}}
                                     key={index}
                                     pathOptions={{
@@ -140,6 +146,12 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                             );
                         };
                     })
+                :
+                    null
+                }
+
+                {props.geoData.length === 1 ?
+                    <AnimateMap geoData={props.geoData} />
                 :
                     null
                 }
