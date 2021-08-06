@@ -7,7 +7,6 @@ import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/f
 
 
 interface State {
-    markers: Array<Array<number>>,
     geoData: JSX.Element[],
     visibleEntity: string
 }
@@ -64,7 +63,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                             return polyCoords.reverse();
                         });
                     }; 
-                } else if (geoJsonType === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                } else if (newGeoData[i].features[0].geometry.type === "Polygon") {
                     newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
                        return entity.reverse();
                     });
@@ -95,59 +94,61 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
     useEffect(() => {
         // if(isLoading) {
             handleGeoDataCoords();
-        // };
-        // console.log(props.geoData.length)
-    }, [props.geoData]);
+        };
+    }, []);
 
-    return (
-        <MapContainer 
-            center={[52.20, 0.12]}
-            zoom={13}
-            maxZoom={18}
-            minZoom={5}
-            style={{height: '1000px', width: '100%'}}
-        >
-            {geoDataConfig.length > 0 ?
-                geoDataConfig.map((entity:any, index) => {
-                    const features = entity.features[0];
-                    const coords = features.geometry.coordinates;
-                    const id = features.properties.id;
-                    return (
-                        <Polygon 
-                            key={index}
-                            pathOptions={{
-                                color: visibleEntity === id ? '#008468' : '#00eab8',
-                                fillOpacity: 0.4,
-                            }}
-                            positions={coords}
-                            eventHandlers={{
-                                click: (event) => {
-                                    setVisibleEntity(id);
-                                    history.push(`/${id}`);
-                                }
-                            }}
-                        >
-                            <Popup>
-                                    {features.properties.id}
-                            </Popup>
-                        </Polygon>
-                    )
-                })
-            :
-                null
-            }
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-            />
-            {/* <AnimateOnLoad geoData={props.geoData} /> */}
-            {props.geoData.length === 1 ?
-                <AnimateMap geoData={props.geoData} />
-            :
-                null
-            }
-        </MapContainer>
-    );
+        return (
+            <MapContainer
+                center={[52.20, 0.12]}
+                zoom={13}
+                maxZoom={18}
+                minZoom={5}
+                style={{height: '1000px', width: '100%'}}
+            >
+                {geoData.length > 0 ?
+                    geoData.map((entity:any, index) => {
+                        const features = entity.features[0];
+                        const geometry = features.geometry;
+                        const id = features.properties.id;
+                        if(geometry.type === "Point") {
+                            return (
+                                <Marker position={geometry.coordinates}>
+                                    <Popup>{features.properties.id}</Popup>
+                                </Marker>
+                            );
+                        } else {
+
+                            return (
+                                <Polygon 
+                                    eventHandlers={{
+                                        click: (event) => {
+                                            setVisibleEntity(id);
+                                            history.push(`/${id}`)
+                                            console.log(entity)
+                                    }}}
+                                    key={index}
+                                    pathOptions={{
+                                        color: visibleEntity === id ? '#008468' : '#00eab8',
+                                        fillOpacity: 0.4,
+                                    }}
+                                    positions={geometry.coordinates}
+                                >
+                                    <Popup>
+                                            {features.properties.id}
+                                    </Popup>
+                                </Polygon>
+                            );
+                        };
+                    })
+                :
+                    null
+                }
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                />
+            </MapContainer>
+        );
 };
 
 export default MainMap;
