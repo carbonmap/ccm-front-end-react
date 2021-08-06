@@ -90,7 +90,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
                   onClick={toggleDrawer} 
                 />
             </div>
-              {props.selectedLocation ?
+              {/* {props.selectedLocation ? */}
                   <EntityDetails 
                     emissionsData={props.emissionsData}
                     isOpen={props.isOpen}
@@ -98,9 +98,9 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
                     isSearching={props.isSearching}
                     isMobile={props.isMobile}
                   />
-              : 
+              {/* : 
                   null
-              }
+              } */}
         </IonCard>
     );
 };

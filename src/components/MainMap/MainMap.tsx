@@ -10,7 +10,8 @@ import {
 import { Link, useHistory, useLocation,  } from 'react-router-dom';
 import { fetchFeaturedGeoData } from "../../service/fetchURL/fetchGeoData";
 import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 interface State {
     geoData: JSX.Element[],
@@ -26,13 +27,14 @@ function AnimateMap({ geoData }:any) {
     const geometry = geoData[0].features[0].geometry;
     const coords = geometry.coordinates;
 
+    const isMobile = useSelector( (state: RootState) => state.isMobile);
     const location = useLocation();
     const map = useMap();
 
     const fitMapView = () => {
         console.log(coords)
         map.fitBounds(coords, { 
-            paddingBottomRight: [220,0], 
+            paddingBottomRight: isMobile ? [0,0] : [220,0], 
             // maxZoom: 18, 
             animate: true 
         });
@@ -98,9 +100,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
     },[location,geoDataConfig]);
 
     useEffect(() => {
-        // if(isLoading) {
-            handleGeoDataCoords();
-        // };
+        handleGeoDataCoords();
     }, [props.geoData]);
 
         return (
@@ -110,6 +110,9 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 maxZoom={18}
                 minZoom={5}
                 style={{height: '1000px', width: '100%'}}
+                tap={true}
+                dragging={true}
+                
             >
                 {geoDataConfig.length > 0 ?
                     geoDataConfig

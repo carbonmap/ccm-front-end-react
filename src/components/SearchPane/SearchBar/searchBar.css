@@ -2,6 +2,7 @@
   position: absolute;
   z-index: 1000;
   width: 100%;
+  pointer-events: all;
 }
 .search-bar {
   padding: 0;
