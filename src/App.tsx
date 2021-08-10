@@ -6,6 +6,7 @@ import { handleWindowSizeChange } from './service/general/checkScreenSize/checkS
 import SearchPane from './components/SearchPane';
 import MainMap from "./components/MainMap/MainMap";
 import Spinner from './components/UI/spinner/spinner';
+
 import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
