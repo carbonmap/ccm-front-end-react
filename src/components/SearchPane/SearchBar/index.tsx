@@ -15,6 +15,7 @@ interface PageProps {
     selectedLocation: void;
     openMenu: Function;
     setIsOpen: (isOpen: boolean) => void;
+    isOpen: boolean;
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
@@ -38,8 +39,8 @@ const SearchBar: React.FC<PageProps> = (props) => {
                         className="search-bar" 
                         onFocus={() => handleSearchSelect()}  
                         value={props.inputVal} 
-                        showCancelButton={props.isSearching ? "always" : "never"}
-                        onIonCancel={() => handleMenuClose()}
+                        showCancelButton={props.isOpen || props.isSearching ? "always" : "never"}
+                        onIonCancel={props.isSearching ? () => props.setIsSearching(false) : () => handleMenuClose()}
                     />
                 </div>
             {props.isSearching ?

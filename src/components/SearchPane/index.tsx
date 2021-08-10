@@ -49,6 +49,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 selectedLocation={selectedLocation}
                 openMenu={openMenu}
                 setIsOpen={setIsOpen}
+                isOpen={isOpen}
             />
             {isMobile ?
                 <>
