@@ -29,10 +29,8 @@ function AnimateMap({ geoData }:any) {
     const map = useMap();
 
     const fitMapView = () => {
-        console.log(coords)
         map.fitBounds(coords, { 
             paddingBottomRight: isMobile ? [0,0] : [220,0], 
-            // maxZoom: 18, 
             animate: true 
         });
     };

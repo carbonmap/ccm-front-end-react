@@ -98,12 +98,9 @@ const App: React.FC = () => {
     };
 
     useEffect(() => {
-      console.log("HI")
       if(location.pathname === "/") {
-        console.log("0")
         handleFeaturedLocations();
       } else {
-        console.log("1")
         handleIndividualEntity();
       };
     }, [location]);
