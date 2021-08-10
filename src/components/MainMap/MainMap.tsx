@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup, Marker } from 'react-leaflet';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store';
@@ -10,7 +10,6 @@ import AlertMessage from "../Message/AlertMessage";
 
 
 interface State {
-    markers: Array<Array<number>>,
     geoData: JSX.Element[],
     visibleEntity: string
 }
@@ -21,7 +20,6 @@ interface GeoDataObject {
 }
 
 const MainMap: React.FC = () => {
-    const [markers, setMarkers] = useState([[52.2, 0.12]]);
     const [geoData, setGeoData] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +38,7 @@ const MainMap: React.FC = () => {
 
         try {
             let newGeoData = defaultGeoData;
+
             for (let i = 0; i < newGeoData.length; i++) {
                 if (newGeoData[i].features[0].geometry.type === "MultiPolygon") {
 
@@ -62,7 +61,7 @@ const MainMap: React.FC = () => {
         } catch (error) {
             throw new Error ('Location not found');
         }
-    }
+    };
 
     useEffect(() => {
         if(location.pathname === "/") {
@@ -81,8 +80,8 @@ const MainMap: React.FC = () => {
     useEffect(() => {
         if(isLoading) {
             handleGeoDataCoords();
-        }
-    }, [])
+        };
+    }, []);
 
         return (
             <MapContainer
@@ -93,13 +92,13 @@ const MainMap: React.FC = () => {
                 style={{height: '1000px', width: '100%'}}
             >
 
+                {geoData.length > 0 ?
+                    geoData.map((entity:any, index) => {
 
-                {
-                    geoData.length > 0 ?
-                    geoData.map((entity:any) => {
                         const features = entity.features[0];
-                        const coords = features.geometry.coordinates;
+                        const geometry = features.geometry;
                         const id = features.properties.id;
+
                         return (
                             <FeatureGroup
                                 eventHandlers={{
@@ -122,6 +121,40 @@ const MainMap: React.FC = () => {
                                 </Polygon>
                             </FeatureGroup>
                         )
+
+                        if(geometry.type === "Point") {
+                            return (
+                                <Marker position={geometry.coordinates}>
+                                    <Popup>{features.properties.id}</Popup>
+                                </Marker>
+                            );
+                        } else {
+
+                            return (
+                                <FeatureGroup
+                                    eventHandlers={{
+                                        click: (event) => {
+                                            setVisibleEntity(id);
+                                            history.push(`/${id}`)
+                                            console.log(entity)
+                                    }}}
+                                    key={index}
+                                >
+                                    <Polygon 
+                                        pathOptions={{
+                                            color: visibleEntity === id ? '#008468' : '#00eab8',
+                                            fillOpacity: 0.4,
+                                        }}
+                                        positions={geometry.coordinates}
+                                    >
+                                        <Popup>
+                                                {features.properties.id}
+                                        </Popup>
+                                    </Polygon>
+                                </FeatureGroup>
+                            );
+                        };
+
                     })
                     : <AlertMessage>{'Location not found'}</AlertMessage>
                 }
