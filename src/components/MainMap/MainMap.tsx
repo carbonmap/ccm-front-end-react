@@ -119,29 +119,6 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                         const geometry = features.geometry;
                         const id = features.properties.id;
 
-                        // return (
-                        //     <FeatureGroup
-                        //         eventHandlers={{
-                        //             click: (event) => {
-                        //                 setVisibleEntity(id);
-                        //                 history.push(`/${id}`)
-                        //             }}}
-                        //     >
-                        //         <Polygon
-                        //             pathOptions={{
-                        //                 color: visibleEntity === id ? '#008468' : '#00eab8',
-                        //                 fillOpacity: 0.4,
-                        //             }}
-                        //             positions={coords}
-                        //         >
-                        //             <Popup>
-
-                        //                 {features.properties.id}
-                        //             </Popup>
-                        //         </Polygon>
-                        //     </FeatureGroup>
-                        // )
-
                         if(geometry.type === "Point") {
                             return (
                                 <Marker position={geometry.coordinates}>
@@ -172,7 +149,8 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                         };
 
                     })
-                    : <AlertMessage>{'Location not found'}</AlertMessage>
+                : 
+                    <AlertMessage>{'Location not found'}</AlertMessage>
                 }
 
                 {props.geoData.length === 1 ?
