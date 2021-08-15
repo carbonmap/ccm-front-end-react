@@ -34,6 +34,6 @@ export const fetchFeaturedGeoData = async () => {
             return geoData;
         })
         .catch((error) => {
-            console.error(error)
+            console.log(error);
         });
 }

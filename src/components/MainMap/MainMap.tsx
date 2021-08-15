@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { 
-    MapContainer, 
-    TileLayer, 
-    Popup, 
-    Polygon, 
-    Marker,
-    useMap } from 'react-leaflet';
-import { useHistory, useLocation,  } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-leaflet';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/reducers';
+import type { RootState } from '../../redux/store';
+
+import AlertMessage from "../Message/AlertMessage";
+
 
 interface State {
     geoData: JSX.Element[],
@@ -52,6 +49,11 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
     const location = useLocation();
     const history = useHistory();
 
+
+    // const isError = useSelector( (state: RootState) => state.isError);
+    // const { error, isOpen } = isError;
+
+
     const handleGeoDataCoords = async() => {
         try {
             let newGeoData:any = props.geoData;
@@ -61,14 +63,15 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 if(geoJsonType === "MultiPolygon") {
     
                     const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
-                    for(let i = 0; i < multiPolygonArr.length; i++) {
-                        multiPolygonArr[i][0].map((polyCoords:string[]) => {
+                    for (let i = 0; i < multiPolygonArr.length; i++) {
+                        multiPolygonArr[i][0].map((polyCoords: string[]) => {
                             return polyCoords.reverse();
                         });
-                    }; 
-                } else if (newGeoData[i].features[0].geometry.type === "Polygon") {
-                    newGeoData[i].features[0].geometry.coordinates[0].map((entity:string[]) => {
-                       return entity.reverse();
+                    }
+                    ;
+                } else if (newGeoData[i].features[0].geometry.type === "Polygon" || newGeoData[i].features[0].geometry.type === "Point") {
+                    newGeoData[i].features[0].geometry.coordinates[0].map((entity: string[]) => {
+                        return entity.reverse();
                     });
                 }
             };
@@ -76,8 +79,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
             setGeoDataConfig(newGeoData);
             setIsLoading(false);
         } catch (error) {
-            alert("Sorry, something went wrong");
-            console.log(error);
+            throw new Error ('Location not found');
         }
     };
 
@@ -93,6 +95,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
             };
         };
     },[location,geoDataConfig]);
+
 
     useEffect(() => {
         handleGeoDataCoords();
@@ -115,6 +118,30 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                         const features = entity.features[0];
                         const geometry = features.geometry;
                         const id = features.properties.id;
+
+                        // return (
+                        //     <FeatureGroup
+                        //         eventHandlers={{
+                        //             click: (event) => {
+                        //                 setVisibleEntity(id);
+                        //                 history.push(`/${id}`)
+                        //             }}}
+                        //     >
+                        //         <Polygon
+                        //             pathOptions={{
+                        //                 color: visibleEntity === id ? '#008468' : '#00eab8',
+                        //                 fillOpacity: 0.4,
+                        //             }}
+                        //             positions={coords}
+                        //         >
+                        //             <Popup>
+
+                        //                 {features.properties.id}
+                        //             </Popup>
+                        //         </Polygon>
+                        //     </FeatureGroup>
+                        // )
+
                         if(geometry.type === "Point") {
                             return (
                                 <Marker position={geometry.coordinates}>
@@ -143,9 +170,9 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                                 </Polygon>
                             );
                         };
+
                     })
-                :
-                    null
+                    : <AlertMessage>{'Location not found'}</AlertMessage>
                 }
 
                 {props.geoData.length === 1 ?
@@ -158,7 +185,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 />
             </MapContainer>
-        );
-};
+        )
+}
 
 export default MainMap;
