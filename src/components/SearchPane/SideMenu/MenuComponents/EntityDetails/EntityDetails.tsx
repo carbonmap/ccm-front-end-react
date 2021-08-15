@@ -73,6 +73,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <DataAccordion 
                 title="posts"
                 titleData={props.emissionsData[0].emissions.length.toString()} 
+                // titleData="1"
                 bottomView={posts}
             />
         </div>

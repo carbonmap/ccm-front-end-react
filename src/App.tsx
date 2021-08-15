@@ -91,20 +91,26 @@ const App: React.FC = () => {
         handleFeaturedLocations();
       } else {
         const fetchedEmissionsData:any[] = await fetchIndividualEntity(`reporting_entities/${entityID}.json`);
-  
-        const featured = await fetchFeatured();
-        
-        const featuredEmissionsData:any  = await Promise.all(featured.map((entityID) => {
-          return (
-            fetchIndividualEntity(`reporting_entities/${entityID}.json`)
-            )
-          }));
+
+        if(!fetchedEmissionsData) {
+          setDisplayAlert(true);
+          history.replace("/");
+          handleFeaturedLocations();
+        } else {
+          const featured = await fetchFeatured();
           
-        setFeaturedEntities(featuredEmissionsData);
-        setGeoData([fetchedGeoData]);
-        setEmissionsData([fetchedEmissionsData]);
-  
-        setIsLoading(false);
+          const featuredEmissionsData:any  = await Promise.all(featured.map((entityID) => {
+            return (
+              fetchIndividualEntity(`reporting_entities/${entityID}.json`)
+              )
+            }));
+            
+          setFeaturedEntities(featuredEmissionsData);
+          setGeoData([fetchedGeoData]);
+          setEmissionsData([fetchedEmissionsData]);
+    
+          setIsLoading(false);
+        };
       };
     };
 
