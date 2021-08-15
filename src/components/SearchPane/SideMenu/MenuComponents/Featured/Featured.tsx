@@ -1,9 +1,10 @@
-import { IonTitle, IonContent, IonText } from '@ionic/react';
+import { IonText } from '@ionic/react';
 import React from 'react';
 import FeaturedEl from './FeaturedElement/FeaturedLocationEl';
 import './featured.css';
 
 interface PageProps {
+    emissionsData: {id: string, name: string, emissions: string[]}[];
     featuredEntities: {id: string, name: string, emissions: string[]}[];
     openMenu: Function
 }

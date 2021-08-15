@@ -1,10 +1,8 @@
 import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, FeatureGroup, Marker } from 'react-leaflet';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-leaflet';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
-
-import fetchGeoData from "../../service/fetchURL/fetchGeoData";
 
 import AlertMessage from "../Message/AlertMessage";
 
@@ -19,14 +17,37 @@ interface GeoDataObject {
     features: Array<any>
 }
 
-const MainMap: React.FC = () => {
-    const [geoData, setGeoData] = useState([]);
+function AnimateMap({ geoData }:any) {
+    const geometry = geoData[0].features[0].geometry;
+    const coords = geometry.coordinates;
+
+    const isMobile = useSelector( (state: RootState) => state.isMobile);
+    const location = useLocation();
+    const map = useMap();
+
+    const fitMapView = () => {
+        map.fitBounds(coords, { 
+            paddingBottomRight: isMobile ? [0,0] : [220,0], 
+            animate: true 
+        });
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            fitMapView();
+        }, 100);
+    }, [geoData]);
+  
+    return null;
+};
+
+const MainMap: React.FC<{geoData:any[]}> = (props) => {
+    const [geoDataConfig, setGeoDataConfig] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
-
-    let location = useLocation();
-    let history = useHistory();
+    const location = useLocation();
+    const history = useHistory();
 
 
     // const isError = useSelector( (state: RootState) => state.isError);
@@ -34,14 +55,13 @@ const MainMap: React.FC = () => {
 
 
     const handleGeoDataCoords = async() => {
-        const defaultGeoData: any = await fetchGeoData();
-
         try {
-            let newGeoData = defaultGeoData;
-
-            for (let i = 0; i < newGeoData.length; i++) {
-                if (newGeoData[i].features[0].geometry.type === "MultiPolygon") {
-
+            let newGeoData:any = props.geoData;
+            
+            for(let i = 0; i < newGeoData.length; i++) {
+                const geoJsonType = newGeoData[i].features[0].geometry.type
+                if(geoJsonType === "MultiPolygon") {
+    
                     const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
                     for (let i = 0; i < multiPolygonArr.length; i++) {
                         multiPolygonArr[i][0].map((polyCoords: string[]) => {
@@ -54,9 +74,9 @@ const MainMap: React.FC = () => {
                         return entity.reverse();
                     });
                 }
-            }
+            };
 
-            setGeoData(newGeoData);
+            setGeoDataConfig(newGeoData);
             setIsLoading(false);
         } catch (error) {
             throw new Error ('Location not found');
@@ -67,21 +87,19 @@ const MainMap: React.FC = () => {
         if(location.pathname === "/") {
             setVisibleEntity("");
         } else {
-            if(geoData.length > 0) {
-                const matchedEntity:any = geoData.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
+            if(geoDataConfig.length > 0) {
+                const matchedEntity:any = geoDataConfig.find((entity:any) => `/${entity.features[0].properties.id}` === location.pathname)
                 if(matchedEntity != undefined) {
                     setVisibleEntity(matchedEntity.features[0].properties.id);
                 };  
             };
         };
-    },[location,geoData]);
+    },[location,geoDataConfig]);
 
 
     useEffect(() => {
-        if(isLoading) {
-            handleGeoDataCoords();
-        };
-    }, []);
+        handleGeoDataCoords();
+    }, [props.geoData]);
 
         return (
             <MapContainer
@@ -90,37 +108,39 @@ const MainMap: React.FC = () => {
                 maxZoom={18}
                 minZoom={5}
                 style={{height: '1000px', width: '100%'}}
+                tap={true}
+                dragging={true}
+
             >
-
-                {geoData.length > 0 ?
-                    geoData.map((entity:any, index) => {
-
+                {geoDataConfig.length > 0 ?
+                    geoDataConfig
+                    .map((entity:any, index) => {
                         const features = entity.features[0];
                         const geometry = features.geometry;
                         const id = features.properties.id;
 
-                        return (
-                            <FeatureGroup
-                                eventHandlers={{
-                                    click: (event) => {
-                                        setVisibleEntity(id);
-                                        history.push(`/${id}`)
-                                    }}}
-                            >
-                                <Polygon
-                                    pathOptions={{
-                                        color: visibleEntity === id ? '#008468' : '#00eab8',
-                                        fillOpacity: 0.4,
-                                    }}
-                                    positions={coords}
-                                >
-                                    <Popup>
+                        // return (
+                        //     <FeatureGroup
+                        //         eventHandlers={{
+                        //             click: (event) => {
+                        //                 setVisibleEntity(id);
+                        //                 history.push(`/${id}`)
+                        //             }}}
+                        //     >
+                        //         <Polygon
+                        //             pathOptions={{
+                        //                 color: visibleEntity === id ? '#008468' : '#00eab8',
+                        //                 fillOpacity: 0.4,
+                        //             }}
+                        //             positions={coords}
+                        //         >
+                        //             <Popup>
 
-                                        {features.properties.id}
-                                    </Popup>
-                                </Polygon>
-                            </FeatureGroup>
-                        )
+                        //                 {features.properties.id}
+                        //             </Popup>
+                        //         </Polygon>
+                        //     </FeatureGroup>
+                        // )
 
                         if(geometry.type === "Point") {
                             return (
@@ -131,27 +151,23 @@ const MainMap: React.FC = () => {
                         } else {
 
                             return (
-                                <FeatureGroup
+                                <Polygon 
                                     eventHandlers={{
                                         click: (event) => {
                                             setVisibleEntity(id);
                                             history.push(`/${id}`)
-                                            console.log(entity)
                                     }}}
                                     key={index}
+                                    pathOptions={{
+                                        color: visibleEntity === id ? '#008468' : '#00eab8',
+                                        fillOpacity: 0.4,
+                                    }}
+                                    positions={geometry.coordinates}
                                 >
-                                    <Polygon 
-                                        pathOptions={{
-                                            color: visibleEntity === id ? '#008468' : '#00eab8',
-                                            fillOpacity: 0.4,
-                                        }}
-                                        positions={geometry.coordinates}
-                                    >
-                                        <Popup>
-                                                {features.properties.id}
-                                        </Popup>
-                                    </Polygon>
-                                </FeatureGroup>
+                                    <Popup>
+                                            {features.properties.id}
+                                    </Popup>
+                                </Polygon>
                             );
                         };
 
@@ -159,6 +175,11 @@ const MainMap: React.FC = () => {
                     : <AlertMessage>{'Location not found'}</AlertMessage>
                 }
 
+                {props.geoData.length === 1 ?
+                    <AnimateMap geoData={props.geoData} />
+                :
+                    null
+                }
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

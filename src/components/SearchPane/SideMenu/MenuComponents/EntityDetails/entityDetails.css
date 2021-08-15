@@ -46,24 +46,6 @@
   align-items: flex-end;
   display: flex;
 }
-/* .close-menu-icon {
-  background-color: #fff;
-  padding: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-/* position: absolute; */
-/* right: 24vw; */
-/* top: 0; */
-/* cursor: pointer;
-  position: absolute;
-  z-index: 3000;
-  width: 2vw;
-  height: 2vw;
-  background-color: coral;
-  left: 0;
-  top: 4vh;
-} */
 
 .bottom-drawer {
   position: absolute;
@@ -74,6 +56,7 @@
   min-height: 80vh;
   border-radius: 30px;
   width: 100vw;
+  pointer-events: all;
 }
 .entity-detail-title {
   font-weight: 600;

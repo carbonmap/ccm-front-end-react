@@ -5,11 +5,12 @@ import EntityDetails from '../EntityDetails';
 import { remove } from 'ionicons/icons';
 
 interface PageProps {
-    isOpen: boolean;
-    closeMenu: Function;
-    isSearching: boolean;
-    isMobile: boolean;
-    selectedLocation: any;
+  isOpen: boolean;
+  closeMenu: Function;
+  isSearching: boolean;
+  isMobile: boolean;
+  selectedLocation: any;
+  emissionsData: {id: string, name: string, emissions: string[]}[];
 }
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
@@ -81,24 +82,21 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
     
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
-            <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
-                <IonIcon 
-                  ref={dragRef}
-                  size="large" 
-                  icon={remove} 
-                  onClick={toggleDrawer} 
-                />
-            </div>
-              {props.selectedLocation ?
-                  <EntityDetails 
-                      isOpen={props.isOpen}
-                      closeMenu={props.closeMenu}
-                      isSearching={props.isSearching}
-                      isMobile={props.isMobile}
-                  />
-              : 
-                  null
-              }
+          <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
+              <IonIcon 
+                ref={dragRef}
+                size="large" 
+                icon={remove} 
+                onClick={toggleDrawer} 
+              />
+          </div>
+              <EntityDetails 
+                emissionsData={props.emissionsData}
+                isOpen={props.isOpen}
+                closeMenu={props.closeMenu}
+                isSearching={props.isSearching}
+                isMobile={props.isMobile}
+              />
         </IonCard>
     );
 };

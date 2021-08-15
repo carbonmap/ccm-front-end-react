@@ -11,6 +11,7 @@ interface PageProps {
     closeMenu: Function;
     isSearching: boolean;
     isMobile: boolean;
+    emissionsData: {id: string, name: string, emissions: string[]}[];
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
@@ -56,7 +57,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <img 
                 src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
             />
-            <IonText className="ion-no-padding ion-text-left">{selectedEntity.name}</IonText>
+            <IonText className="ion-no-padding ion-text-left">{props.emissionsData[0].name}</IonText>
             <br />
             <IonText>15 Market Hill, Cambridge</IonText>
             <DataAccordion 
@@ -71,7 +72,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             />
             <DataAccordion 
                 title="posts"
-                titleData={selectedEntity.emissions.length} 
+                titleData={props.emissionsData[0].emissions.length.toString()} 
                 bottomView={posts}
             />
         </div>
