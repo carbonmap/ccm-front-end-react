@@ -30,7 +30,8 @@ import {
   Route, 
   RouteComponentProps,
   useLocation,
-  useHistory
+  useHistory,
+  useParams
 } from 'react-router-dom';
 import { fetchIndividualEntity } from './service/fetchURL/individualEntity/fetchIndividualEntity';
 import { RootState } from './redux/reducers';
@@ -55,10 +56,13 @@ const App: React.FC = () => {
     const [geoData, setGeoData] = useState<any[]>([]);
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
     const [displayAlert, setDisplayAlert] = useState(false);
+    const [navHistory, setNavHistory] = useState<object[]>([{ name: "King's College", path: "uk.ac.cam.kings"}]);
 
     const location = useLocation();
     const history = useHistory();
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
+    // const navHistory = useSelector((state: RootState) => state.navHistory);
+    const dispatch = useDispatch();
 
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
@@ -119,8 +123,33 @@ const App: React.FC = () => {
         handleFeaturedLocations();
       } else {
         handleIndividualEntity();
+        // if(emissionsData.length > 0) {
+        //   console.log(emissionsData[0].name);
+        // }
+
+        // if(navHistory.length === 5) {
+        //   const shiftedHistory:any = navHistory.slice(1);
+        //   const newHistory = [...shiftedHistory, location.pathname];
+        //   setNavHistory(newHistory);
+        // } else {
+        //   const newHistory = [...navHistory, location.pathname];
+        //   setNavHistory(newHistory);
+        // };
       };
     }, [location]);
+
+    useEffect(() => {
+      if(emissionsData.length > 0) {
+        if(navHistory.length === 5) {
+          const shiftedHistory:any = navHistory.slice(1);
+          const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
+          setNavHistory(newHistory);
+        } else {
+          const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
+          setNavHistory(newHistory);
+        };  
+      };
+    }, [emissionsData])
   
     return (
       <>
@@ -136,6 +165,7 @@ const App: React.FC = () => {
               <SearchPane 
                 emissionsData={emissionsData}
                 featuredEntities={featuredEntities}
+                navHistory={navHistory}
               />
               {displayAlert ? 
                 <AlertMessage>Location not found.</AlertMessage>

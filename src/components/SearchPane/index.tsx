@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router';
 interface PageProps {
     emissionsData: any[],
     featuredEntities: any[]
+    navHistory: object[]
 }
 
 const SearchPane: React.FC<PageProps> = (props) => {
@@ -50,6 +51,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 openMenu={openMenu}
                 setIsOpen={setIsOpen}
                 isOpen={isOpen}
+                navHistory={props.navHistory}
             />
             {isMobile ?
                 <>

@@ -1,10 +1,12 @@
 import { IonItem } from '@ionic/react';
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
     featuredEntities: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
+    navHistory: object[];
 }
 
 const SearchSuggestions: React.FC<PageProps> = (props) => {
@@ -19,15 +21,15 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
     };
 
     return (
-        <div className="suggestion-container"
-             style={ props.isSearching ? searchStyles : hiddenStyles }>
+        <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
             {
-                props.featuredEntities.map((entity: any, index) => {
+                props.navHistory.map((entity: any, index) => {
                     return (
-                        <IonItem 
-                            key={index}
-                            className="search-suggestion-el"
-                        >{entity.name}</IonItem>
+                        <Link key={index} to={entity.path} >
+                            <IonItem 
+                                className="search-suggestion-el"
+                            >{entity.name}</IonItem>
+                        </Link>
                     )
                 })
             }
