@@ -29,10 +29,12 @@ import {
   Switch, 
   Route, 
   RouteComponentProps,
-  useLocation
+  useLocation,
+  useHistory
 } from 'react-router-dom';
 import { fetchIndividualEntity } from './service/fetchURL/individualEntity/fetchIndividualEntity';
 import { RootState } from './redux/reducers';
+import AlertMessage from './components/Message/AlertMessage';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -52,8 +54,10 @@ const App: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [geoData, setGeoData] = useState<any[]>([]);
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
+    const [displayAlert, setDisplayAlert] = useState(false);
 
     const location = useLocation();
+    const history = useHistory();
     const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
 
     const handleFeaturedLocations = async() => {
@@ -80,22 +84,34 @@ const App: React.FC = () => {
     const handleIndividualEntity = async() => {
       const entityID = location.pathname.substring(1,location.pathname.length);
       const fetchedGeoData:any[] = await fetchIndividualEntity(`geojson/${entityID}.geojson`);
-      const fetchedEmissionsData:any[] = await fetchIndividualEntity(`reporting_entities/${entityID}.json`);
 
-      const featured = await fetchFeatured();
-      
-      const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
-        return (
-          fetchIndividualEntity(`reporting_entities/${entityID}.json`)
-          )
-        }));
-        
-      setFeaturedEntities(featuredEmissionsData);
-      setGeoData([fetchedGeoData]);
-      setEmissionsData([fetchedEmissionsData]);
+      if(!fetchedGeoData) {
+        setDisplayAlert(true);
+        history.replace("/");
+        handleFeaturedLocations();
+      } else {
+        const fetchedEmissionsData:any[] = await fetchIndividualEntity(`reporting_entities/${entityID}.json`);
 
-      setIsLoading(false);
-
+        if(!fetchedEmissionsData) {
+          setDisplayAlert(true);
+          history.replace("/");
+          handleFeaturedLocations();
+        } else {
+          const featured = await fetchFeatured();
+          
+          const featuredEmissionsData:any  = await Promise.all(featured.map((entityID) => {
+            return (
+              fetchIndividualEntity(`reporting_entities/${entityID}.json`)
+              )
+            }));
+            
+          setFeaturedEntities(featuredEmissionsData);
+          setGeoData([fetchedGeoData]);
+          setEmissionsData([fetchedEmissionsData]);
+    
+          setIsLoading(false);
+        };
+      };
     };
 
     useEffect(() => {
@@ -109,19 +125,24 @@ const App: React.FC = () => {
     return (
       <>
         {isLoading ?
-          <div className="spinner-container">
-            <Spinner />
-          </div>
-        :
-          <>
-            <MainMap
-              geoData={geoData}
-            />
-            <SearchPane 
-              emissionsData={emissionsData}
-              featuredEntities={featuredEntities}
-            />
-          </>
+            <div className="spinner-container">
+              <Spinner />
+            </div>
+          :
+            <>
+              <MainMap
+                geoData={geoData}
+              />
+              <SearchPane 
+                emissionsData={emissionsData}
+                featuredEntities={featuredEntities}
+              />
+              {displayAlert ? 
+                <AlertMessage>Location not found.</AlertMessage>
+              :
+                null
+              }
+            </>
         }
       </>
     );

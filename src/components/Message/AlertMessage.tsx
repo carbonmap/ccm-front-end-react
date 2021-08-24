@@ -12,7 +12,9 @@ const AlertMessage: React.FC<ErrorProps> = (props) => {
         <IonContent>
             <IonAlert
                 isOpen={true}
-                onDidDismiss={() => {console.log("User notified about locations not found error")}}
+                onDidDismiss={() => {
+                    console.log("User notified about locations not found error");
+                }}
                 cssClass='my-custom-class '
                 // header={'Something went wrong'}
                 // subHeader={'Subtitle'}

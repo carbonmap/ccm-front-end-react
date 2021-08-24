@@ -53,7 +53,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
             />
             {isMobile ?
                 <>
-                    {isOpen && props.emissionsData ?
+                    {isOpen && props.emissionsData.length > 0 ?
                         <MobileDrawer 
                             emissionsData={props.emissionsData}
                             isOpen={isOpen}
@@ -68,7 +68,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 </>
             :
                 <>
-                    {isOpen && props.emissionsData ?
+                    {isOpen && props.emissionsData.length > 0 ?
                         <SideMenu 
                             emissionsData={props.emissionsData}
                             isOpen={isOpen}

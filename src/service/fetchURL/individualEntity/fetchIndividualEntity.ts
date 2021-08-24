@@ -5,7 +5,7 @@ export const fetchIndividualEntity:any = async(entityID:string) => {
         return data;
     } 
     catch(error) {
-        alert("Sorry, something went wrong when trying to find this location. Please try again later")
         console.log(error);
+        return false;
     }
 };
