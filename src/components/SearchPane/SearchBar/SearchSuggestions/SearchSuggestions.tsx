@@ -10,7 +10,6 @@ interface PageProps {
 }
 
 const SearchSuggestions: React.FC<PageProps> = (props) => {
-
     const searchStyles = {
         opacity: 1,
         transform: 'translateX(0)'
@@ -22,10 +21,20 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
 
     return (
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
-            {
+            {props.navHistory ?
                 props.navHistory.map((entity: any, index) => {
                     return (
                         <Link key={index} to={entity.path} >
+                            <IonItem 
+                                className="search-suggestion-el"
+                            >{entity.name}</IonItem>
+                        </Link>
+                    )
+                })
+            :
+                props.featuredEntities.map((entity: any, index) => {
+                    return (
+                        <Link key={index} to={entity.id} >
                             <IonItem 
                                 className="search-suggestion-el"
                             >{entity.name}</IonItem>

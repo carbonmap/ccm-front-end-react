@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IonApp, IonHeader } from '@ionic/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Toolbar from './components/toolbar';
 import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
 import SearchPane from './components/SearchPane';
@@ -31,11 +31,10 @@ import {
   RouteComponentProps,
   useLocation,
   useHistory,
-  useParams
 } from 'react-router-dom';
 import { fetchIndividualEntity } from './service/fetchURL/individualEntity/fetchIndividualEntity';
-import { RootState } from './redux/reducers';
 import AlertMessage from './components/Message/AlertMessage';
+import { useCookies } from 'react-cookie';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -56,13 +55,11 @@ const App: React.FC = () => {
     const [geoData, setGeoData] = useState<any[]>([]);
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
     const [displayAlert, setDisplayAlert] = useState(false);
-    const [navHistory, setNavHistory] = useState<object[]>([{ name: "King's College", path: "uk.ac.cam.kings"}]);
+
+    const [cookies, setCookie, removeCookie] = useCookies(['history']);
 
     const location = useLocation();
     const history = useHistory();
-    const selectedLocation = useSelector((state: RootState) => state.selectedLocation);
-    // const navHistory = useSelector((state: RootState) => state.navHistory);
-    const dispatch = useDispatch();
 
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
@@ -123,31 +120,27 @@ const App: React.FC = () => {
         handleFeaturedLocations();
       } else {
         handleIndividualEntity();
-        // if(emissionsData.length > 0) {
-        //   console.log(emissionsData[0].name);
-        // }
-
-        // if(navHistory.length === 5) {
-        //   const shiftedHistory:any = navHistory.slice(1);
-        //   const newHistory = [...shiftedHistory, location.pathname];
-        //   setNavHistory(newHistory);
-        // } else {
-        //   const newHistory = [...navHistory, location.pathname];
-        //   setNavHistory(newHistory);
-        // };
       };
     }, [location]);
 
     useEffect(() => {
       if(emissionsData.length > 0) {
-        if(navHistory.length === 5) {
-          const shiftedHistory:any = navHistory.slice(1);
-          const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
-          setNavHistory(newHistory);
+        const navHistory = cookies.history
+        if(navHistory == undefined) {
+          setCookie('history', [{ name: emissionsData[0].name, path: location.pathname }])
         } else {
-          const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
-          setNavHistory(newHistory);
-        };  
+          const matchEntity = navHistory.find((entity:any) => entity.name === emissionsData[0].name);
+          if(matchEntity == undefined) {
+            if(navHistory.length === 5) {
+              const shiftedHistory:any = navHistory.slice(1);
+              const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
+              setCookie('history', newHistory);
+            } else  {
+              const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
+              setCookie('history', newHistory);
+            };  
+          };
+        };
       };
     }, [emissionsData])
   
@@ -165,7 +158,7 @@ const App: React.FC = () => {
               <SearchPane 
                 emissionsData={emissionsData}
                 featuredEntities={featuredEntities}
-                navHistory={navHistory}
+                navHistory={cookies.history}
               />
               {displayAlert ? 
                 <AlertMessage>Location not found.</AlertMessage>
