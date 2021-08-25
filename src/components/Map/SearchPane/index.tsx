@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
-import { RootState } from '../../redux/reducers';
+import { RootState } from '../../../redux/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
 import { useHistory, useLocation } from 'react-router';
