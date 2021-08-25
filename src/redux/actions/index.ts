@@ -35,13 +35,6 @@ export const selectLocation = (location: object) => {
     }
 }
 
-export const navigationHistory = (history: string[]) => {
-    return {
-        type: Constants.NAVIGATION_HISTORY,
-        payload: history
-    }
-}
-
 export function setError(error: any){
 
     return {
