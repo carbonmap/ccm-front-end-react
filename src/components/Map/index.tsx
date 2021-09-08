@@ -93,7 +93,11 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           setCookie('history', [{ name: emissionsData[0].name, path: location.pathname }])
         } else {
           const matchEntity = navHistory.find((entity:any) => entity.name === emissionsData[0].name);
-          if(matchEntity == undefined) {
+          if(matchEntity !== undefined) {
+            const index = navHistory.indexOf(matchEntity);
+            navHistory.splice(index, 1);
+          }
+          // if(matchEntity == undefined) {
             if(navHistory.length === 5) {
               const shiftedHistory:any = navHistory.slice(1);
               const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
@@ -102,7 +106,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
               const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
               setCookie('history', newHistory);
             };  
-          };
+          // };
         };
       };
     }, [emissionsData])

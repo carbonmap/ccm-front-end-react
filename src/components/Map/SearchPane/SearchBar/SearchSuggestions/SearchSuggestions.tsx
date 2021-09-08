@@ -19,10 +19,13 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         transform: 'translateX(-100%)'
     };
 
+    const reversedHistory = [...props.navHistory].reverse();
+    // console.log(reversed)
+
     return (
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
-            {props.navHistory ?
-                props.navHistory.map((entity: any, index) => {
+            {reversedHistory ?
+                reversedHistory.map((entity: any, index) => {
                     return (
                         <Link key={index} to={entity.path} >
                             <IonItem 
