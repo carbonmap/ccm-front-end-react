@@ -1,0 +1,110 @@
+import { IonIcon, IonInput, IonSearchbar } from '@ionic/react';
+import React, { useState, useEffect, SetStateAction } from 'react';
+import Autosuggest from 'react-autosuggest';
+import { arrowBack, searchOutline, close } from 'ionicons/icons'
+
+interface PageProps {
+  isOpen: boolean;
+  isSearching: boolean;
+  inputVal: string;
+  handleSearchSelect: Function;
+  setIsSearching: (isSearching: boolean) => void;
+  handleMenuClose: Function;
+  setInputVal: (inputVal: string) => void;
+  setAutoSuggestions: any;
+}
+
+const languages = [
+  {
+    name: 'The Leys School',
+    path: 'net.theleys'
+  },
+  {
+    name: 'St. Edmunds College',
+    path: 'uk.ac.cam.st-edmunds'
+  },
+  {
+    name: "King's College",
+    path: 'uk.ac.cam.kings'
+  }
+];
+
+const getSuggestions = (value:any) => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+
+  return inputLength === 0 ? [] : languages.filter(lang =>
+    lang.name.toLowerCase().slice(0, inputLength) === inputValue
+  );
+};
+
+const getSuggestionValue = (suggestion:any) => suggestion.name;
+
+const renderSuggestion = (suggestion:any) => (
+  <div style={{ display: 'none' }}>
+    {suggestion.name}
+  </div>
+);
+
+const AutoSuggestEntities: React.FC<PageProps> = (props) => {
+    const [value, setValue] = useState('');
+    const [suggestions, setSuggestions] = useState<any>('');
+    const [searchIcon, setSearchIcon] = useState(searchOutline);
+
+    const onChange = (event:any) => {
+      if(event.target.value) {
+        props.setInputVal(event.target.value);
+      } else {
+        props.setInputVal("")
+      }
+    };
+
+    const onSuggestionsFetchRequested = ({ value }:any) => {
+        props.setAutoSuggestions(getSuggestions(value));
+    };
+
+    const onSuggestionsClearRequested = () => {
+        props.setAutoSuggestions([]);
+    };
+
+    const inputProps = {
+      placeholder: 'Search',
+      value: props.inputVal,
+      onChange: onChange,
+    };
+
+    const renderInputComponent = (inputProps:any) => (
+      <div style={{ backgroundColor: '#fff', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 14 }}>
+          <IonIcon icon={searchIcon} onClick={props.isSearching ? () => props.setIsSearching(false) : () => props.handleMenuClose()} style={{ fontSize: 24, cursor: 'pointer' }} />
+          <input 
+              {...inputProps} 
+              className="search-bar"
+              style={{ outline: 'none', border: 'none' }}
+              onFocus={() => props.setIsSearching(true)}
+          />
+          <IonIcon icon={close} onClick={() => props.setInputVal("")} style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} />
+      </div>
+    );
+
+    useEffect(() => {
+      if(props.isOpen || props.isSearching) {
+        setSearchIcon(arrowBack);
+      } else {
+        setSearchIcon(searchOutline);
+      }
+    }, [props.isOpen, props.isSearching])
+
+    return (
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        renderInputComponent={renderInputComponent}
+      />
+    );
+};
+
+export default AutoSuggestEntities;

@@ -7,6 +7,7 @@ interface PageProps {
     featuredEntities: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
     navHistory: object[];
+    suggestions: object[];
 }
 
 const SearchSuggestions: React.FC<PageProps> = (props) => {
@@ -21,8 +22,8 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
 
     return (
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
-            {props.navHistory ?
-                props.navHistory.map((entity: any, index) => {
+            {props.suggestions ?
+                props.suggestions.map((entity: any, index) => {
                     return (
                         <Link key={index} to={entity.path} >
                             <IonItem 
