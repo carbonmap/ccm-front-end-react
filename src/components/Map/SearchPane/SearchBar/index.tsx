@@ -73,7 +73,6 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
-                    // navHistory={[...props.navHistory].reverse()}
                     navHistory={props.navHistory}
                     suggestions={suggestions}
                 />  

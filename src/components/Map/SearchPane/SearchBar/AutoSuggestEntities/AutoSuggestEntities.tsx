@@ -1,5 +1,5 @@
-import { IonIcon, IonInput, IonSearchbar } from '@ionic/react';
-import React, { useState, useEffect, SetStateAction } from 'react';
+import { IonIcon } from '@ionic/react';
+import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { arrowBack, searchOutline, close } from 'ionicons/icons';
 import * as entityList from './entities.json';
@@ -66,7 +66,6 @@ const renderSuggestion = (suggestion:any) => (
 );
 
 const AutoSuggestEntities: React.FC<PageProps> = (props) => {
-    const [value, setValue] = useState('');
     const [suggestions, setSuggestions] = useState<any>('');
     const [searchIcon, setSearchIcon] = useState(searchOutline);
 
@@ -93,7 +92,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     };
 
     const renderInputComponent = (inputProps:any) => (
-      <div style={{ backgroundColor: '#fff', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 14 }}>
+      <div className="search-bar-container" >
           <IonIcon icon={searchIcon} onClick={props.isSearching ? () => props.setIsSearching(false) : () => props.handleMenuClose()} style={{ fontSize: 24, cursor: 'pointer' }} />
           <input 
               {...inputProps} 
