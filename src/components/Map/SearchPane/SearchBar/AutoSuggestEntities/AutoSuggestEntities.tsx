@@ -33,9 +33,42 @@ const getSuggestions = (value:any) => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
-  return inputLength === 0 ? [] : languages.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
+  const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
+
+  const filter = inputLength === 0 ? [] : languages.filter(lang => {
+    const strippedName = lang.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+    
+    if(strippedName.startsWith("the")) {
+      if(punctuationless.startsWith("the")) {
+        if(strippedName.slice(0, inputLength) == punctuationless) {
+          return lang;
+        } else if(lang.name.toLowerCase().slice(3, inputLength) === inputValue) {
+          return lang;
+        }
+      } else {
+        if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
+          return lang;
+        } else if(lang.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
+          return lang;
+        } else {
+            if(strippedName.slice(0, inputLength) == punctuationless) {
+            return lang;
+          } else if(lang.name.toLowerCase().slice(0, inputLength) === inputValue) {
+            return lang;
+          }
+        }
+      }
+    } else {
+        if(strippedName.slice(0, inputLength) == punctuationless) {
+        return lang;
+      } else if(lang.name.toLowerCase().slice(0, inputLength) === inputValue) {
+        return lang;
+      }
+    }
+  })
+
+
+  return filter;
 };
 
 const getSuggestionValue = (suggestion:any) => suggestion.name;
