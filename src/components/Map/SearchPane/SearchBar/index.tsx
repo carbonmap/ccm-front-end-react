@@ -41,7 +41,8 @@ const SearchBar: React.FC<PageProps> = (props) => {
         if(props.inputVal !== "") {
             setSuggestions(autoSuggestions);
         } else {
-            setSuggestions(props.navHistory);
+            setSuggestions([...props.navHistory].reverse());
+            // setSuggestions(props.navHistory);
         }
     }, [props.inputVal])
 
@@ -72,7 +73,8 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
-                    navHistory={props.navHistory}
+                    navHistory={[...props.navHistory].reverse()}
+                    // navHistory={props.navHistory}
                     suggestions={suggestions}
                 />  
                 <Featured 
