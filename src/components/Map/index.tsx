@@ -88,7 +88,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
     useEffect(() => {
       if(emissionsData.length > 0) {
-        const navHistory = cookies.history
+        const navHistory = cookies.history;
         if(navHistory == undefined) {
           setCookie('history', [{ name: emissionsData[0].name, path: location.pathname }])
         } else {

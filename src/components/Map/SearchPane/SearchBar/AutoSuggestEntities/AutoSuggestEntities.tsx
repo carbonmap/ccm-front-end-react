@@ -1,7 +1,8 @@
 import { IonIcon, IonInput, IonSearchbar } from '@ionic/react';
 import React, { useState, useEffect, SetStateAction } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { arrowBack, searchOutline, close } from 'ionicons/icons'
+import { arrowBack, searchOutline, close } from 'ionicons/icons';
+import * as entityList from './entities.json';
 
 interface PageProps {
   isOpen: boolean;
@@ -14,55 +15,40 @@ interface PageProps {
   setAutoSuggestions: any;
 }
 
-const languages = [
-  {
-    name: 'The Leys School',
-    path: 'net.theleys'
-  },
-  {
-    name: 'St. Edmunds College',
-    path: 'uk.ac.cam.st-edmunds'
-  },
-  {
-    name: "King's College",
-    path: 'uk.ac.cam.kings'
-  }
-];
-
 const getSuggestions = (value:any) => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
   const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
 
-  const filter = inputLength === 0 ? [] : languages.filter(lang => {
-    const strippedName = lang.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+  const filter = inputLength === 0 ? [] : entityList.entities.filter(entity => {
+    const strippedName = entity.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
     
     if(strippedName.startsWith("the")) {
       if(punctuationless.startsWith("the")) {
         if(strippedName.slice(0, inputLength) == punctuationless) {
-          return lang;
-        } else if(lang.name.toLowerCase().slice(3, inputLength) === inputValue) {
-          return lang;
+          return entity;
+        } else if(entity.name.toLowerCase().slice(3, inputLength) === inputValue) {
+          return entity;
         }
       } else {
         if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
-          return lang;
-        } else if(lang.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
-          return lang;
+          return entity;
+        } else if(entity.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
+          return entity;
         } else {
             if(strippedName.slice(0, inputLength) == punctuationless) {
-            return lang;
-          } else if(lang.name.toLowerCase().slice(0, inputLength) === inputValue) {
-            return lang;
+            return entity;
+          } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
+            return entity;
           }
         }
       }
     } else {
         if(strippedName.slice(0, inputLength) == punctuationless) {
-        return lang;
-      } else if(lang.name.toLowerCase().slice(0, inputLength) === inputValue) {
-        return lang;
+        return entity;
+      } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
+        return entity;
       }
     }
   })
