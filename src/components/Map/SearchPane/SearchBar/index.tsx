@@ -41,14 +41,16 @@ const SearchBar: React.FC<PageProps> = (props) => {
         if(props.inputVal !== "") {
             setSuggestions(autoSuggestions);
         } else {
-            setSuggestions([...props.navHistory].reverse());
+            if(props.navHistory) {
+                setSuggestions([...props.navHistory].reverse());
+            }
             // setSuggestions(props.navHistory);
         }
     }, [props.inputVal, props.navHistory])
 
     return (
         <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent' }}>
-                <div className="search-bar-container">
+                {/* <div className="search-bar-container"> */}
                     {/* <IonSearchbar 
                         className="search-bar" 
                         onFocus={() => handleSearchSelect()}  
@@ -66,7 +68,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                         handleMenuClose={() => handleMenuClose()}
                         setAutoSuggestions={setAutoSuggestions}
                     />
-                </div>
+                {/* </div> */}
             {props.isSearching ?
             <>
                 <SearchSuggestions 

@@ -93,14 +93,22 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
     const renderInputComponent = (inputProps:any) => (
       <div className="search-bar-container" >
-          <IonIcon icon={searchIcon} onClick={props.isSearching ? () => props.setIsSearching(false) : () => props.handleMenuClose()} style={{ fontSize: 24, cursor: 'pointer' }} />
+          <IonIcon 
+            icon={searchIcon} 
+            onClick={props.isSearching ? () => props.setIsSearching(false) : () => props.handleMenuClose()} 
+            style={{ fontSize: 24, cursor: 'pointer' }} 
+          />
           <input 
               {...inputProps} 
               className="search-bar"
               style={{ outline: 'none', border: 'none' }}
               onFocus={() => props.setIsSearching(true)}
           />
-          <IonIcon icon={close} onClick={() => props.setInputVal("")} style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} />
+          <IonIcon 
+            icon={close} 
+            onClick={() => props.setInputVal("")} 
+            style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} 
+          />
       </div>
     );
 
