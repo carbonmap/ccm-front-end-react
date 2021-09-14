@@ -27,6 +27,8 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     
       const filter = inputLength === 0 ? [] : entityList.entities.filter((entity:any) => {
         const strippedName = entity.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+
+
         
         if(strippedName.startsWith("the")) {
           if(punctuationless.startsWith("the")) {
@@ -49,14 +51,23 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
             }
           }
         } else {
-            if(strippedName.slice(0, inputLength) == punctuationless) {
+          if(strippedName.slice(0, inputLength) == punctuationless) {
             return entity;
           } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
             return entity;
+          } else {
+            const splitWordArr = punctuationless.split(" ");
+            const splitEntityString = strippedName.split(" ");
+            for(let i = 0; i < splitWordArr.length; i++) {
+                const checkWords = splitEntityString.includes(splitWordArr[i]);
+                if(checkWords) {
+                  return entity;
+                }
+            }
           }
         }
-      })
-    
+      });
+
     
       return filter;
     };
@@ -110,7 +121,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
               {...inputProps} 
               className="search-bar"
               style={{ outline: 'none', border: 'none' }}
-              // onFocus={() => props.setIsSearching(true)}
               onFocus={() => handleInputFocus()}
           />
           <IonIcon 
