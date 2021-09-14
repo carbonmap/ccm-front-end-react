@@ -2,7 +2,6 @@ import { IonIcon } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { arrowBack, searchOutline, close } from 'ionicons/icons';
-import * as entityList from './entities.json';
 
 interface PageProps {
   isOpen: boolean;
@@ -15,27 +14,40 @@ interface PageProps {
   setAutoSuggestions: any;
 }
 
-const getSuggestions = (value:any) => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
+const AutoSuggestEntities: React.FC<PageProps> = (props) => {
+    const [suggestions, setSuggestions] = useState<any>('');
+    const [searchIcon, setSearchIcon] = useState(searchOutline);
+    const [entityList, setEntityList] = useState<any>();
 
-  const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
-
-  const filter = inputLength === 0 ? [] : entityList.entities.filter(entity => {
-    const strippedName = entity.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+    const getSuggestions = (value:any) => {
+      const inputValue = value.trim().toLowerCase();
+      const inputLength = inputValue.length;
     
-    if(strippedName.startsWith("the")) {
-      if(punctuationless.startsWith("the")) {
-        if(strippedName.slice(0, inputLength) == punctuationless) {
-          return entity;
-        } else if(entity.name.toLowerCase().slice(3, inputLength) === inputValue) {
-          return entity;
-        }
-      } else {
-        if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
-          return entity;
-        } else if(entity.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
-          return entity;
+      const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
+    
+      const filter = inputLength === 0 ? [] : entityList.entities.filter((entity:any) => {
+        const strippedName = entity.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+        
+        if(strippedName.startsWith("the")) {
+          if(punctuationless.startsWith("the")) {
+            if(strippedName.slice(0, inputLength) == punctuationless) {
+              return entity;
+            } else if(entity.name.toLowerCase().slice(3, inputLength) === inputValue) {
+              return entity;
+            }
+          } else {
+            if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
+              return entity;
+            } else if(entity.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
+              return entity;
+            } else {
+                if(strippedName.slice(0, inputLength) == punctuationless) {
+                return entity;
+              } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
+                return entity;
+              }
+            }
+          }
         } else {
             if(strippedName.slice(0, inputLength) == punctuationless) {
             return entity;
@@ -43,31 +55,19 @@ const getSuggestions = (value:any) => {
             return entity;
           }
         }
-      }
-    } else {
-        if(strippedName.slice(0, inputLength) == punctuationless) {
-        return entity;
-      } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
-        return entity;
-      }
-    }
-  })
-
-
-  return filter;
-};
-
-const getSuggestionValue = (suggestion:any) => suggestion.name;
-
-const renderSuggestion = (suggestion:any) => (
-  <div style={{ display: 'none' }}>
-    {suggestion.name}
-  </div>
-);
-
-const AutoSuggestEntities: React.FC<PageProps> = (props) => {
-    const [suggestions, setSuggestions] = useState<any>('');
-    const [searchIcon, setSearchIcon] = useState(searchOutline);
+      })
+    
+    
+      return filter;
+    };
+    
+    const getSuggestionValue = (suggestion:any) => suggestion.name;
+    
+    const renderSuggestion = (suggestion:any) => (
+      <div style={{ display: 'none' }}>
+        {suggestion.name}
+      </div>
+    );
 
     const onChange = (event:any) => {
       if(event.target.value) {
@@ -91,6 +91,14 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
       onChange: onChange,
     };
 
+    const handleInputFocus = async() => {
+      props.setIsSearching(true);
+
+      const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
+      const data = await response.json();
+      setEntityList(data);
+    };
+
     const renderInputComponent = (inputProps:any) => (
       <div className="search-bar-container" >
           <IonIcon 
@@ -102,7 +110,8 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
               {...inputProps} 
               className="search-bar"
               style={{ outline: 'none', border: 'none' }}
-              onFocus={() => props.setIsSearching(true)}
+              // onFocus={() => props.setIsSearching(true)}
+              onFocus={() => handleInputFocus()}
           />
           <IonIcon 
             icon={close} 
