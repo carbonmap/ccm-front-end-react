@@ -84,8 +84,9 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
       if(event.target.value) {
         props.setInputVal(event.target.value);
       } else {
-        props.setInputVal("")
-      }
+        props.setInputVal("");
+        props.setAutoSuggestions([]);
+      };
     };
 
     const onSuggestionsFetchRequested = ({ value }:any) => {
