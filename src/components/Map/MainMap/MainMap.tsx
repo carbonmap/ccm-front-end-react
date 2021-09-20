@@ -2,10 +2,8 @@ import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-leaflet';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../redux/store';
-
-import AlertMessage from "../Message/AlertMessage";
-
+import type { RootState } from '../../../redux/store';
+import AlertMessage from "../../Message/AlertMessage";
 
 interface State {
     geoData: JSX.Element[],
@@ -48,11 +46,6 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
 
     const location = useLocation();
     const history = useHistory();
-
-
-    // const isError = useSelector( (state: RootState) => state.isError);
-    // const { error, isOpen } = isError;
-
 
     const handleGeoDataCoords = async() => {
         try {

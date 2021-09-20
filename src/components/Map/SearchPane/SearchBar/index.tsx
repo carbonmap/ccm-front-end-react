@@ -16,6 +16,7 @@ interface PageProps {
     openMenu: Function;
     setIsOpen: (isOpen: boolean) => void;
     isOpen: boolean;
+    navHistory: object[]
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
@@ -49,6 +50,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
+                    navHistory={props.navHistory}
                 />  
                 <Featured 
                     featuredEntities={props.featuredEntities}

@@ -10,8 +10,7 @@ const rootReducer = combineReducers({
     isLoading: loadingReducer,
     menuOpen: menuReducer,
     selectedLocation: locationReducer,
-    isError: errorReducer
-
+    isError: errorReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

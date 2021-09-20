@@ -2,7 +2,7 @@ import { IonText, IonIcon } from '@ionic/react';
 import React from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../redux/reducers';
+import { RootState } from '../../../../../../redux/reducers';
 import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
 
