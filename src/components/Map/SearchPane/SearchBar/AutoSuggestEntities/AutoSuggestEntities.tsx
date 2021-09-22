@@ -22,7 +22,8 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     const getSuggestions = (value:any) => {
       const inputValue = value.trim().toLowerCase();
       const inputLength = inputValue.length;
-    
+      let matchedArr:any = [];
+
       const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
     
       const filter = inputLength === 0 ? [] : entityList.filter((entity:any) => {
@@ -30,7 +31,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
 
         if(punctuationless === strippedName.slice(0,inputLength)) {
-          return entity;
+          matchedArr.push(entity);
         } else {
           if(strippedName.startsWith("the")) {
             if(punctuationless.startsWith("the")) {
@@ -62,7 +63,20 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
         }
       });
-      return filter;
+
+      filter.sort((a:any,b:any) => {
+        if(a.name < b.name) { return -1; }
+        if(a.name > b.name) { return 1; }
+        return 0;
+      });
+
+      matchedArr.sort((a:any, b:any) => {
+        if(a.name < b.name) { return -1; }
+        if(a.name > b.name) { return 1; }
+        return 0;
+      });
+
+      return [...matchedArr, ...filter];
     };
     
     const getSuggestionValue = (suggestion:any) => suggestion.name;
