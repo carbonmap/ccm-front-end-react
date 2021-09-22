@@ -24,13 +24,15 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
             {props.suggestions ?
                 props.suggestions.map((entity: any, index) => {
-                    return (
-                        <Link key={index} to={entity.path} >
-                            <IonItem 
-                                className="search-suggestion-el"
-                            >{entity.name}</IonItem>
-                        </Link>
-                    )
+                    if(index < 5) {
+                        return (
+                            <Link key={index} to={entity.path} >
+                                <IonItem 
+                                    className="search-suggestion-el"
+                                >{entity.name}</IonItem>
+                            </Link>
+                        );
+                    };
                 })
             :
                 props.featuredEntities.map((entity: any, index) => {
@@ -40,7 +42,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
                                 className="search-suggestion-el"
                             >{entity.name}</IonItem>
                         </Link>
-                    )
+                    );
                 })
             }
         </div>
