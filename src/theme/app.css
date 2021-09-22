@@ -6,7 +6,6 @@
   z-index: 1000;
   position: absolute;
   margin-top: 7vh;
-  pointer-events: none;
 }
 .spinner-container {
   height: 100vh;
@@ -43,5 +42,6 @@
     width: 100%;
     height: auto;
     margin-top: 9vh;
+    pointer-events: none;
   }
 }

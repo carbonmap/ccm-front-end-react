@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../redux/reducers';
 import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
+import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
 
 interface PageProps {
     isOpen: boolean;
@@ -63,7 +64,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <DataAccordion 
                 title="CO2e in 2020"
                 titleData="24t"
-                bottomView={<IonText>Hello</IonText>}
+                bottomView={<EntityCO2 />}
             />
             <DataAccordion 
                 title="actions"

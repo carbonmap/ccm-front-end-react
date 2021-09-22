@@ -1,7 +1,7 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
-  height: 64vh;
+  max-height: 90vh;
 }
 .data-accordion {
   border: 2px solid green;
@@ -74,5 +74,12 @@
   .entity-details-container {
     padding: 16px 16px 16px 16px;
     max-height: 72vh;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .entity-details-container {
+    padding: 16px 16px 16px 16px;
+    max-height: 72vh;
+    height: 64vh;
   }
 }
