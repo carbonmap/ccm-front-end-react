@@ -5,10 +5,20 @@
   pointer-events: all;
 }
 .search-bar {
-  padding: 0;
+  padding: 14px;
   width: 96%;
   margin: 4px 0 0 2%;
   margin-bottom: 2px;
+}
+.search-bar-container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .suggestion-container {

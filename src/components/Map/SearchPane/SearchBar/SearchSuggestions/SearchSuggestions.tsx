@@ -7,6 +7,7 @@ interface PageProps {
     featuredEntities: {id: string, name: string, emissions: string[]}[];
     isSearching: boolean;
     navHistory: object[];
+    suggestions: object[];
 }
 
 const SearchSuggestions: React.FC<PageProps> = (props) => {
@@ -19,20 +20,19 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         transform: 'translateX(-100%)'
     };
 
-    const reversedHistory = [...props.navHistory].reverse();
-    // console.log(reversed)
-
     return (
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
-            {reversedHistory ?
-                reversedHistory.map((entity: any, index) => {
-                    return (
-                        <Link key={index} to={entity.path} >
-                            <IonItem 
-                                className="search-suggestion-el"
-                            >{entity.name}</IonItem>
-                        </Link>
-                    )
+            {props.suggestions ?
+                props.suggestions.map((entity: any, index) => {
+                    if(index < 5) {
+                        return (
+                            <Link key={index} to={entity.path} >
+                                <IonItem 
+                                    className="search-suggestion-el"
+                                >{entity.name}</IonItem>
+                            </Link>
+                        );
+                    };
                 })
             :
                 props.featuredEntities.map((entity: any, index) => {
@@ -42,7 +42,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
                                 className="search-suggestion-el"
                             >{entity.name}</IonItem>
                         </Link>
-                    )
+                    );
                 })
             }
         </div>

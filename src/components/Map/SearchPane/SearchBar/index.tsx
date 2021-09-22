@@ -1,9 +1,10 @@
 import { IonIcon, IonSearchbar } from '@ionic/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Featured from '../SideMenu/MenuComponents/Featured/Featured';
 import './searchBar.css';
 import SearchSuggestions from './SearchSuggestions/SearchSuggestions';
+import AutoSuggestEntities from './AutoSuggestEntities/AutoSuggestEntities';
 
 interface PageProps {
     inputVal: string;
@@ -20,6 +21,9 @@ interface PageProps {
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
+    const [autoSuggestions, setAutoSuggestions] = useState([]);
+    const [suggestions, setSuggestions] = useState<object[]>([]);
+
     const history = useHistory();
 
     const handleSearchSelect = () => {
@@ -33,17 +37,39 @@ const SearchBar: React.FC<PageProps> = (props) => {
         history.push("/")
     };
 
+    useEffect(() => {
+        if(props.inputVal !== "") {
+            setSuggestions(autoSuggestions);
+        } else {
+            if(props.navHistory) {
+                setSuggestions([...props.navHistory].reverse());
+            } else {
+                setSuggestions(props.featuredEntities);
+            }
+        }
+    }, [props.inputVal, props.navHistory])
+
     return (
         <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent' }}>
-                <div className="search-bar-container">
-                    <IonSearchbar 
+                {/* <div className="search-bar-container"> */}
+                    {/* <IonSearchbar 
                         className="search-bar" 
                         onFocus={() => handleSearchSelect()}  
                         value={props.inputVal} 
                         showCancelButton={props.isOpen || props.isSearching ? "always" : "never"}
                         onIonCancel={props.isSearching ? () => props.setIsSearching(false) : () => handleMenuClose()}
+                    /> */}
+                    <AutoSuggestEntities 
+                        handleSearchSelect={handleSearchSelect}
+                        inputVal={props.inputVal}
+                        setInputVal={props.setInputVal}
+                        isOpen={props.isOpen}
+                        isSearching={props.isSearching}
+                        setIsSearching={props.setIsSearching}
+                        handleMenuClose={() => handleMenuClose()}
+                        setAutoSuggestions={setAutoSuggestions}
                     />
-                </div>
+                {/* </div> */}
             {props.isSearching ?
             <>
                 <SearchSuggestions 
@@ -51,6 +77,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     emissionsData={props.emissionsData}
                     isSearching={props.isSearching}
                     navHistory={props.navHistory}
+                    suggestions={suggestions}
                 />  
                 <Featured 
                     featuredEntities={props.featuredEntities}

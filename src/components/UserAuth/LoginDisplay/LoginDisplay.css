@@ -1,0 +1,10 @@
+.switch-login-display {
+  color: #008468;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.login-warn {
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
+}
