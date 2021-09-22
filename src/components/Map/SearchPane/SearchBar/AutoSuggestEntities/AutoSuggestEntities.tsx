@@ -25,46 +25,41 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     
       const punctuationless = inputValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s+/g, " ");
     
-      const filter = inputLength === 0 ? [] : entityList.entities.filter((entity:any) => {
+      const filter = inputLength === 0 ? [] : entityList.filter((entity:any) => {
         const strippedName = entity.name.toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
 
 
-        
-        if(strippedName.startsWith("the")) {
-          if(punctuationless.startsWith("the")) {
-            if(strippedName.slice(0, inputLength) == punctuationless) {
-              return entity;
-            } else if(entity.name.toLowerCase().slice(3, inputLength) === inputValue) {
-              return entity;
+        if(punctuationless === strippedName.slice(0,inputLength)) {
+          return entity;
+        } else {
+          if(strippedName.startsWith("the")) {
+            if(punctuationless.startsWith("the")) {
+              if(strippedName.slice(0, inputLength) == punctuationless) {
+                return entity;
+              } 
+            } else {
+              if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
+                return entity;
+              } 
             }
           } else {
-            if(strippedName.substring(4, (4 + inputLength)) === punctuationless) {
+            if(strippedName.slice(0, inputLength) == punctuationless) {
               return entity;
-            } else if(entity.name.toLowerCase().substring(4, (4 + inputLength)) === inputValue) {
+            } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
               return entity;
             } else {
-                if(strippedName.slice(0, inputLength) == punctuationless) {
-                return entity;
-              } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
-                return entity;
+              const splitWordArr = punctuationless.split(" ");
+              const splitEntityString = strippedName.split(" ");
+              console.log(splitEntityString)
+              for(let i = 0; i < splitWordArr.length; i++) {
+                  const checkWords = splitEntityString.includes(splitWordArr[i]);
+                  if(checkWords) {
+                    return entity;
+                  }
               }
             }
           }
-        } else {
-          if(strippedName.slice(0, inputLength) == punctuationless) {
-            return entity;
-          } else if(entity.name.toLowerCase().slice(0, inputLength) === inputValue) {
-            return entity;
-          } else {
-            const splitWordArr = punctuationless.split(" ");
-            const splitEntityString = strippedName.split(" ");
-            for(let i = 0; i < splitWordArr.length; i++) {
-                const checkWords = splitEntityString.includes(splitWordArr[i]);
-                if(checkWords) {
-                  return entity;
-                }
-            }
-          }
+
         }
       });
 
@@ -108,7 +103,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
       const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
       const data = await response.json();
-      setEntityList(data);
+      setEntityList(data.entities);
     };
 
     const renderInputComponent = (inputProps:any) => (
