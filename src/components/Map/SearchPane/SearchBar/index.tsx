@@ -46,7 +46,6 @@ const SearchBar: React.FC<PageProps> = (props) => {
             } else {
                 setSuggestions(props.featuredEntities);
             }
-            // setSuggestions(props.navHistory);
         }
     }, [props.inputVal, props.navHistory])
 

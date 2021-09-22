@@ -50,7 +50,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
             } else {
               const splitWordArr = punctuationless.split(" ");
               const splitEntityString = strippedName.split(" ");
-              console.log(splitWordArr)
               for(let i = 0; i < splitWordArr.length; i++) {
                 for(let x = 0; x < splitEntityString.length; x++) {
                   if(splitEntityString[x].slice(0, splitWordArr[i].length) === splitWordArr[i]) {

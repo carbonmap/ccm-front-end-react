@@ -97,7 +97,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
             const index = navHistory.indexOf(matchEntity);
             navHistory.splice(index, 1);
           }
-          // if(matchEntity == undefined) {
             if(navHistory.length === 5) {
               const shiftedHistory:any = navHistory.slice(1);
               const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
@@ -106,7 +105,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
               const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
               setCookie('history', newHistory);
             };  
-          // };
         };
       };
     }, [emissionsData])
