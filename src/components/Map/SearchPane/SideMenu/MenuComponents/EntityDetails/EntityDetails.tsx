@@ -53,6 +53,8 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
 
+    console.log(props.emissionsData[0])
+
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
             <img 
@@ -64,7 +66,12 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <DataAccordion 
                 title="CO2e in 2020"
                 titleData="24t"
-                bottomView={<EntityCO2 />}
+                bottomView={
+                    <EntityCO2 
+                        labels={props.emissionsData[0].emissions.map((emission:any) => emission.measure)}
+                        data={props.emissionsData[0].emissions.map((emission:any) => emission.value)}
+                    />
+                }
             />
             <DataAccordion 
                 title="actions"

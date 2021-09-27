@@ -1,16 +1,25 @@
+import { Legend } from 'chart.js';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-labels';
 
-interface PageProps {}
+interface PageProps {
+  labels: string[],
+  data: number[],
+
+}
 
 const EntityCO2: React.FC<PageProps> = (props) => {
 
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: props.labels,
+        // labels: ['Electricity', 'Gas'],
         datasets: [
           {
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: props.data,
+            // data: [12, 19],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -27,15 +36,31 @@ const EntityCO2: React.FC<PageProps> = (props) => {
               'rgba(153, 102, 255, 1)',
               'rgba(255, 159, 64, 1)',
             ],
-            borderWidth: 1,
+            borderWidth: 1,                
           },
         ],
       };
       
+      // console.log(ChartDataLabels)
     return (
         <div style={{ width: '100%', height: '100%' }}>
-            <Pie data={data} />
-            {/* <p>HELLO</p> */}
+            <Pie 
+              data={data} 
+              options={{
+                plugins: {
+                  legend: {
+                    position: 'bottom'
+                  },
+                  datalabels: {
+                    display: true,
+                    color: '#000',
+                    labels: {
+                      
+                    }
+                  },
+                }
+              }}
+            />
         </div>
     );
 };
