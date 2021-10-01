@@ -1,5 +1,5 @@
-import { IonText, IonIcon } from '@ionic/react';
-import React from 'react';
+import { IonText } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../redux/reducers';
@@ -16,8 +16,19 @@ interface PageProps {
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
+    const [graphData, setGraphData] = useState<any>([]);
+
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
+
+    const getEmissionsData = async() => {
+        const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission.json');
+        const data = await response.json();
+
+        const entityData = data.emission.find((emission:any) => emission.entity_id === props.emissionsData[0].id);
+
+        setGraphData(entityData.emissions)
+    };
 
     const actions = (
         <EntityActionsList 
@@ -53,7 +64,9 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
 
-    console.log(props.emissionsData[0])
+    useEffect(() => {
+        getEmissionsData();
+    }, [])
 
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
@@ -63,16 +76,20 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <IonText className="ion-no-padding ion-text-left">{props.emissionsData[0].name}</IonText>
             <br />
             <IonText>15 Market Hill, Cambridge</IonText>
-            <DataAccordion 
-                title="CO2e in 2020"
-                titleData="24t"
-                bottomView={
-                    <EntityCO2 
-                        labels={props.emissionsData[0].emissions.map((emission:any) => emission.measure)}
-                        data={props.emissionsData[0].emissions.map((emission:any) => emission.value)}
-                    />
-                }
-            />
+            {/* {graphData ? */}
+                <DataAccordion 
+                    title="CO2e in 2020"
+                    titleData="24t"
+                    bottomView={
+                        <EntityCO2 
+                            labels={graphData.map((emission:any) => emission.measure)}
+                            data={graphData.map((emission:any) => emission.value)}
+                        />
+                    }
+                />
+            {/* :
+                null
+            } */}
             <DataAccordion 
                 title="actions"
                 titleData="2"
