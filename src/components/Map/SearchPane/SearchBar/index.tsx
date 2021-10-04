@@ -51,25 +51,16 @@ const SearchBar: React.FC<PageProps> = (props) => {
 
     return (
         <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent' }}>
-                {/* <div className="search-bar-container"> */}
-                    {/* <IonSearchbar 
-                        className="search-bar" 
-                        onFocus={() => handleSearchSelect()}  
-                        value={props.inputVal} 
-                        showCancelButton={props.isOpen || props.isSearching ? "always" : "never"}
-                        onIonCancel={props.isSearching ? () => props.setIsSearching(false) : () => handleMenuClose()}
-                    /> */}
-                    <AutoSuggestEntities 
-                        handleSearchSelect={handleSearchSelect}
-                        inputVal={props.inputVal}
-                        setInputVal={props.setInputVal}
-                        isOpen={props.isOpen}
-                        isSearching={props.isSearching}
-                        setIsSearching={props.setIsSearching}
-                        handleMenuClose={() => handleMenuClose()}
-                        setAutoSuggestions={setAutoSuggestions}
-                    />
-                {/* </div> */}
+            <AutoSuggestEntities 
+                handleSearchSelect={handleSearchSelect}
+                inputVal={props.inputVal}
+                setInputVal={props.setInputVal}
+                isOpen={props.isOpen}
+                isSearching={props.isSearching}
+                setIsSearching={props.setIsSearching}
+                handleMenuClose={() => handleMenuClose()}
+                setAutoSuggestions={setAutoSuggestions}
+            />
             {props.isSearching ?
             <>
                 <SearchSuggestions 
@@ -78,6 +69,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     isSearching={props.isSearching}
                     navHistory={props.navHistory}
                     suggestions={suggestions}
+                    setInputVal={props.setInputVal}
                 />  
                 <Featured 
                     featuredEntities={props.featuredEntities}
