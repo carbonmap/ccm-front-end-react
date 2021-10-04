@@ -1,4 +1,4 @@
-import { IonIcon, IonText, IonTitle } from '@ionic/react'
+import { IonIcon, IonText } from '@ionic/react'
 import React, { useState } from 'react';
 import '../entityDetails.css';
 import { chevronDown } from 'ionicons/icons'; 

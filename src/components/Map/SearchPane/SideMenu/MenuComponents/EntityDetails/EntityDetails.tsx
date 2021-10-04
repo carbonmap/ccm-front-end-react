@@ -76,20 +76,18 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <IonText className="ion-no-padding ion-text-left">{props.emissionsData[0].name}</IonText>
             <br />
             <IonText>15 Market Hill, Cambridge</IonText>
-            {/* {graphData ? */}
-                <DataAccordion 
-                    title="CO2e in 2020"
-                    titleData="24t"
-                    bottomView={
-                        <EntityCO2 
-                            labels={graphData.map((emission:any) => emission.measure)}
-                            data={graphData.map((emission:any) => emission.value)}
-                        />
-                    }
-                />
-            {/* :
-                null
-            } */}
+            <DataAccordion 
+                title="CO2e in 2020"
+                titleData="24t"
+                bottomView={
+                    <EntityCO2 
+                        graphData={graphData}
+                        labels={graphData.map((emission:any) => emission.measure)}
+                        data={graphData.map((emission:any) => emission.value)}
+                        // dateRange={graphData.map((emission:any) => {emission.period-start, emission.period-end})}
+                    />
+                }
+            />
             <DataAccordion 
                 title="actions"
                 titleData="2"
