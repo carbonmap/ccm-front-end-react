@@ -2,21 +2,18 @@ import { Chart } from 'chart.js';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonRange } from '@ionic/react';
 
 Chart.register(ChartDataLabels);
 
 interface PageProps {
   labels: string[],
   data: number[],
-  // dateRange: {}[]
   graphData: any
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
   const data = {
     labels: props.graphData.map((emission:any) => emission.measure),
-    // labels: props.labels,
     datasets: [
       {
         label: '# of Votes',
@@ -73,7 +70,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
               }
             }}
           />
-          <IonRange  />
       </div>
   );
 };

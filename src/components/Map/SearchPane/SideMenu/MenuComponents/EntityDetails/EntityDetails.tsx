@@ -84,7 +84,6 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                         graphData={graphData}
                         labels={graphData.map((emission:any) => emission.measure)}
                         data={graphData.map((emission:any) => emission.value)}
-                        // dateRange={graphData.map((emission:any) => {emission.period-start, emission.period-end})}
                     />
                 }
             />
