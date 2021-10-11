@@ -2,12 +2,12 @@ import React from 'react';
 import EntityAction from './EntityAction';
 
 interface PageProps {
-    actions: string[]
+    actions: any[]
 }
 
 const EntityActionsList: React.FC<PageProps> = (props) => {
     return (
-        <div className="ion-margin-top">
+        <ul className="ion-margin-top">
             {
                 props.actions.map((action, index) => {
                     return (
@@ -18,7 +18,7 @@ const EntityActionsList: React.FC<PageProps> = (props) => {
                     )
                 })
             }
-        </div>
+        </ul>
     );
 };
 
