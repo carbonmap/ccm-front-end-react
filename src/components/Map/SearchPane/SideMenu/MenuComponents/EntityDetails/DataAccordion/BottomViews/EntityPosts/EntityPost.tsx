@@ -8,11 +8,13 @@ interface PageProps {
 }
 
 const EntityPost: React.FC<PageProps> = (props) => {
+    const date = new Date(props.date);
+
     return (
         <div className="accordion-post">
             <div className="accordion-post-title ion-justify-content-between">
                 <IonText className="accordion-title-bold">{props.title}</IonText>
-                <IonText>{props.date}</IonText>
+                <IonText>{date.toLocaleDateString("en-UK")}</IonText>
             </div>
             <div className="accordion-post-text-container">
                 <IonText className="accordion-post-text">{props.text}</IonText>

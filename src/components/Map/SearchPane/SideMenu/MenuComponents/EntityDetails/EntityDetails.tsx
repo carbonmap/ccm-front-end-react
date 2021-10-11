@@ -18,6 +18,7 @@ interface PageProps {
 const EntityDetails: React.FC<PageProps> = (props) => {
     const [graphData, setGraphData] = useState<any>([]);
     const [actionData, setActionData] = useState<any>([]);
+    const [postData, setPostData] = useState<any>([]);
 
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
@@ -34,13 +35,13 @@ const EntityDetails: React.FC<PageProps> = (props) => {
 
         const entityActionData = actionJson.action.find((action:any) => action.entity_id === props.emissionsData[0].id);
         setActionData(entityActionData.actions);
-        console.log(entityActionData.actions)
 
-        // const postRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action.json');
-        // const postJson = await postRes.json();
+        const postRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post.json');
+        const postJson = await postRes.json();
 
-        // const entityPostData = postJson.post.find((post:any) => post.entity_id === props.emissionsData[0].id);
-        // setActionData(entityPostData.posts);
+        const entityPostData = postJson.post.find((post:any) => post.entity_id === props.emissionsData[0].id);
+        setPostData(entityPostData.posts);
+        console.log(entityPostData.posts);
     };
 
     const actions = (
@@ -50,23 +51,24 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     );
     const posts = (
         <EntityPostsList 
-            posts={[
-                {
-                    title: "Getting Started",
-                    text: "It's 20221 and time we took our carbon footprint seriously. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    date: "1 April 2021"
-                },
-                {
-                    title: "Food Waste",
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-                    date: "5 April 2021"
-                },
-                {
-                    title: "Develop a decarbonisation plan",
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-                    date: "14 May 2021"
-                },
-            ]}
+            posts={postData}
+            // posts={[
+            //     {
+            //         title: "Getting Started",
+            //         text: "It's 20221 and time we took our carbon footprint seriously. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            //         date: "1 April 2021"
+            //     },
+            //     {
+            //         title: "Food Waste",
+            //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
+            //         date: "5 April 2021"
+            //     },
+            //     {
+            //         title: "Develop a decarbonisation plan",
+            //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
+            //         date: "14 May 2021"
+            //     },
+            // ]}
         />
     );
 
@@ -102,12 +104,12 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             />
             <DataAccordion 
                 title="actions"
-                titleData="2"
+                titleData={actionData.length}
                 bottomView={actions}
             />
             <DataAccordion 
                 title="posts"
-                titleData={props.emissionsData[0].emissions.length.toString()} 
+                titleData={postData.length} 
                 bottomView={posts}
             />
         </div>
