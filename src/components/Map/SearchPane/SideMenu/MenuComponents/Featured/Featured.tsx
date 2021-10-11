@@ -6,7 +6,8 @@ import './featured.css';
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
     featuredEntities: {id: string, name: string, emissions: string[]}[];
-    openMenu: Function
+    openMenu: Function;
+    setInputVal: Function;
 }
 
 const Featured: React.FC<PageProps> = (props) => {
@@ -25,6 +26,7 @@ const Featured: React.FC<PageProps> = (props) => {
                             actions={2}
                             posts={2}
                             openMenu={props.openMenu}
+                            setInputVal={props.setInputVal}
                         />
                     )
                 })

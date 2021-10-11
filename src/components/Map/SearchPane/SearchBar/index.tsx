@@ -75,6 +75,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     featuredEntities={props.featuredEntities}
                     emissionsData={props.emissionsData}
                     openMenu={props.openMenu}
+                    setInputVal={props.setInputVal}
                 /> 
             </>
             : 
