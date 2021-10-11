@@ -12,12 +12,25 @@ interface PageProps {
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
+  
+  const filteredData = props.graphData.filter((dataItem:any) => {
+    const startDate = new Date(dataItem.period_start);
+    const startYear = startDate.getFullYear();
+  
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() - 1;
+
+    if(currentYear === startYear) {
+      return dataItem;
+    };    
+  });
+
   const data = {
-    labels: props.graphData.map((emission:any) => emission.measure),
+    labels: filteredData.map((emission:any) => emission.measure),
     datasets: [
       {
         label: '# of Votes',
-        data: props.data,
+        data: filteredData.map((dataItem:any) => dataItem.value),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
