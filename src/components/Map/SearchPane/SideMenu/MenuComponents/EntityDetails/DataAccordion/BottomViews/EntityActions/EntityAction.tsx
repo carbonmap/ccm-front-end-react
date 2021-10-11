@@ -1,4 +1,4 @@
-import { IonText } from '@ionic/react';
+import { IonList, IonText } from '@ionic/react';
 import React from 'react';
 
 interface PageProps {
@@ -8,7 +8,8 @@ interface PageProps {
 const EntityAction: React.FC<PageProps> = (props) => {
     return (
         <div>
-            <IonText>{props.action}</IonText>
+            <IonList>{props.action}</IonList>
+            {/* <IonText>{props.action}</IonText> */}
         </div>
     );
 };

@@ -77,7 +77,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <br />
             <IonText>15 Market Hill, Cambridge</IonText>
             <DataAccordion 
-                title="CO2e in 2020"
+                title="CO2e in 2021"
                 titleData="24t"
                 bottomView={
                     <EntityCO2 

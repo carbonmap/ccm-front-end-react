@@ -70,8 +70,7 @@
     "@types/leaflet": "^1.7.0",
     "@types/react-autosuggest": "^10.1.5",
     "@types/react-redux": "^7.1.16",
-    "@types/react-responsive": "^8.0.2",
-    "@types/webpack-env": "^1.16.0"
+    "@types/react-responsive": "^8.0.2"
   },
   "description": "An Ionic project"
 }
