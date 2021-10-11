@@ -69,6 +69,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     isSearching={props.isSearching}
                     navHistory={props.navHistory}
                     suggestions={suggestions}
+                    setInputVal={props.setInputVal}
                 />  
                 <Featured 
                     featuredEntities={props.featuredEntities}

@@ -8,6 +8,7 @@ interface PageProps {
     isSearching: boolean;
     navHistory: object[];
     suggestions: object[];
+    setInputVal: (inputVal: string) => void;
 }
 
 const SearchSuggestions: React.FC<PageProps> = (props) => {
@@ -26,7 +27,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
                 props.suggestions.map((entity: any, index) => {
                     if(index < 5) {
                         return (
-                            <Link key={index} to={entity.path} >
+                            <Link key={index} to={entity.path} onClick={() => props.setInputVal("")} >
                                 <IonItem 
                                     className="search-suggestion-el"
                                 >{entity.name}</IonItem>
@@ -37,7 +38,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
             :
                 props.featuredEntities.map((entity: any, index) => {
                     return (
-                        <Link key={index} to={entity.id} >
+                        <Link key={index} to={entity.id} onClick={() => props.setInputVal("")} >
                             <IonItem 
                                 className="search-suggestion-el"
                             >{entity.name}</IonItem>
