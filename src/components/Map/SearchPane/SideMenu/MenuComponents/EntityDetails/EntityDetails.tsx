@@ -41,7 +41,6 @@ const EntityDetails: React.FC<PageProps> = (props) => {
 
         const entityPostData = postJson.post.find((post:any) => post.entity_id === props.emissionsData[0].id);
         setPostData(entityPostData.posts);
-        console.log(entityPostData.posts);
     };
 
     const actions = (
