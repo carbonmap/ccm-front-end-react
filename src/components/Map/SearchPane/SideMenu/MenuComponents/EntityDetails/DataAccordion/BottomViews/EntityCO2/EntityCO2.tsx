@@ -72,8 +72,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   color: '#000',
                   formatter:(value) => {
                     let sum = 0;
-                    props.data.map((num:any) => {
-                      sum = sum + parseInt(num);
+                    filteredData.map((dataItem:any) => {
+                      sum = sum + parseInt(dataItem.value);
                     });
 
                     let percentage = ((value / sum) * 100);
