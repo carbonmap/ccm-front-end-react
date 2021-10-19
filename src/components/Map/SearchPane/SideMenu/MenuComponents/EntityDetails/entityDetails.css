@@ -1,7 +1,7 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
-  height: 64vh;
+  height: 90vh;
 }
 .data-accordion {
   border: 2px solid green;
@@ -69,7 +69,6 @@
 .drawer-closed {
   transition: 0.5s ease-out;
 }
-
 @media only screen and (max-width: 768px) {
   .entity-details-container {
     padding: 16px 16px 16px 16px;
