@@ -1,10 +1,12 @@
 import { IonText, IonIcon } from '@ionic/react';
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../redux/reducers';
 import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
+import { useLocation } from 'react-router';
+import Spinner from '../../../../../UI/spinner/spinner';
 
 interface PageProps {
     isOpen: boolean;
@@ -15,8 +17,20 @@ interface PageProps {
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
+    const [entityDetails, setEntityDetails] = useState<any>();
+
+    const location = useLocation();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
+
+    const getEntityDetails = async() => {
+        const response = await fetch("https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property.json");
+        const data = await response.json();
+        
+        const urlId = location.pathname.substring(1, location.pathname.length);
+        const filterData = data.entity_property.find((entity:any) => entity.id === urlId);
+        setEntityDetails(filterData);
+    };
 
     const actions = (
         <EntityActionsList 
@@ -52,14 +66,39 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
 
+    useEffect(() => {
+        console.log("useEffect")
+        getEntityDetails();
+    }, []);
+    // useEffect(() => {
+    //     console.log(entityDetails.name)
+    // }, [entityDetails]);
+
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
-            <img 
-                src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
-            />
-            <IonText className="ion-no-padding ion-text-left">{props.emissionsData[0].name}</IonText>
+            {entityDetails ?
+                <>
+                    <img 
+                        src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
+                    />
+                    <IonText className="ion-no-padding ion-text-left">{entityDetails.name}</IonText>
+                    <br />
+                    <IonText>{entityDetails.business_type}</IonText>
+                    <br />
+                    <IonText>{entityDetails.address}</IonText>
+                    <br />
+                    <IonText>{entityDetails.desc}</IonText>
+                </>
+            :
+                <Spinner />
+            }
+
+            {/* <IonText className="ion-no-padding ion-text-left">{entityDetails.name}</IonText>
             <br />
-            <IonText>15 Market Hill, Cambridge</IonText>
+            <IonText>{entityDetails.business_type}</IonText>
+            <br />
+            <IonText>{entityDetails.address}</IonText> */}
+
             <DataAccordion 
                 title="CO2e in 2020"
                 titleData="24t"
