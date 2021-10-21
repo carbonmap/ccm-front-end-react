@@ -1,7 +1,8 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
-  height: 90vh;
+  height: 88vh;
+  margin-top: 4vh;
 }
 .data-accordion {
   border: 2px solid green;
@@ -106,6 +107,9 @@
 }
 .entity-address {
   font-weight: 500;
+}
+.entity-img {
+  border-radius: 3%;
 }
 
 @media only screen and (max-width: 768px) {

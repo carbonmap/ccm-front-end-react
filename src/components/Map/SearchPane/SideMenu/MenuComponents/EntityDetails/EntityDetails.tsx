@@ -87,6 +87,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             {entityDetails ?
                 <div>
                     <img 
+                        className="entity-img"
                         src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
                     />
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
