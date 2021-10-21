@@ -1,4 +1,4 @@
-import { IonText, IonIcon } from '@ionic/react';
+import { IonText, IonIcon, IonTitle } from '@ionic/react';
 import React, { useState, useEffect }  from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
@@ -18,6 +18,8 @@ interface PageProps {
 
 const EntityDetails: React.FC<PageProps> = (props) => {
     const [entityDetails, setEntityDetails] = useState<any>();
+    const [descHeight, setDescHeight] = useState('8vh');
+    const [seeMoreText, setSeeMoreText] = useState("more");
 
     const location = useLocation();
     const isMobile = useSelector( (state: RootState) => state.isMobile);
@@ -66,26 +68,45 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
 
+    const handleReadMore = () => {
+        if(descHeight !== '100vh') {
+            setDescHeight('100vh');
+            setSeeMoreText("less");
+        } else {
+            setDescHeight('8vh');
+            setSeeMoreText("more");
+        }
+    };
+
     useEffect(() => {
-        console.log("useEffect")
         getEntityDetails();
     }, []);
 
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
             {entityDetails ?
-                <div style={{ display:'flex', flexDirection: 'column', paddingTop: 16, paddingBottom: 16 }}>
+                <div>
                     <img 
                         src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
                     />
-                    <IonText 
-                    className="ion-no-padding ion-text-left entity-details-text">{entityDetails.name}</IonText>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div>
+                            <IonTitle className="ion-text-capitalize ion-no-padding ion-text-left entity-details-title">{entityDetails.name}</IonTitle>
+                            <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                        </div>
+                        <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                    </div>
                     <br />
-                    <IonText className="ion-text-capitalize entity-details-text">{entityDetails.business_type}</IonText>
-                    <br />
-                    <IonText className="entity-details-text">{entityDetails.address}</IonText>
-                    <br />
-                    <IonText className="entity-details-text">{entityDetails.desc}</IonText>
+                    <div className="entity-desc-container" onClick={() => handleReadMore()}>
+                        <div className="entity-desc-text-container" style={{ maxHeight: descHeight, transitionDuration: '2s', marginBottom: '4vh' }}>
+                        <IonText className="entity-desc">{entityDetails.desc}</IonText>
+                        <div 
+                            className="entity-desc-readmore-container" 
+                            style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}>
+                            <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             :
                 <Spinner />
