@@ -94,15 +94,19 @@
 .entity-desc {
   text-overflow: ellipsis;
 }
+.entity-title {
+  font-weight: 600;
+  font-size: 2vh;
+}
 .entity-business-type {
   background-color: #ccc;
   padding: 4px 12px;
   height: fit-content;
   font-weight: 400;
-  border-top-right-radius: 1vw;
-  border-top-left-radius: 1vw;
-  border-bottom-right-radius: 1vw;
-  border-bottom-left-radius: 1vw;
+  border-top-right-radius: 2vh;
+  border-top-left-radius: 2vh;
+  border-bottom-right-radius: 2vh;
+  border-bottom-left-radius: 2vh;
   cursor: pointer;
 }
 .entity-address {
@@ -114,7 +118,8 @@
 
 @media only screen and (max-width: 768px) {
   .entity-details-container {
-    padding: 16px 16px 16px 16px;
-    max-height: 72vh;
+    padding: 0px 16px 16px 16px;
+    max-height: 60vh;
+    margin-top: 0;
   }
 }

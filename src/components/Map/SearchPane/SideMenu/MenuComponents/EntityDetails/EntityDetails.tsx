@@ -91,8 +91,8 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                         src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
                     />
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div>
-                            <IonTitle className="ion-text-capitalize ion-no-padding ion-text-left entity-details-title">{entityDetails.name}</IonTitle>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
                             <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
                         </div>
                         <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
