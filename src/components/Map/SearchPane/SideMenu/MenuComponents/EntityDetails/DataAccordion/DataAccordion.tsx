@@ -10,13 +10,13 @@ interface PageProps {
 }
 
 const DataAccordion: React.FC<PageProps> = (props) => {
-    const [bottomViewClass, setBottomViewClass] = useState("ion-hide");
+    const [maxHeight, setMaxHeight] = useState("0vh");
 
     const openAccordion = () => {
-        if(bottomViewClass === "ion-hide") {
-            setBottomViewClass("");
+        if(maxHeight === "0vh") {
+            setMaxHeight("100vh");
         } else {
-            setBottomViewClass("ion-hide");
+            setMaxHeight("0vh");
         };
     };
 
@@ -26,7 +26,7 @@ const DataAccordion: React.FC<PageProps> = (props) => {
                 <IonText className="accordion-title"><span className="accordion-title-bold">{props.titleData} </span>{props.title}</IonText>
                 <IonIcon className="ion-align-self-center" icon={chevronDown} color="black" />
             </div>
-            <div className={bottomViewClass}>
+            <div style={{ maxHeight: maxHeight, transitionDuration: '1s', overflow: 'hidden' }}>
                 {props.bottomView}
             </div>
         </div>
