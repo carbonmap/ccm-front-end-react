@@ -2,6 +2,7 @@ import { Chart } from 'chart.js';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { IonText } from '@ionic/react';
 
 Chart.register(ChartDataLabels);
 
@@ -57,7 +58,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     
   return (
       <div style={{ width: '100%', height: '100%' }}>
-          <Pie 
+        {props.graphData.length > 0 ?
+           <Pie 
             data={data} 
             options={{
               plugins: {
@@ -83,6 +85,9 @@ const EntityCO2: React.FC<PageProps> = (props) => {
               }
             }}
           />
+        :
+          <IonText>No emissions data available</IonText>
+        }
       </div>
   );
 };

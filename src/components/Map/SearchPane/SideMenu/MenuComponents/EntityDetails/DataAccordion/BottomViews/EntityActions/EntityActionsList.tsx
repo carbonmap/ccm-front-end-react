@@ -1,3 +1,4 @@
+import { IonText } from '@ionic/react';
 import React from 'react';
 import EntityAction from './EntityAction';
 
@@ -7,18 +8,24 @@ interface PageProps {
 
 const EntityActionsList: React.FC<PageProps> = (props) => {
     return (
-        <ul className="ion-margin-top">
-            {
-                props.actions.map((action, index) => {
-                    return (
-                        <EntityAction 
-                            key={index}
-                            action={action}
-                        />
-                    )
-                })
-            }
-        </ul>
+        <>
+        {props.actions.length > 0 ?
+            <ul className="ion-margin-top">
+                {
+                    props.actions.map((action, index) => {
+                        return (
+                            <EntityAction 
+                                key={index}
+                                action={action}
+                            />
+                        )
+                    })
+                }
+            </ul>
+        :
+            <IonText>No actions available</IonText>
+        }
+        </>
     );
 };
 

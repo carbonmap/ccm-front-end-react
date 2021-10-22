@@ -43,34 +43,6 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         setPostData(entityPostData.posts);
     };
 
-    const actions = (
-        <EntityActionsList 
-            actions={actionData}
-        />
-    );
-    const posts = (
-        <EntityPostsList 
-            posts={postData}
-            // posts={[
-            //     {
-            //         title: "Getting Started",
-            //         text: "It's 20221 and time we took our carbon footprint seriously. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            //         date: "1 April 2021"
-            //     },
-            //     {
-            //         title: "Food Waste",
-            //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-            //         date: "5 April 2021"
-            //     },
-            //     {
-            //         title: "Develop a decarbonisation plan",
-            //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-            //         date: "14 May 2021"
-            //     },
-            // ]}
-        />
-    );
-
     const mobileMenuStyle = (
         props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
     );
@@ -104,12 +76,20 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <DataAccordion 
                 title="actions"
                 titleData={actionData.length}
-                bottomView={actions}
+                bottomView={
+                    <EntityActionsList 
+                        actions={actionData}
+                    />
+                }
             />
             <DataAccordion 
                 title="posts"
                 titleData={postData.length} 
-                bottomView={posts}
+                bottomView={
+                    <EntityPostsList 
+                        posts={postData}
+                    />
+                }
             />
         </div>
     );
