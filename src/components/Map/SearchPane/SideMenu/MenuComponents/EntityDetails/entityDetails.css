@@ -27,6 +27,7 @@
 }
 .accordion-post-title {
   display: flex;
+  cursor: pointer;
 }
 .accordion-post-text-container {
   max-height: 8vh;
