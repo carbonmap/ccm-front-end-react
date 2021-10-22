@@ -1,4 +1,4 @@
-import { IonText } from '@ionic/react';
+import { IonSpinner, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';

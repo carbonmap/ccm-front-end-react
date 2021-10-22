@@ -8,6 +8,7 @@
   width: 100%;
   margin-bottom: 4px;
   border-radius: 8px;
+  overflow-y: scroll;
 }
 .accordion-title-container {
   display: flex;
