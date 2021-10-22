@@ -7,6 +7,7 @@
   border: 2px solid green;
   width: 100%;
   margin-bottom: 4px;
+  border-radius: 8px;
 }
 .accordion-title-container {
   display: flex;
