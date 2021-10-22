@@ -28,9 +28,6 @@ const EntityPost: React.FC<PageProps> = (props) => {
             </div>
             <div className="accordion-post-text-container" style={{ maxHeight: maxHeight, overflow: 'hidden', transitionDuration: '1s' }}>
                 <IonText className="accordion-post-text">{props.text}</IonText>
-                {/* <div className="accordion-post-readmore-container">
-                    <IonText className="accordion-post-readmore">[READ MORE]</IonText>
-                </div> */}
             </div>
         </div>
     );
