@@ -11,6 +11,7 @@ interface PageProps {
     index: number;
     entity: any;
     openMenu: Function
+    setInputVal: Function;
 }
 
 const FeaturedLocationEl: React.FC<PageProps> = (props) => { 
@@ -22,7 +23,7 @@ const FeaturedLocationEl: React.FC<PageProps> = (props) => {
     };
 
     return(
-        <Link to={`/${props.entity.id}`} >
+        <Link to={`/${props.entity.id}`} onClick={() => props.setInputVal("")}>
             <div className="featured-el-selector" onClick={() => selectEntity()} >
                 <IonText className="featured-el-title" color="dark" >{props.title}</IonText>
                 <div className="featured-el-details">
