@@ -30,7 +30,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     labels: filteredData.map((emission:any) => emission.measure),
     datasets: [
       {
-        label: '# of Votes',
         data: filteredData.map((dataItem:any) => dataItem.value),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
