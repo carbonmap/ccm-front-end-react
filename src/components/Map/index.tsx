@@ -136,4 +136,4 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     );
 };
 
-  export default Map;
+export default Map;

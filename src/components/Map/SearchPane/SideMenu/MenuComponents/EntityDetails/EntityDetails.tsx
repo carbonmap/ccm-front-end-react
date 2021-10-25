@@ -1,10 +1,11 @@
-import { IonText, IonIcon } from '@ionic/react';
-import React from 'react';
+import { IonSpinner, IonText } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../redux/reducers';
 import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
+import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
 
 interface PageProps {
     isOpen: boolean;
@@ -15,35 +16,32 @@ interface PageProps {
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
+    const [graphData, setGraphData] = useState<any>([]);
+    const [actionData, setActionData] = useState<any>([]);
+    const [postData, setPostData] = useState<any>([]);
+
     const isMobile = useSelector( (state: RootState) => state.isMobile);
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
 
-    const actions = (
-        <EntityActionsList 
-            actions={["Green Tariff", "Reduce Food Waste"]}
-        />
-    );
-    const posts = (
-        <EntityPostsList 
-            posts={[
-                {
-                    title: "Getting Started",
-                    text: "It's 20221 and time we took our carbon footprint seriously. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    date: "1 April 2021"
-                },
-                {
-                    title: "Food Waste",
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-                    date: "5 April 2021"
-                },
-                {
-                    title: "Develop a decarbonisation plan",
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet sit amet cursus sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Diam maecenas sed enim ut sem viverra. Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Aenean et tortor at risus viverra adipiscing at in. Auctor augue mauris augue neque gravida in. Bibendum enim facilisis gravida neque.",
-                    date: "14 May 2021"
-                },
-            ]}
-        />
-    );
+    const getEntityData = async() => {
+        const emissionResponse = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission.json');
+        const emissionJson = await emissionResponse.json();
+
+        const entityEmissionData = emissionJson.emission.find((emission:any) => emission.entity_id === props.emissionsData[0].id);
+        setGraphData(entityEmissionData.emissions);
+
+        const actionRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action.json');
+        const actionJson = await actionRes.json();
+
+        const entityActionData = actionJson.action.find((action:any) => action.entity_id === props.emissionsData[0].id);
+        setActionData(entityActionData.actions);
+
+        const postRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post.json');
+        const postJson = await postRes.json();
+
+        const entityPostData = postJson.post.find((post:any) => post.entity_id === props.emissionsData[0].id);
+        setPostData(entityPostData.posts);
+    };
 
     const mobileMenuStyle = (
         props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
@@ -51,6 +49,10 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     const desktopMenuStyle = (
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
+
+    useEffect(() => {
+        getEntityData();
+    }, [])
 
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
@@ -61,19 +63,33 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <br />
             <IonText>15 Market Hill, Cambridge</IonText>
             <DataAccordion 
-                title="CO2e in 2020"
+                title="CO2e in 2021"
                 titleData="24t"
-                bottomView={<IonText>Hello</IonText>}
+                bottomView={
+                    <EntityCO2 
+                        graphData={graphData}
+                        labels={graphData.map((emission:any) => emission.measure)}
+                        data={graphData.map((emission:any) => emission.value)}
+                    />
+                }
             />
             <DataAccordion 
                 title="actions"
-                titleData="2"
-                bottomView={actions}
+                titleData={actionData.length}
+                bottomView={
+                    <EntityActionsList 
+                        actions={actionData}
+                    />
+                }
             />
             <DataAccordion 
                 title="posts"
-                titleData={props.emissionsData[0].emissions.length.toString()} 
-                bottomView={posts}
+                titleData={postData.length} 
+                bottomView={
+                    <EntityPostsList 
+                        posts={postData}
+                    />
+                }
             />
         </div>
     );

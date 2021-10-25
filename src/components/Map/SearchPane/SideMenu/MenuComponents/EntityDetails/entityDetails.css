@@ -1,12 +1,13 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
-  height: 64vh;
+  max-height: 90vh;
 }
 .data-accordion {
   border: 2px solid green;
   width: 100%;
   margin-bottom: 4px;
+  border-radius: 8px;
 }
 .accordion-title-container {
   display: flex;
@@ -27,6 +28,7 @@
 }
 .accordion-post-title {
   display: flex;
+  cursor: pointer;
 }
 .accordion-post-text-container {
   max-height: 8vh;
@@ -74,5 +76,12 @@
   .entity-details-container {
     padding: 16px 16px 16px 16px;
     max-height: 72vh;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .entity-details-container {
+    padding: 16px 16px 16px 16px;
+    max-height: 72vh;
+    height: 64vh;
   }
 }
