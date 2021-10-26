@@ -114,9 +114,6 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
                 }
                 <IonRow>
                     <IonCol>
-                        {/* <p style={{ fontSize: "small" }}>
-                            By clicking LOGIN you agree to our <a href="#">Policy</a>
-                        </p> */}
                         <IonButton expand="block" onClick={handleClick}>
                             {props.login ?
                                 <p>Login</p>
