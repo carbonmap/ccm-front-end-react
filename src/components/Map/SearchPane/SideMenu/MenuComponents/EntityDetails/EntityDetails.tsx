@@ -54,7 +54,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         const data = await response.json();
         
         const urlId = location.pathname.substring(1, location.pathname.length);
-        const filterData = data.entity_peroperty.find((entity:any) => entity.id === urlId);
+        const filterData = data.entity_property.find((entity:any) => entity.id === urlId);
         setEntityDetails(filterData);
     };
 
