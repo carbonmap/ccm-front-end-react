@@ -54,7 +54,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         const data = await response.json();
         
         const urlId = location.pathname.substring(1, location.pathname.length);
-        const filterData = data.entity_property.find((entity:any) => entity.id === urlId);
+        const filterData = data.entity_peroperty.find((entity:any) => entity.id === urlId);
         setEntityDetails(filterData);
     };
 
@@ -86,7 +86,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                 <div>
                     <img 
                         className="entity-img"
-                        src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
+                        src={entityDetails.img}
                     />
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
