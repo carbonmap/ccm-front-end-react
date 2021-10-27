@@ -24,23 +24,20 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
 
     const getEntityData = async() => {
-        const emissionResponse = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission.json');
+        const emissionResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission/${props.emissionsData[0].id}.json`);
         const emissionJson = await emissionResponse.json();
 
-        const entityEmissionData = emissionJson.emission.find((emission:any) => emission.entity_id === props.emissionsData[0].id);
-        setGraphData(entityEmissionData.emissions);
+        setGraphData(emissionJson.emissions);
 
-        const actionRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action.json');
+        const actionRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action/${props.emissionsData[0].id}.json`);
         const actionJson = await actionRes.json();
 
-        const entityActionData = actionJson.action.find((action:any) => action.entity_id === props.emissionsData[0].id);
-        setActionData(entityActionData.actions);
+        setActionData(actionJson.actions);
 
-        const postRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post.json');
+        const postRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post/${props.emissionsData[0].id}.json`);
         const postJson = await postRes.json();
 
-        const entityPostData = postJson.post.find((post:any) => post.entity_id === props.emissionsData[0].id);
-        setPostData(entityPostData.posts);
+        setPostData(postJson.posts);
     };
 
     const mobileMenuStyle = (
