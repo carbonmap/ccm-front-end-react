@@ -47,12 +47,10 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     };
 
     const getEntityDetails = async() => {
-        const response = await fetch("https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property.json");
+        const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
         const data = await response.json();
-        
-        const urlId = location.pathname.substring(1, location.pathname.length);
-        const filterData = data.entity_property.find((entity:any) => entity.id === urlId);
-        setEntityDetails(filterData);
+
+        setEntityDetails(data);
     };
 
     const mobileMenuStyle = (
