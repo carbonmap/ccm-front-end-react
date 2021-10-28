@@ -1,6 +1,8 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
+  height: 88vh;
+  margin-top: 4vh;
   max-height: 90vh;
 }
 .data-accordion {
@@ -72,10 +74,56 @@
   transition: 0.5s ease-out;
 }
 
+.entity-desc-container {
+  position: relative;
+}
+.entity-desc-text-container {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.entity-desc-readmore-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-image: linear-gradient(transparent, #fff);
+  height: 120%;
+  align-items: flex-end;
+  display: flex;
+}
+.entity-desc-readmore {
+  cursor: pointer;
+  font-weight: 500;
+}
+.entity-desc {
+  text-overflow: ellipsis;
+}
+.entity-title {
+  font-weight: 600;
+  font-size: 2vh;
+}
+.entity-business-type {
+  background-color: #ccc;
+  padding: 4px 12px;
+  height: fit-content;
+  font-weight: 400;
+  border-top-right-radius: 2vh;
+  border-top-left-radius: 2vh;
+  border-bottom-right-radius: 2vh;
+  border-bottom-left-radius: 2vh;
+  cursor: pointer;
+}
+.entity-address {
+  font-weight: 500;
+}
+.entity-img {
+  border-radius: 3%;
+}
+
 @media only screen and (max-width: 768px) {
   .entity-details-container {
-    padding: 16px 16px 16px 16px;
-    max-height: 72vh;
+    padding: 0px 16px 16px 16px;
+    max-height: 60vh;
+    margin-top: 0;
   }
 }
 @media only screen and (max-width: 1024px) {
