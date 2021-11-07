@@ -8,6 +8,7 @@ import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPosts
 import { useLocation } from 'react-router';
 import Spinner from '../../../../../UI/spinner/spinner';
 import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
+import { Link } from 'react-router-dom';
 
 interface PageProps {
     isOpen: boolean;
@@ -69,7 +70,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             setSeeMoreText("more");
         }
     };
-
+    
     useEffect(() => {
         getEntityData();
         getEntityDetails();
@@ -88,7 +89,9 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                             <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
                             <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
                         </div>
-                        <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                        <Link to={`/business-type/${entityDetails.business_type}`}>
+                            <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                        </Link>
                     </div>
                     <br />
                     <div className="entity-desc-container" onClick={() => handleReadMore()}>

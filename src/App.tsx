@@ -52,6 +52,7 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact component={Map} />
             <Route path="/:id" component={Map} />
+            <Route path="/business-type" component={Map} />
           </Switch>
         </>
       </IonApp>

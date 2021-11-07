@@ -24,6 +24,31 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const location = useLocation();
     const history = useHistory();
 
+    const getEntityByBusinessType = async(businessType:string) => {
+      const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
+      const data = await response.json();
+
+      const entityData:any = await Promise.all(data.entities.map(async(entity:{name:string, id:string}) => {
+        const entityPropertyResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${entity.id}.json`)
+        const entityPropertData = await entityPropertyResponse.json();
+
+        if(entityPropertData.business_type === businessType) {
+          return entityPropertData;
+        }
+      }));
+
+      const entityGeoData:any = await Promise.all(entityData.map(async(entity:{id:string}) => {
+        const geoData = await fetchIndividualEntity(`geojson/${entity.id}.geojson`);
+        return geoData;
+      }));
+
+      const filteredGeoData = entityGeoData.filter((geoData:any) => geoData);
+
+      setGeoData(filteredGeoData);
+      setIsLoading(false);
+    };
+    
+
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
 
@@ -79,11 +104,16 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     };
 
     useEffect(() => {
-      if(location.pathname === "/") {
-        handleFeaturedLocations();
+      if(location.pathname.substring(0, 14) !== "/business-type") {
+        if(location.pathname === "/") {
+          handleFeaturedLocations();
+        } else {
+          handleIndividualEntity();
+        };
       } else {
-        handleIndividualEntity();
-      };
+        const businessType = location.pathname.substring(15, location.pathname.length);
+        getEntityByBusinessType(businessType);
+      }
     }, [location]);
 
     useEffect(() => {
