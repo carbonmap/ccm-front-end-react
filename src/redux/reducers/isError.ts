@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import {  HIDE_ERROR,SET_ERROR } from '../../constants/actionTypes'
+import {  HIDE_ERROR,SET_ERROR } from 'src/constants/actionTypes'
 
 const initState = {
     error: null,

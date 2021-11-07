@@ -1,12 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    // "paths": {
-    //   "@/*": ["*"],
-    //   "@redux/*": ["redux/*"],
-    //   "@components/*": ["components/*"],
-    //   "@service/*": ["service/*"]
-    // },
     "target": "es5",
     "lib": [
       "dom",

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import SearchPane from './SearchPane';
 import MainMap from "./MainMap/MainMap";
 import Spinner from '../UI/spinner/spinner';
-import { fetchIndividualEntity } from '../../service/fetchURL/individualEntity/fetchIndividualEntity';
-import { fetchFeatured } from '../../service/fetchURL/featuredEntities/fetchFeatured';
+import { fetchIndividualEntity } from 'src/service/fetchURL/individualEntity/fetchIndividualEntity';
+import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
 import AlertMessage from '../Message/AlertMessage';
 import { useCookies } from 'react-cookie';
 import { 

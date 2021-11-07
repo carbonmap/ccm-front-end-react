@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { LOADED } from '../../constants/actionTypes'
+import { LOADED } from 'src/constants/actionTypes'
 
 const loadingReducer = (state = true, action: PayloadAction) => {
     switch(action.type) {

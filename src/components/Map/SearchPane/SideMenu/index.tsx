@@ -2,7 +2,7 @@ import React from 'react';
 import './sideMenu.css';
 import { IonIcon } from '@ionic/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/reducers';
+import { RootState } from 'src/redux/reducers';
 import EntityDetails from './MenuComponents/EntityDetails/EntityDetails';
 
 interface PageProps {
