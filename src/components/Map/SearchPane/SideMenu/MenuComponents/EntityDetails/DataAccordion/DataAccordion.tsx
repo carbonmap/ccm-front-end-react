@@ -13,7 +13,6 @@ const DataAccordion: React.FC<PageProps> = (props) => {
     const [maxHeight, setMaxHeight] = useState("0vh");
 
     const openAccordion = () => {
-        console.log(process.env)
         if(maxHeight === "0vh") {
             setMaxHeight("100vh");
         } else {

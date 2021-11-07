@@ -113,7 +113,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     const handleInputFocus = async() => {
       props.setIsSearching(true);
 
-      // const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
       const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}aldjonz/ccm-json/main/entities.json`);
       const data = await response.json();
       setEntityList(data.entities);

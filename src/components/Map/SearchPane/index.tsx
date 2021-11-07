@@ -26,7 +26,6 @@ const SearchPane: React.FC<PageProps> = (props) => {
     const openMenu = () => {
         setIsSearching(false);
         setIsOpen(true);
-        console.log(process.env)
     };
     const closeMenu = () => {
         setIsOpen(false); 

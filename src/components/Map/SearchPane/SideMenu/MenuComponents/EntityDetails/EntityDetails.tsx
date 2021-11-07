@@ -30,21 +30,18 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     const location = useLocation();
 
     const getEntityData = async() => {
-        // const emissionResponse = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission.json');
         const emissionResponse = await fetch(`${process.env.REACT_APP_DATABASE_URL}aldjonz/ccm-json/main/emission.json`);
         const emissionJson = await emissionResponse.json();
 
         const entityEmissionData = emissionJson.emission.find((emission:any) => emission.entity_id === props.emissionsData[0].id);
         setGraphData(entityEmissionData.emissions);
 
-        // const actionRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action.json');
         const actionRes = await fetch(`${process.env.REACT_APP_DATABASE_URL}aldjonz/ccm-json/main/entity_action.json`);
         const actionJson = await actionRes.json();
 
         const entityActionData = actionJson.action.find((action:any) => action.entity_id === props.emissionsData[0].id);
         setActionData(entityActionData.actions);
 
-        // const postRes = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post.json');
         const postRes = await fetch(`${process.env.REACT_APP_DATABASE_URL}aldjonz/ccm-json/main/entity_post.json`);
         const postJson = await postRes.json();
 
@@ -53,7 +50,6 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     };
 
     const getEntityDetails = async() => {
-        // const response = await fetch("https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property.json");
         const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}aldjonz/ccm-json/main/entity_property.json`);
         const data = await response.json();
         
