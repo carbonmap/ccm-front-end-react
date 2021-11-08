@@ -62,6 +62,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
                 setIsSearching={props.setIsSearching}
                 handleMenuClose={() => handleMenuClose()}
                 setAutoSuggestions={setAutoSuggestions}
+                entitiesByBusinessType={props.entitiesByBusinessType}
             />
             {props.isSearching ?
                 <>

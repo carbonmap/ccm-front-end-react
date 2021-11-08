@@ -2,6 +2,7 @@ import { IonIcon } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { arrowBack, searchOutline, close } from 'ionicons/icons';
+import { useHistory } from 'react-router';
 
 interface PageProps {
   isOpen: boolean;
@@ -12,12 +13,15 @@ interface PageProps {
   handleMenuClose: Function;
   setInputVal: (inputVal: string) => void;
   setAutoSuggestions: any;
+  entitiesByBusinessType: object[];
 }
 
 const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     const [suggestions, setSuggestions] = useState<any>('');
     const [searchIcon, setSearchIcon] = useState(searchOutline);
     const [entityList, setEntityList] = useState<any>();
+
+    const history = useHistory();
 
     const getSuggestions = (value:any) => {
       const inputValue = value.trim().toLowerCase();
@@ -118,11 +122,24 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
       setEntityList(data.entities);
     };
 
+    const handleIconClick = () => {
+      if(props.isSearching) {
+        props.setIsSearching(false)
+      } else {
+        if(props.entitiesByBusinessType.length > 0) {
+          history.goBack();
+        } else {
+          props.handleMenuClose();
+        }
+      }
+    };
+
     const renderInputComponent = (inputProps:any) => (
       <div className="search-bar-container" >
           <IonIcon 
             icon={searchIcon} 
-            onClick={props.isSearching ? () => props.setIsSearching(false) : () => props.handleMenuClose()} 
+            onClick={() => handleIconClick()}
+            // onClick={props.isSearching ? () => props.setIsSearching(false) : props.entitiesByBusinessType.length > 0 ? history.goBack() : () => props.handleMenuClose()} 
             style={{ fontSize: 24, cursor: 'pointer' }} 
           />
           <input 
