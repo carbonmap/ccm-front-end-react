@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { IonItem, IonTitle } from '@ionic/react';
+import { IonItem, IonText } from '@ionic/react';
 
 interface PageProps {
     entitiesByBusinessType: any;
 }
 
 const BusinessTypeEntities: React.FC<PageProps> = (props) => {
-    
+
     return (
-        <>
-            <IonTitle className="ion-text-capitalize">{props.entitiesByBusinessType[0].business_type}</IonTitle>
+        <div style={{ height: '100%', marginTop: '4vh', overflow: 'visible' }}>
+            <IonText style={{ fontSize: 32, textDecoration: 'underline' }} color="primary" className="ion-text-capitalize ion-margin">{props.entitiesByBusinessType[0].business_type}</IonText>
             {props.entitiesByBusinessType.map((entity:any,index:number) => {
                 return (
                     <Link key={index} to={`/${entity.id}`} >
@@ -20,7 +20,7 @@ const BusinessTypeEntities: React.FC<PageProps> = (props) => {
                     </Link>
                 )
             })}
-        </>
+        </div>
     );
 };
 
