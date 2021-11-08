@@ -107,6 +107,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     };
 
     useEffect(() => {
+      console.log("location.pathname: " + location.pathname)
       if(location.pathname.substring(0, 14) !== "/business-type") {
         setEmissionsData([]);
         if(location.pathname === "/") {
@@ -127,7 +128,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
       if(emissionsData.length > 0) {
         const navHistory = cookies.history;
         if(navHistory == undefined) {
-          setCookie('history', [{ name: emissionsData[0].name, path: location.pathname }])
+          setCookie('history', [{ name: emissionsData[0].name, id: location.pathname }])
         } else {
           const matchEntity = navHistory.find((entity:any) => entity.name === emissionsData[0].name);
           if(matchEntity !== undefined) {
@@ -136,10 +137,10 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           }
             if(navHistory.length === 5) {
               const shiftedHistory:any = navHistory.slice(1);
-              const newHistory = [...shiftedHistory, { name: emissionsData[0].name, path: location.pathname }];
+              const newHistory = [...shiftedHistory, { name: emissionsData[0].name, id: location.pathname }];
               setCookie('history', newHistory);
             } else  {
-              const newHistory = [...navHistory, { name: emissionsData[0].name, path: location.pathname }];
+              const newHistory = [...navHistory, { name: emissionsData[0].name, id: location.pathname }];
               setCookie('history', newHistory);
             };  
         };
