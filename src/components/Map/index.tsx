@@ -108,6 +108,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
     useEffect(() => {
       if(location.pathname.substring(0, 14) !== "/business-type") {
+        setEmissionsData([]);
         if(location.pathname === "/") {
           handleFeaturedLocations();
           setEntitiesByBusinessType([]);
@@ -116,6 +117,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           setEntitiesByBusinessType([]);
         };
       } else {
+        setEmissionsData([]);
         const businessType = location.pathname.substring(15, location.pathname.length);
         getEntityByBusinessType(businessType);
       }
