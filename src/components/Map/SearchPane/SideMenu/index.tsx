@@ -11,6 +11,7 @@ interface PageProps {
     selectedLocation: any;
     isSearching: boolean;
     closeMenu: Function;
+    entitiesByBusinessType: object[];
 }
 
 const SideMenu: React.FC<PageProps> = (props) => {    
@@ -30,6 +31,7 @@ const SideMenu: React.FC<PageProps> = (props) => {
             style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}
         >
             <EntityDetails
+                entitiesByBusinessType={props.entitiesByBusinessType}
                 isOpen={props.isOpen}
                 closeMenu={props.closeMenu}
                 isSearching={props.isSearching}

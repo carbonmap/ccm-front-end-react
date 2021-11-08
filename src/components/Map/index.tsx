@@ -26,7 +26,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const history = useHistory();
 
     const getEntityByBusinessType = async(businessType:string) => {
-      console.log(businessType)
       const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
       const data = await response.json();
 
@@ -107,7 +106,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     };
 
     useEffect(() => {
-      console.log("location.pathname: " + location.pathname)
       if(location.pathname.substring(0, 14) !== "/business-type") {
         setEmissionsData([]);
         if(location.pathname === "/") {
@@ -118,6 +116,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           setEntitiesByBusinessType([]);
         };
       } else {
+        setEntitiesByBusinessType([]);
         setEmissionsData([]);
         const businessType = location.pathname.substring(15, location.pathname.length);
         getEntityByBusinessType(businessType);

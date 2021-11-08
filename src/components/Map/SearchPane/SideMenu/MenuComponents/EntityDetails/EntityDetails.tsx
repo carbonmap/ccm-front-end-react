@@ -9,6 +9,7 @@ import { useLocation } from 'react-router';
 import Spinner from '../../../../../UI/spinner/spinner';
 import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
 import { Link } from 'react-router-dom';
+import BusinessTypeEntities from '../../../SearchBar/BusinessTypeEntities/BusinessTypeEntities';
 
 interface PageProps {
     isOpen: boolean;
@@ -16,6 +17,7 @@ interface PageProps {
     isSearching: boolean;
     isMobile: boolean;
     emissionsData: {id: string, name: string, emissions: string[]}[];
+    entitiesByBusinessType: object[];
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
@@ -72,71 +74,81 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     };
     
     useEffect(() => {
-        getEntityData();
-        getEntityDetails();
+        if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
+            getEntityData();
+            getEntityDetails();
+        }
     }, []);
 
     return (
         <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
-            {entityDetails ?
-                <div>
-                    <img 
-                        className="entity-img"
-                        src={entityDetails.img}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                            <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
-                        </div>
-                        <Link to={`/business-type/${entityDetails.business_type}`}>
-                            <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                        </Link>
-                    </div>
-                    <br />
-                    <div className="entity-desc-container" onClick={() => handleReadMore()}>
-                        <div className="entity-desc-text-container" style={{ maxHeight: descHeight, transitionDuration: '2s', marginBottom: '4vh' }}>
-                        <IonText className="entity-desc">{entityDetails.desc}</IonText>
-                        <div 
-                            className="entity-desc-readmore-container" 
-                            style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}>
-                            <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+            {props.entitiesByBusinessType.length > 0 ?
+                <BusinessTypeEntities 
+                    entitiesByBusinessType={props.entitiesByBusinessType}
+                />
             :
-                <Spinner />
+            <>
+                {entityDetails ?
+                    <div>
+                        <img 
+                            className="entity-img"
+                            src={entityDetails.img}
+                        />
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
+                                <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                            </div>
+                            <Link to={`/business-type/${entityDetails.business_type}`}>
+                                <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                            </Link>
+                        </div>
+                        <br />
+                        <div className="entity-desc-container" onClick={() => handleReadMore()}>
+                            <div className="entity-desc-text-container" style={{ maxHeight: descHeight, transitionDuration: '2s', marginBottom: '4vh' }}>
+                            <IonText className="entity-desc">{entityDetails.desc}</IonText>
+                            <div 
+                                className="entity-desc-readmore-container" 
+                                style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}>
+                                <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                :
+                    <Spinner />}
+                
+                <DataAccordion 
+                    title="CO2e in 2021"
+                    titleData="24t"
+                    bottomView={
+                        <EntityCO2 
+                            graphData={graphData}
+                            labels={graphData.map((emission:any) => emission.measure)}
+                            data={graphData.map((emission:any) => emission.value)}
+                        />
+                    }
+                />
+                <DataAccordion 
+                    title="actions"
+                    titleData={actionData.length}
+                    bottomView={
+                        <EntityActionsList 
+                            actions={actionData}
+                        />
+                    }
+                />
+                <DataAccordion 
+                    title="posts"
+                    titleData={postData.length} 
+                    bottomView={
+                        <EntityPostsList 
+                            posts={postData}
+                        />
+                    }
+                />
+            </>
             }
-            <DataAccordion 
-                title="CO2e in 2021"
-                titleData="24t"
-                bottomView={
-                    <EntityCO2 
-                        graphData={graphData}
-                        labels={graphData.map((emission:any) => emission.measure)}
-                        data={graphData.map((emission:any) => emission.value)}
-                    />
-                }
-            />
-            <DataAccordion 
-                title="actions"
-                titleData={actionData.length}
-                bottomView={
-                    <EntityActionsList 
-                        actions={actionData}
-                    />
-                }
-            />
-            <DataAccordion 
-                title="posts"
-                titleData={postData.length} 
-                bottomView={
-                    <EntityPostsList 
-                        posts={postData}
-                    />
-                }
-            />
         </div>
     );
 };

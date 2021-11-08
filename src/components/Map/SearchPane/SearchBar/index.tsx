@@ -81,12 +81,13 @@ const SearchBar: React.FC<PageProps> = (props) => {
                     /> 
                 </>
             : 
-                props.entitiesByBusinessType.length > 0 ?
-                    <BusinessTypeEntities 
-                        entitiesByBusinessType={props.entitiesByBusinessType}
-                    />
-                :
-                    null
+                null
+                // props.entitiesByBusinessType.length > 0 ?
+                //     <BusinessTypeEntities 
+                //         entitiesByBusinessType={props.entitiesByBusinessType}
+                //     />
+                // :
+                //     null
             }
         </div>
     );

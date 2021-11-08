@@ -30,18 +30,14 @@ const SearchPane: React.FC<PageProps> = (props) => {
     };
     const closeMenu = () => {
         setIsOpen(false); 
-        history.replace("/")
+        history.replace("/");
     };
-
+    
     useEffect(() => {
-        if(location.pathname !== "/" && props.emissionsData) {
+        if(location.pathname !== "/" && props.emissionsData || props.entitiesByBusinessType.length > 0) {
             openMenu();
         };
-    }, [props.emissionsData])
-
-    useEffect(() => {
-        console.log(selectedLocation)
-    }, [selectedLocation])
+    }, [props.entitiesByBusinessType, props.emissionsData]);
 
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
@@ -59,13 +55,14 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 isOpen={isOpen}
                 navHistory={props.navHistory}
             />
-            {props.entitiesByBusinessType.length > 0 ?
+            {/* {props.entitiesByBusinessType.length > 0 ?
                 null
-            :
-                isMobile ?
+            : */}
+                {isMobile ?
                     <>
-                        {isOpen && props.emissionsData.length > 0 ?
+                        {isOpen && props.emissionsData.length > 0 || isOpen && props.entitiesByBusinessType.length > 0 ?
                             <MobileDrawer 
+                                entitiesByBusinessType={props.entitiesByBusinessType}
                                 emissionsData={props.emissionsData}
                                 isOpen={isOpen}
                                 closeMenu={closeMenu}
@@ -79,8 +76,9 @@ const SearchPane: React.FC<PageProps> = (props) => {
                     </>
                 :
                     <>
-                        {isOpen && props.emissionsData.length > 0 ?
+                        {isOpen && props.emissionsData.length > 0 || isOpen && props.entitiesByBusinessType.length > 0 ?
                             <SideMenu 
+                                entitiesByBusinessType={props.entitiesByBusinessType}
                                 emissionsData={props.emissionsData}
                                 isOpen={isOpen}
                                 selectedLocation={selectedLocation}
@@ -91,7 +89,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                             null
                         }
                     </>
-            } 
+            }
         </div>
     );
 };

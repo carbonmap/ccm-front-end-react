@@ -11,6 +11,7 @@ interface PageProps {
   isMobile: boolean;
   selectedLocation: any;
   emissionsData: {id: string, name: string, emissions: string[]}[];
+  entitiesByBusinessType: object[];
 }
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
@@ -44,42 +45,42 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       };
 
     useEffect(() => {
-      if(props.selectedLocation) {
+      if(props.selectedLocation || props.entitiesByBusinessType.length > 0) {
         openDrawer();
-      }
-    }, [props.selectedLocation])
+      };
+    }, [props.selectedLocation, props.entitiesByBusinessType]);
 
     useEffect(() => {
-        let c = drawerRef.current;
-        let height = window.innerHeight;
+      let c = drawerRef.current;
+      let height = window.innerHeight;
 
-        // Change drawer position by dragging - styles ref directly
-        const gesture = createGesture({
-            el: dragRef.current,
-            gestureName: "my-swipe",
-            direction: "y",
-            onMove: event => {
-                let position = height - event.currentY;
-                if (position > (height * 0.74)) return;
-               // closing with a downward swipe
-               if (position < 100) {
-                 c.style.transform = "";
-                 c.dataset.open = "false";
-                 return;
-               }
-                c.style.transform = `translateY(-${position}px)`;
-              },
-            onEnd: event => {
-                let position = height - event.currentY;
-                c.style.transition = ".5s ease-out";
-                if (position > 100 && c.dataset.open != "true") {
-                  c.dataset.open = "true";
-                }
+      // Change drawer position by dragging - styles ref directly
+      const gesture = createGesture({
+          el: dragRef.current,
+          gestureName: "my-swipe",
+          direction: "y",
+          onMove: event => {
+              let position = height - event.currentY;
+              if (position > (height * 0.74)) return;
+              // closing with a downward swipe
+              if (position < 100) {
+                c.style.transform = "";
+                c.dataset.open = "false";
+                return;
               }
-        });
-        gesture.enable(true);
-    }, [])
-    
+              c.style.transform = `translateY(-${position}px)`;
+            },
+          onEnd: event => {
+              let position = height - event.currentY;
+              c.style.transition = ".5s ease-out";
+              if (position > 100 && c.dataset.open != "true") {
+                c.dataset.open = "true";
+              }
+            }
+      });
+      gesture.enable(true);
+    }, []);
+
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
           <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
@@ -91,6 +92,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
               />
           </div>
               <EntityDetails 
+                entitiesByBusinessType={props.entitiesByBusinessType}
                 emissionsData={props.emissionsData}
                 isOpen={props.isOpen}
                 closeMenu={props.closeMenu}

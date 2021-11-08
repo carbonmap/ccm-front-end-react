@@ -7,10 +7,7 @@ interface PageProps {
 }
 
 const BusinessTypeEntities: React.FC<PageProps> = (props) => {
-
-    useEffect(() => {
-        console.log(props.entitiesByBusinessType[0])
-    }, [props.entitiesByBusinessType])
+    
     return (
         <>
             <IonTitle className="ion-text-capitalize">{props.entitiesByBusinessType[0].business_type}</IonTitle>
