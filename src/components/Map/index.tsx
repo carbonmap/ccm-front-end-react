@@ -32,12 +32,12 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         const entityPropertyResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${entity.id}.json`)
         const entityPropertData = await entityPropertyResponse.json();
 
-        if(entityPropertData.business_type === businessType) {
-          return entityPropertData;
-        }
+        return entityPropertData;
       }));
 
-      const entityGeoData:any = await Promise.all(entityData.map(async(entity:{id:string}) => {
+      const filteredEntityData = entityData.filter((entity:any) => entity.business_type === businessType)
+
+      const entityGeoData:any = await Promise.all(filteredEntityData.map(async(entity:{id:string}) => {
         const geoData = await fetchIndividualEntity(`geojson/${entity.id}.geojson`);
         return geoData;
       }));
