@@ -23,18 +23,36 @@ function AnimateMap({ geoData }:any) {
     const location = useLocation();
     const map = useMap();
 
-    const fitMapView = () => {
+    const fitMapBounds = () => {
         map.fitBounds(coords, { 
             paddingBottomRight: isMobile ? [0,0] : [220,0], 
-            animate: true 
+            animate: true
+        });
+    };
+    const fitMapView = (centerCoords:any) => {
+        map.setView(centerCoords, 14, { 
+            // paddingBottomRight: isMobile ? [0,0] : [220,0], 
+            animate: true
         });
     };
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         fitMapView(coords);
+    //     }, 100);
+    // }, [geoData]);
+
     useEffect(() => {
-        setTimeout(() => {
-            fitMapView();
-        }, 100);
-    }, [geoData]);
+        if(location.pathname.substring(0, 14) === "/business-type") {
+            setTimeout(() => {
+                fitMapView([52.20, 0.12]);
+            }, 100);
+        } else {
+            setTimeout(() => {
+                fitMapBounds();
+            }, 100);
+        }
+    }, [location, geoData])
   
     return null;
 };
@@ -55,7 +73,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 const geoJsonType = newGeoData[i].features[0].geometry.type
                 if(geoJsonType === "MultiPolygon") {
     
-                    const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates
+                    const multiPolygonArr = newGeoData[i].features[0].geometry.coordinates;
                     for (let i = 0; i < multiPolygonArr.length; i++) {
                         multiPolygonArr[i][0].map((polyCoords: string[]) => {
                             return polyCoords.reverse();
