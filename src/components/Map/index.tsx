@@ -18,6 +18,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const [geoData, setGeoData] = useState<any[]>([]);
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
     const [displayAlert, setDisplayAlert] = useState(false);
+    const [entitiesByBusinessType, setEntitiesByBusinessType] = useState([]);
 
     const [cookies, setCookie, removeCookie] = useCookies(['history']);
 
@@ -25,6 +26,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const history = useHistory();
 
     const getEntityByBusinessType = async(businessType:string) => {
+      console.log(businessType)
       const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
       const data = await response.json();
 
@@ -44,6 +46,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
       const filteredGeoData = entityGeoData.filter((geoData:any) => geoData);
 
+      setEntitiesByBusinessType(filteredEntityData);
       setGeoData(filteredGeoData);
       setIsLoading(false);
     };
@@ -107,8 +110,10 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
       if(location.pathname.substring(0, 14) !== "/business-type") {
         if(location.pathname === "/") {
           handleFeaturedLocations();
+          setEntitiesByBusinessType([]);
         } else {
           handleIndividualEntity();
+          setEntitiesByBusinessType([]);
         };
       } else {
         const businessType = location.pathname.substring(15, location.pathname.length);
@@ -151,6 +156,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
                 geoData={geoData}
               />
               <SearchPane 
+                entitiesByBusinessType={entitiesByBusinessType}
                 emissionsData={emissionsData}
                 featuredEntities={featuredEntities}
                 navHistory={cookies.history}

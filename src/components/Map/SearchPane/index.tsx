@@ -10,6 +10,7 @@ interface PageProps {
     emissionsData: any[],
     featuredEntities: any[]
     navHistory: object[]
+    entitiesByBusinessType: object[]
 }
 
 const SearchPane: React.FC<PageProps> = (props) => {
@@ -38,9 +39,14 @@ const SearchPane: React.FC<PageProps> = (props) => {
         };
     }, [props.emissionsData])
 
+    useEffect(() => {
+        console.log(selectedLocation)
+    }, [selectedLocation])
+
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
             <SearchBar 
+                entitiesByBusinessType={props.entitiesByBusinessType}
                 featuredEntities={props.featuredEntities}
                 inputVal={inputVal} 
                 setInputVal={setInputVal} 
@@ -53,36 +59,39 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 isOpen={isOpen}
                 navHistory={props.navHistory}
             />
-            {isMobile ?
-                <>
-                    {isOpen && props.emissionsData.length > 0 ?
-                        <MobileDrawer 
-                            emissionsData={props.emissionsData}
-                            isOpen={isOpen}
-                            closeMenu={closeMenu}
-                            isSearching={isSearching}
-                            isMobile={isMobile}
-                            selectedLocation={selectedLocation}
-                        />
-                    :
-                        null
-                    }
-                </>
+            {props.entitiesByBusinessType.length > 0 ?
+                null
             :
-                <>
-                    {isOpen && props.emissionsData.length > 0 ?
-                        <SideMenu 
-                            emissionsData={props.emissionsData}
-                            isOpen={isOpen}
-                            selectedLocation={selectedLocation}
-                            isSearching={isSearching}
-                            closeMenu={closeMenu}
-                        />
-                    :
-                        null
-                    }
-                </>
-            }
+                isMobile ?
+                    <>
+                        {isOpen && props.emissionsData.length > 0 ?
+                            <MobileDrawer 
+                                emissionsData={props.emissionsData}
+                                isOpen={isOpen}
+                                closeMenu={closeMenu}
+                                isSearching={isSearching}
+                                isMobile={isMobile}
+                                selectedLocation={selectedLocation}
+                            />
+                        :
+                            null
+                        }
+                    </>
+                :
+                    <>
+                        {isOpen && props.emissionsData.length > 0 ?
+                            <SideMenu 
+                                emissionsData={props.emissionsData}
+                                isOpen={isOpen}
+                                selectedLocation={selectedLocation}
+                                isSearching={isSearching}
+                                closeMenu={closeMenu}
+                            />
+                        :
+                            null
+                        }
+                    </>
+            } 
         </div>
     );
 };
