@@ -1,4 +1,3 @@
-import { IonIcon, IonSearchbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Featured from './Featured/Featured';
@@ -82,12 +81,6 @@ const SearchBar: React.FC<PageProps> = (props) => {
                 </>
             : 
                 null
-                // props.entitiesByBusinessType.length > 0 ?
-                //     <BusinessTypeEntities 
-                //         entitiesByBusinessType={props.entitiesByBusinessType}
-                //     />
-                // :
-                //     null
             }
         </div>
     );
