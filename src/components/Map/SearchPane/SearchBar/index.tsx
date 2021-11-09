@@ -43,7 +43,6 @@ const SearchBar: React.FC<PageProps> = (props) => {
             setSuggestions(autoSuggestions);
         } else {
             if(props.navHistory) {
-                console.log(props.navHistory)
                 setSuggestions([...props.navHistory].reverse());
             } else {
                 setSuggestions(props.featuredEntities);

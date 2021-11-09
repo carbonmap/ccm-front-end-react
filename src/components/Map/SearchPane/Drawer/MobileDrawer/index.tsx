@@ -1,14 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { IonCard, createGesture, IonIcon } from '@ionic/react';
-// import '../entityDetails.css';
-import EntityDetails from '../DrawerContent/EntityDetails/EntityDetails';
 import { remove } from 'ionicons/icons';
 import DrawerContent from '../DrawerContent';
 
 interface PageProps {
   isOpen: boolean;
-  closeMenu: Function;
-  isSearching: boolean;
   isMobile: boolean;
   selectedLocation: any;
   emissionsData: {id: string, name: string, emissions: string[]}[];
@@ -97,18 +93,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
               emissionsData={props.emissionsData}
               isOpen={props.isOpen}
               isMobile={props.isMobile}
-              // closeMenu={props.closeMenu}
-              // isSearching={props.isSearching}
-              // isMobile={props.isMobile}
           />
-              {/* <EntityDetails 
-                entitiesByBusinessType={props.entitiesByBusinessType}
-                emissionsData={props.emissionsData}
-                isOpen={props.isOpen}
-                closeMenu={props.closeMenu}
-                isSearching={props.isSearching}
-                isMobile={props.isMobile}
-              /> */}
         </IonCard>
     );
 };

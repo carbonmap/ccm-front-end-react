@@ -6,8 +6,6 @@ interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
     isOpen: boolean;
     selectedLocation: any;
-    isSearching: boolean;
-    closeMenu: Function;
     entitiesByBusinessType: object[];
     isMobile: boolean;
 }
@@ -23,8 +21,6 @@ const Drawer:React.FC<PageProps> = (props) => {
                             entitiesByBusinessType={props.entitiesByBusinessType}
                             emissionsData={props.emissionsData}
                             isOpen={props.isOpen}
-                            closeMenu={props.closeMenu}
-                            isSearching={props.isSearching}
                             isMobile={props.isMobile}
                             selectedLocation={props.selectedLocation}
                         />
@@ -39,9 +35,6 @@ const Drawer:React.FC<PageProps> = (props) => {
                             entitiesByBusinessType={props.entitiesByBusinessType}
                             emissionsData={props.emissionsData}
                             isOpen={props.isOpen}
-                            selectedLocation={props.selectedLocation}
-                            isSearching={props.isSearching}
-                            closeMenu={props.closeMenu}
                             isMobile={props.isMobile}
                         />
                     :

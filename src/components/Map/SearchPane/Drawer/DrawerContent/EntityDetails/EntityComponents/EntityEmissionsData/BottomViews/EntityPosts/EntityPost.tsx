@@ -1,4 +1,4 @@
-import { IonText, IonTitle } from '@ionic/react';
+import { IonText } from '@ionic/react';
 import React, { useState } from 'react';
 
 interface PageProps {

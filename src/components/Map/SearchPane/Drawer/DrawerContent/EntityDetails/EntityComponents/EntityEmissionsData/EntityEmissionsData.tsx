@@ -36,6 +36,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
             getEntityData();
         }
     }, []);
+    
     return (
         <div>
             <DataAccordion 
