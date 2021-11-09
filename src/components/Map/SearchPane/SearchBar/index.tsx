@@ -5,7 +5,6 @@ import Featured from './Featured/Featured';
 import './searchBar.css';
 import SearchSuggestions from './SearchSuggestions/SearchSuggestions';
 import AutoSuggestEntities from './AutoSuggestEntities/AutoSuggestEntities';
-import BusinessTypeEntities from './BusinessTypeEntities/BusinessTypeEntities';
 
 interface PageProps {
     inputVal: string;
@@ -44,6 +43,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
             setSuggestions(autoSuggestions);
         } else {
             if(props.navHistory) {
+                console.log(props.navHistory)
                 setSuggestions([...props.navHistory].reverse());
             } else {
                 setSuggestions(props.featuredEntities);

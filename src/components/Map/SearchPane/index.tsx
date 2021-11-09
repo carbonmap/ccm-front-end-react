@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
-import SideMenu from './SideMenu';
+import SideMenu from './Drawer/DesktopDrawer';
 import { RootState } from '../../../redux/reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import MobileDrawer from './SideMenu/MenuComponents/EntityDetails/MobileDrawer/MobileDrawer';
+import MobileDrawer from './Drawer/MobileDrawer';
 import { useHistory, useLocation } from 'react-router';
+import Drawer from './Drawer';
 
 interface PageProps {
     emissionsData: any[],
@@ -55,10 +56,19 @@ const SearchPane: React.FC<PageProps> = (props) => {
                 isOpen={isOpen}
                 navHistory={props.navHistory}
             />
+            <Drawer 
+                 entitiesByBusinessType={props.entitiesByBusinessType}
+                 emissionsData={props.emissionsData}
+                 isOpen={isOpen}
+                 closeMenu={closeMenu}
+                 isSearching={isSearching}
+                 selectedLocation={selectedLocation}
+                 isMobile={isMobile}
+            />
             {/* {props.entitiesByBusinessType.length > 0 ?
                 null
             : */}
-                {isMobile ?
+                {/* {isMobile ?
                     <>
                         {isOpen && props.emissionsData.length > 0 || isOpen && props.entitiesByBusinessType.length > 0 ?
                             <MobileDrawer 
@@ -89,7 +99,7 @@ const SearchPane: React.FC<PageProps> = (props) => {
                             null
                         }
                     </>
-            }
+            } */}
         </div>
     );
 };

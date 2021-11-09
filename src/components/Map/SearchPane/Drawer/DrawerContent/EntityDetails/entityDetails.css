@@ -1,0 +1,135 @@
+/* .entity-details-container {
+  padding: 0 16px 16px 16px;
+  overflow-y: scroll;
+  height: 88vh;
+  margin-top: 4vh;
+  max-height: 90vh;
+}
+.data-accordion {
+  border: 2px solid green;
+  width: 100%;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+.accordion-title-container {
+  display: flex;
+  cursor: pointer;
+}
+.accordion-title {
+  font-size: 24px;
+}
+.accordion-title-bold {
+  font-weight: 600;
+}
+.accordion-post-list {
+  overflow-y: scroll;
+  height: fit-content;
+}
+.accordion-post {
+  position: relative;
+}
+.accordion-post-title {
+  display: flex;
+  cursor: pointer;
+}
+.accordion-post-text-container {
+  max-height: 8vh;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.accordion-post-readmore {
+  cursor: pointer;
+  font-weight: 600;
+}
+.accordion-post-readmore-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-image: linear-gradient(transparent, #fff);
+  height: 50%;
+  align-items: flex-end;
+  display: flex;
+}
+
+.bottom-drawer {
+  position: absolute;
+  right: -16px;
+  bottom: -68vh;
+  height: 68vh;
+  max-height: 80vh;
+  min-height: 80vh;
+  border-radius: 30px;
+  width: 100vw;
+  pointer-events: all;
+}
+.entity-detail-title {
+  font-weight: 600;
+  font-size: 24px;
+}
+.drawer-open {
+  transition: 0.5s ease-in;
+  transform: translateY(-68vh);
+}
+.drawer-closed {
+  transition: 0.5s ease-out;
+}
+
+.entity-desc-container {
+  position: relative;
+}
+.entity-desc-text-container {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.entity-desc-readmore-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-image: linear-gradient(transparent, #fff);
+  height: 120%;
+  align-items: flex-end;
+  display: flex;
+}
+.entity-desc-readmore {
+  cursor: pointer;
+  font-weight: 500;
+}
+.entity-desc {
+  text-overflow: ellipsis;
+}
+.entity-title {
+  font-weight: 600;
+  font-size: 2vh;
+}
+.entity-business-type {
+  background-color: #ccc;
+  padding: 4px 12px;
+  height: fit-content;
+  font-weight: 400;
+  border-top-right-radius: 2vh;
+  border-top-left-radius: 2vh;
+  border-bottom-right-radius: 2vh;
+  border-bottom-left-radius: 2vh;
+  cursor: pointer;
+}
+.entity-address {
+  font-weight: 500;
+}
+.entity-img {
+  border-radius: 3%;
+}
+
+@media only screen and (max-width: 768px) {
+  .entity-details-container {
+    padding: 0px 16px 16px 16px;
+    max-height: 60vh;
+    margin-top: 0;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .entity-details-container {
+    padding: 16px 16px 16px 16px;
+    max-height: 72vh;
+    height: 64vh;
+  }
+} */

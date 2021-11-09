@@ -1,60 +1,56 @@
-import { IonSpinner, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
-import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../redux/reducers';
-import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
-import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
 import { useLocation } from 'react-router';
-import Spinner from '../../../../../UI/spinner/spinner';
-import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
-import { Link } from 'react-router-dom';
-import BusinessTypeEntities from '../../../SearchBar/BusinessTypeEntities/BusinessTypeEntities';
+import BusinessTypeEntities from '../BusinessTypeEntities/BusinessTypeEntities';
+import EntityInfo from './EntityComponents/EntityInfo/EntityInfo';
+import EntityEmissionsData from './EntityComponents/EntityEmissionsData/EntityEmissionsData';
 
 interface PageProps {
     isOpen: boolean;
-    closeMenu: Function;
-    isSearching: boolean;
-    isMobile: boolean;
+    // closeMenu: Function;
+    // isSearching: boolean;
+    // isMobile: boolean;
     emissionsData: {id: string, name: string, emissions: string[]}[];
     entitiesByBusinessType: object[];
+    isMobile: boolean;
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
-    const [entityDetails, setEntityDetails] = useState<any>();
-    const [descHeight, setDescHeight] = useState('8vh');
-    const [seeMoreText, setSeeMoreText] = useState("more");
-    const [graphData, setGraphData] = useState<any>([]);
-    const [actionData, setActionData] = useState<any>([]);
-    const [postData, setPostData] = useState<any>([]);
+    // const [entityDetails, setEntityDetails] = useState<any>();
+    // const [descHeight, setDescHeight] = useState('8vh');
+    // const [seeMoreText, setSeeMoreText] = useState("more");
+    // const [graphData, setGraphData] = useState<any>([]);
+    // const [actionData, setActionData] = useState<any>([]);
+    // const [postData, setPostData] = useState<any>([]);
 
-    const isMobile = useSelector( (state: RootState) => state.isMobile);
-    const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
-    const location = useLocation();
+    // const isMobile = useSelector( (state: RootState) => state.isMobile);
+    // const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
+    // const location = useLocation();
 
-    const getEntityData = async() => {
-        const emissionResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission/${props.emissionsData[0].id}.json`);
-        const emissionJson = await emissionResponse.json();
+    // const getEntityData = async() => {
+    //     const emissionResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission/${props.emissionsData[0].id}.json`);
+    //     const emissionJson = await emissionResponse.json();
 
-        setGraphData(emissionJson.emissions);
+    //     setGraphData(emissionJson.emissions);
 
-        const actionRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action/${props.emissionsData[0].id}.json`);
-        const actionJson = await actionRes.json();
+    //     const actionRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action/${props.emissionsData[0].id}.json`);
+    //     const actionJson = await actionRes.json();
 
-        setActionData(actionJson.actions);
+    //     setActionData(actionJson.actions);
 
-        const postRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post/${props.emissionsData[0].id}.json`);
-        const postJson = await postRes.json();
+    //     const postRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post/${props.emissionsData[0].id}.json`);
+    //     const postJson = await postRes.json();
 
-        setPostData(postJson.posts);
-    };
+    //     setPostData(postJson.posts);
+    // };
 
-    const getEntityDetails = async() => {
-        const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
-        const data = await response.json();
+    // const getEntityDetails = async() => {
+    //     const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
+    //     const data = await response.json();
 
-        setEntityDetails(data);
-    };
+    //     setEntityDetails(data);
+    // };
 
     const mobileMenuStyle = (
         props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
@@ -63,22 +59,22 @@ const EntityDetails: React.FC<PageProps> = (props) => {
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
     );
 
-    const handleReadMore = () => {
-        if(descHeight !== '100vh') {
-            setDescHeight('100vh');
-            setSeeMoreText("less");
-        } else {
-            setDescHeight('8vh');
-            setSeeMoreText("more");
-        }
-    };
+    // const handleReadMore = () => {
+    //     if(descHeight !== '100vh') {
+    //         setDescHeight('100vh');
+    //         setSeeMoreText("less");
+    //     } else {
+    //         setDescHeight('8vh');
+    //         setSeeMoreText("more");
+    //     }
+    // };
     
-    useEffect(() => {
-        if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
-            getEntityData();
-            getEntityDetails();
-        }
-    }, []);
+    // useEffect(() => {
+    //     if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
+    //         getEntityData();
+    //         getEntityDetails();
+    //     }
+    // }, []);
 
     return (
         <>
@@ -87,8 +83,16 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                     entitiesByBusinessType={props.entitiesByBusinessType}
                 />
             :
-                <div className="entity-details-container" style={{ transform: !isMobile ? desktopMenuStyle : mobileMenuStyle }}>
-                    {entityDetails ?
+                <div className="entity-details-container" style={{ transform: !props.isMobile ? desktopMenuStyle : mobileMenuStyle }}>
+                    <EntityInfo 
+                        emissionsData={props.emissionsData}
+                        entitiesByBusinessType={props.entitiesByBusinessType}
+                    />
+                    <EntityEmissionsData 
+                        emissionsData={props.emissionsData}
+                        entitiesByBusinessType={props.entitiesByBusinessType}
+                    />
+                    {/* {entityDetails ?
                         <div>
                             <img 
                                 className="entity-img"
@@ -116,9 +120,9 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                             </div>
                         </div>
                     :
-                        <Spinner />}
+                        <Spinner />} */}
                     
-                    <DataAccordion 
+                    {/* <DataAccordion 
                         title="CO2e in 2021"
                         titleData="24t"
                         bottomView={
@@ -146,7 +150,7 @@ const EntityDetails: React.FC<PageProps> = (props) => {
                                 posts={postData}
                             />
                         }
-                    />
+                    /> */}
                 </div>
             }
         </>
