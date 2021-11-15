@@ -1,0 +1,14 @@
+{
+    "name": "White Cottage, St. Edmund's College",
+    "entity_id": "uk.ac.cam.st-edmunds.white-cottage",
+    "actions": [
+        {
+            "title": "Green Tariff",
+            "link": "https://cambridgecarbonfootprint.org/actions/renewable_electricity_tariff/"
+        },
+        {
+            "title": "Reduce Food Waste",
+            "link": "https://cambridgecarbonfootprint.org/actions/cut_down_on_waste/"
+        }
+    ]
+}

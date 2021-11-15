@@ -1,0 +1,14 @@
+{
+    "name": "Bodley's Court, King's College",
+    "entity_id": "uk.ac.cam.kings.bodleys",
+    "actions": [
+        {
+            "title": "Green Tariff",
+            "link": "https://cambridgecarbonfootprint.org/actions/renewable_electricity_tariff/"
+        },
+        {
+            "title": "Reduce Food Waste",
+            "link": "https://cambridgecarbonfootprint.org/actions/cut_down_on_waste/"
+        }
+    ]
+}
