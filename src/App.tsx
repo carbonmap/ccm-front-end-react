@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { IonApp, IonHeader } from '@ionic/react';
 import { useDispatch } from 'react-redux';
-import Toolbar from './components/toolbar';
-import { handleWindowSizeChange } from './service/general/checkScreenSize/checkScreenSize';
+import Toolbar from 'src/components/toolbar';
+import { handleWindowSizeChange } from 'src/service/general/checkScreenSize/checkScreenSize';
 
-import { fetchFeatured } from './service/fetchURL/featuredEntities/fetchFeatured';
+import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 /* Basic CSS for apps built with Ionic */
@@ -19,14 +19,14 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 /* Theme variables */
-import './theme/variables.css';
-import './theme/app.css';
+import 'src/theme/variables.css';
+import 'src/theme/app.css';
 import { 
   BrowserRouter as Router, 
   Switch, 
   Route, 
 } from 'react-router-dom';
-import Map from './components/Map';
+import Map from 'src/components/Map';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

@@ -28,7 +28,7 @@ const FeaturedLocationEl: React.FC<PageProps> = (props) => {
                 <IonText className="featured-el-title" color="dark" >{props.title}</IonText>
                 <div className="featured-el-details">
                     <IonText className="featured-el-text">{props.actions} Actions</IonText>
-                    <IonText className="featured-el-text">{props.entity.emissions.length} Posts</IonText>
+                    <IonText className="featured-el-text">{props.posts} Posts</IonText>
                 </div>
             </div>
         </Link>

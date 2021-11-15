@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-leaflet';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../../redux/store';
+import type { RootState } from 'src/redux/store';
 import AlertMessage from "../../Message/AlertMessage";
 
 interface State {

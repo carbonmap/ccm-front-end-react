@@ -1,4 +1,4 @@
-import * as Constants from '../../constants/actionTypes';
+import * as Constants from 'src/constants/actionTypes';
 
 export const screenSm = () => {
     return {

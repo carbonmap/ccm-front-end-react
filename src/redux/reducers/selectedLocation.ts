@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { SET_LOCATION } from '../../constants/actionTypes'
+import { SET_LOCATION } from 'src/constants/actionTypes'
 
 const locationReducer = (state: any = null, action: PayloadAction) => {
     switch(action.type) {
