@@ -1,0 +1,38 @@
+{
+    "name": "Grasshopper Lodge, King's College",
+    "entity_id": "uk.ac.cam.kings.grasshopper",
+    "emissions": [
+        {
+            "measure": "gas",
+            "unit": "m3",
+            "value": "2",
+            "period_start": "2020-01-01T00:00:00",
+            "period_end": "2021-01-01T00:00:00",
+            "kgco2e": "234.56"
+        },
+        {
+            "measure": "electricity",
+            "unit": "kWh",
+            "value": "9",
+            "period_start": "2020-01-01T00:00:00",
+            "period_end": "2021-01-01T00:00:00",
+            "kgco2e": "234.56"
+        },
+        {
+            "measure": "gas",
+            "unit": "m3",
+            "value": "8",
+            "period_start": "2019-01-01T00:00:00",
+            "period_end": "2020-01-01T00:00:00",
+            "kgco2e": "234.56"
+        },
+        {
+            "measure": "electricity",
+            "unit": "kWh",
+            "value": "14",
+            "period_start": "2019-01-01T00:00:00",
+            "period_end": "2020-01-01T00:00:00",
+            "kgco2e": "234.56"
+        }
+    ]
+}

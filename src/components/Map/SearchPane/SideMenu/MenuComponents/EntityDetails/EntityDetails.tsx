@@ -2,12 +2,13 @@ import { IonSpinner, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import DataAccordion from './DataAccordion/DataAccordion';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../../redux/reducers';
+import { RootState } from 'src/redux/reducers';
 import EntityActionsList from './DataAccordion/BottomViews/EntityActions/EntityActionsList';
 import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPostsList';
 import { useLocation } from 'react-router';
 import Spinner from '../../../../../UI/spinner/spinner';
 import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
+import { fetchIndividualEntityData } from 'src/service/fetchURL/entityData/fetchIndividualEntityData';
 
 interface PageProps {
     isOpen: boolean;
@@ -29,28 +30,31 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     const selectedEntity = useSelector((state: RootState) => state.selectedLocation);
     const location = useLocation();
 
+    const dbURl = process.env.REACT_APP_DATABASE_URL;
+    const entityId = props.emissionsData[0].id;
+
     const getEntityData = async() => {
-        const emissionResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission/${props.emissionsData[0].id}.json`);
-        const emissionJson = await emissionResponse.json();
+        const emissionJson = await fetchIndividualEntityData("emission", entityId, "json");
+        if(emissionJson) {
+            setGraphData(emissionJson.emissions);
+        };
 
-        setGraphData(emissionJson.emissions);
+        const actionJson = await fetchIndividualEntityData("entity_action", entityId, "json");
+        if(actionJson) {
+            setActionData(actionJson.actions);
+        };
 
-        const actionRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action/${props.emissionsData[0].id}.json`);
-        const actionJson = await actionRes.json();
-
-        setActionData(actionJson.actions);
-
-        const postRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post/${props.emissionsData[0].id}.json`);
-        const postJson = await postRes.json();
-
-        setPostData(postJson.posts);
+        const postJson = await fetchIndividualEntityData("entity_post", entityId, "json");
+        if(postJson) {
+            setPostData(postJson.posts);
+        }
     };
 
     const getEntityDetails = async() => {
-        const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
-        const data = await response.json();
-
-        setEntityDetails(data);
+        const data = await fetchIndividualEntityData("entity_property", entityId, "json");
+        if(data) {
+            setEntityDetails(data);
+        };
     };
 
     const mobileMenuStyle = (
