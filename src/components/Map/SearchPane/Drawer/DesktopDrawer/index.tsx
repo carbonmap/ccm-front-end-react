@@ -9,14 +9,6 @@ interface PageProps {
 }
 
 const SideMenu: React.FC<PageProps> = (props) => {    
-    // const isMobile = useSelector( (state: RootState) => state.isMobile);
-
-    // const mobileMenuStyle = (
-    //     props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
-    // );
-    // const desktopMenuStyle = (
-    //     props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
-    // );
 
     return (
         <div className="ion-align-self-end side-menu ion-padding-top" slot="end" >

@@ -31,16 +31,9 @@ function AnimateMap({ geoData }:any) {
     };
     const fitMapView = (centerCoords:any) => {
         map.setView(centerCoords, 14, { 
-            // paddingBottomRight: isMobile ? [0,0] : [220,0], 
             animate: true
         });
     };
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         fitMapView(coords);
-    //     }, 100);
-    // }, [geoData]);
 
     useEffect(() => {
         if(location.pathname.substring(0, 14) === "/business-type") {

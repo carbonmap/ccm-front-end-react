@@ -140,7 +140,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
           <IonIcon 
             icon={searchIcon} 
             onClick={() => handleIconClick()}
-            // onClick={props.isSearching ? () => props.setIsSearching(false) : props.entitiesByBusinessType.length > 0 ? history.goBack() : () => props.handleMenuClose()} 
             style={{ fontSize: 24, cursor: 'pointer' }} 
           />
           <input 
