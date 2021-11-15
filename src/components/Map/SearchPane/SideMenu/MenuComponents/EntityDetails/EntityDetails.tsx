@@ -8,7 +8,7 @@ import EntityPostsList from './DataAccordion/BottomViews/EntityPosts/EntityPosts
 import { useLocation } from 'react-router';
 import Spinner from '../../../../../UI/spinner/spinner';
 import EntityCO2 from './DataAccordion/BottomViews/EntityCO2/EntityCO2';
-import { fetchIndividualEntity } from 'src/service/fetchURL/individualEntity/fetchIndividualEntity';
+import { fetchIndividualEntityData } from 'src/service/fetchURL/entityData/fetchIndividualEntityData';
 
 interface PageProps {
     isOpen: boolean;
@@ -34,24 +34,24 @@ const EntityDetails: React.FC<PageProps> = (props) => {
     const entityId = props.emissionsData[0].id;
 
     const getEntityData = async() => {
-        const emissionJson = await fetchIndividualEntity(`/emission/${entityId}.json`);
+        const emissionJson = await fetchIndividualEntityData("emission", entityId, "json");
         if(emissionJson) {
             setGraphData(emissionJson.emissions);
         };
 
-        const actionJson = await fetchIndividualEntity(`/entity_action/${entityId}.json`);
+        const actionJson = await fetchIndividualEntityData("entity_action", entityId, "json");
         if(actionJson) {
             setActionData(actionJson.actions);
         };
 
-        const postJson = await fetchIndividualEntity(`/entity_post/${entityId}.json`);
+        const postJson = await fetchIndividualEntityData("entity_post", entityId, "json");
         if(postJson) {
             setPostData(postJson.posts);
         }
     };
 
     const getEntityDetails = async() => {
-        const data = await fetchIndividualEntity(`/entity_property/${entityId}.json`);
+        const data = await fetchIndividualEntityData("entity_property", entityId, "json");
         if(data) {
             setEntityDetails(data);
         };

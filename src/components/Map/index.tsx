@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SearchPane from './SearchPane';
 import MainMap from "./MainMap/MainMap";
 import Spinner from '../UI/spinner/spinner';
-import { fetchIndividualEntity } from 'src/service/fetchURL/individualEntity/fetchIndividualEntity';
+import { fetchIndividualEntityData } from 'src/service/fetchURL/entityData/fetchIndividualEntityData';
 import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
 import AlertMessage from '../Message/AlertMessage';
 import { useCookies } from 'react-cookie';
@@ -29,13 +29,13 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
       const featuredEmissionsData:any = await Promise.all(featured.map((entityID) => {
         return (
-          fetchIndividualEntity(`/entity_property/${entityID}.json`)
+          fetchIndividualEntityData("entity_property", entityID, "json")
         )
       }));
 
       const featuredGeoData:any = await Promise.all(featured.map((entityID) => {
         return (
-          fetchIndividualEntity(`/geojson/${entityID}.geojson`)
+          fetchIndividualEntityData("geojson", entityID, "geojson")
         )
       }));
 
@@ -47,14 +47,14 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
     const handleIndividualEntity = async() => {
       const entityID = location.pathname.substring(1,location.pathname.length);
-      const fetchedGeoData:any[] = await fetchIndividualEntity(`/geojson/${entityID}.geojson`);
+      const fetchedGeoData:any[] = await fetchIndividualEntityData("geojson", entityID, "geojson");
 
       if(!fetchedGeoData) {
         setDisplayAlert(true);
         history.replace("/");
         handleFeaturedLocations();
       } else {
-        const fetchedEmissionsData:any[] = await fetchIndividualEntity(`/entity_property/${entityID}.json`);
+        const fetchedEmissionsData:any[] = await fetchIndividualEntityData("entity_property", entityID, "json");
 
         if(!fetchedEmissionsData) {
           setDisplayAlert(true);
@@ -65,7 +65,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           
           const featuredEmissionsData:any  = await Promise.all(featured.map((entityID) => {
             return (
-              fetchIndividualEntity(`/entity_property/${entityID}.json`)
+              fetchIndividualEntityData("entity_property", entityID, "json")
               )
             }));
             
