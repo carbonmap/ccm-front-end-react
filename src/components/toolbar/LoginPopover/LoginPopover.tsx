@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
-import LoginDisplay from '../../UserAuth/LoginDisplay/LoginDisplay';
+import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
 
 interface PageProps {
     popoverState: { showPopover: boolean, event: any },

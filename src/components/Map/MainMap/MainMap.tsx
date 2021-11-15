@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-l
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'src/redux/store';
-import AlertMessage from "../../Message/AlertMessage";
+import AlertMessage from "src/components/Message/AlertMessage";
 
 interface State {
     geoData: JSX.Element[],

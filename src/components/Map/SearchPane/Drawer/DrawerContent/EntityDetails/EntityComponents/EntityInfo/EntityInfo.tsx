@@ -1,6 +1,6 @@
 import { IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
-import Spinner from '../../../../../../../UI/spinner/spinner';
+import Spinner from 'src/components/UI/spinner/spinner';
 import { Link } from 'react-router-dom';
 
 interface PageProps {

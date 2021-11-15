@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
-import { RootState } from '../../../redux/reducers';
+import { RootState } from 'src/redux/reducers';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import Drawer from './Drawer';

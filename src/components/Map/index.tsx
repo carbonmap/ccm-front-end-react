@@ -39,7 +39,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
       const filteredEntityData = entityData.filter((entity:any) => entity.business_type === businessType)
 
       const entityGeoData:any = await Promise.all(filteredEntityData.map(async(entity:{id:string}) => {
-        const geoData = await fetchIndividualEntityData(`geojson/${entity.id}.geojson`);
+        const geoData = await fetchIndividualEntityData("geojson", entity.id, "geojson");
         return geoData;
       }));
 
@@ -128,7 +128,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         const navHistory = cookies.history;
         if(navHistory == undefined) {
           setCookie('history', [{ name: emissionsData[0].name, id: emissionsData[0].id }])
-          // setCookie('history', [{ name: emissionsData[0].name, id: location.pathname }])
         } else {
           const matchEntity = navHistory.find((entity:any) => entity.name === emissionsData[0].name);
           if(matchEntity !== undefined) {
