@@ -27,10 +27,8 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
                 props.suggestions.map((entity: any, index) => {
                     if(index < 5) {
                         return (
-                            <Link key={index} to={entity.id} onClick={() => props.setInputVal("")} >
-                                <IonItem 
-                                    className="search-suggestion-el"
-                                >{entity.name}</IonItem>
+                            <Link key={index} to={`/${entity.id}`} onClick={() => props.setInputVal("")} >
+                                <IonItem className="search-suggestion-el">{entity.name}</IonItem>
                             </Link>
                         );
                     };
@@ -38,10 +36,8 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
             :
                 props.featuredEntities.map((entity: any, index) => {
                     return (
-                        <Link key={index} to={entity.id} onClick={() => props.setInputVal("")} >
-                            <IonItem 
-                                className="search-suggestion-el"
-                            >{entity.name}</IonItem>
+                        <Link key={index} to={`/${entity.id}`} onClick={() => props.setInputVal("")} >
+                            <IonItem className="search-suggestion-el">{entity.name}</IonItem>
                         </Link>
                     );
                 })

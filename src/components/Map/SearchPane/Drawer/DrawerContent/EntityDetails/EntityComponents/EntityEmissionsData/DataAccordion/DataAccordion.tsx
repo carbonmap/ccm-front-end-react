@@ -1,6 +1,5 @@
 import { IonIcon, IonText } from '@ionic/react'
 import React, { useState } from 'react';
-import '../entityDetails.css';
 import { chevronDown } from 'ionicons/icons'; 
 
 interface PageProps {

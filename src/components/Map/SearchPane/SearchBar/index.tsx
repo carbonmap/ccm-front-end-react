@@ -1,7 +1,6 @@
-import { IonIcon, IonSearchbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import Featured from '../SideMenu/MenuComponents/Featured/Featured';
+import Featured from './Featured/Featured';
 import './searchBar.css';
 import SearchSuggestions from './SearchSuggestions/SearchSuggestions';
 import AutoSuggestEntities from './AutoSuggestEntities/AutoSuggestEntities';
@@ -17,7 +16,8 @@ interface PageProps {
     openMenu: Function;
     setIsOpen: (isOpen: boolean) => void;
     isOpen: boolean;
-    navHistory: object[]
+    navHistory: object[];
+    entitiesByBusinessType: object[];
 }
 
 const SearchBar: React.FC<PageProps> = (props) => {
@@ -60,24 +60,25 @@ const SearchBar: React.FC<PageProps> = (props) => {
                 setIsSearching={props.setIsSearching}
                 handleMenuClose={() => handleMenuClose()}
                 setAutoSuggestions={setAutoSuggestions}
+                entitiesByBusinessType={props.entitiesByBusinessType}
             />
             {props.isSearching ?
-            <>
-                <SearchSuggestions 
-                    featuredEntities={props.featuredEntities}
-                    emissionsData={props.emissionsData}
-                    isSearching={props.isSearching}
-                    navHistory={props.navHistory}
-                    suggestions={suggestions}
-                    setInputVal={props.setInputVal}
-                />  
-                <Featured 
-                    featuredEntities={props.featuredEntities}
-                    emissionsData={props.emissionsData}
-                    openMenu={props.openMenu}
-                    setInputVal={props.setInputVal}
-                /> 
-            </>
+                <>
+                    <SearchSuggestions 
+                        featuredEntities={props.featuredEntities}
+                        emissionsData={props.emissionsData}
+                        isSearching={props.isSearching}
+                        navHistory={props.navHistory}
+                        suggestions={suggestions}
+                        setInputVal={props.setInputVal}
+                    />  
+                    <Featured 
+                        featuredEntities={props.featuredEntities}
+                        emissionsData={props.emissionsData}
+                        openMenu={props.openMenu}
+                        setInputVal={props.setInputVal}
+                    /> 
+                </>
             : 
                 null
             }

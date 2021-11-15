@@ -18,11 +18,38 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const [geoData, setGeoData] = useState<any[]>([]);
     const [emissionsData, setEmissionsData] = useState<any[]>([]);
     const [displayAlert, setDisplayAlert] = useState(false);
+    const [entitiesByBusinessType, setEntitiesByBusinessType] = useState([]);
 
     const [cookies, setCookie, removeCookie] = useCookies(['history']);
 
     const location = useLocation();
     const history = useHistory();
+
+    const getEntityByBusinessType = async(businessType:string) => {
+      const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
+      const data = await response.json();
+
+      const entityData:any = await Promise.all(data.entities.map(async(entity:{name:string, id:string}) => {
+        const entityPropertyResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${entity.id}.json`)
+        const entityPropertData = await entityPropertyResponse.json();
+
+        return entityPropertData;
+      }));
+
+      const filteredEntityData = entityData.filter((entity:any) => entity.business_type === businessType)
+
+      const entityGeoData:any = await Promise.all(filteredEntityData.map(async(entity:{id:string}) => {
+        const geoData = await fetchIndividualEntityData("geojson", entity.id, "geojson");
+        return geoData;
+      }));
+
+      const filteredGeoData = entityGeoData.filter((geoData:any) => geoData);
+
+      setEntitiesByBusinessType(filteredEntityData);
+      setGeoData(filteredGeoData);
+      setIsLoading(false);
+    };
+    
 
     const handleFeaturedLocations = async() => {
       const featured = await fetchFeatured();
@@ -79,18 +106,28 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     };
 
     useEffect(() => {
-      if(location.pathname === "/") {
-        handleFeaturedLocations();
+      if(location.pathname.substring(0, 14) !== "/business-type") {
+        setEmissionsData([]);
+        if(location.pathname === "/") {
+          handleFeaturedLocations();
+          setEntitiesByBusinessType([]);
+        } else {
+          handleIndividualEntity();
+          setEntitiesByBusinessType([]);
+        };
       } else {
-        handleIndividualEntity();
-      };
+        setEntitiesByBusinessType([]);
+        setEmissionsData([]);
+        const businessType = location.pathname.substring(15, location.pathname.length);
+        getEntityByBusinessType(businessType);
+      }
     }, [location]);
 
     useEffect(() => {
       if(emissionsData.length > 0) {
         const navHistory = cookies.history;
         if(navHistory == undefined) {
-          setCookie('history', [{ name: emissionsData[0].name, id: location.pathname }])
+          setCookie('history', [{ name: emissionsData[0].name, id: emissionsData[0].id }])
         } else {
           const matchEntity = navHistory.find((entity:any) => entity.name === emissionsData[0].name);
           if(matchEntity !== undefined) {
@@ -99,10 +136,10 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
           }
             if(navHistory.length === 5) {
               const shiftedHistory:any = navHistory.slice(1);
-              const newHistory = [...shiftedHistory, { name: emissionsData[0].name, id: location.pathname }];
+              const newHistory = [...shiftedHistory, { name: emissionsData[0].name, id: emissionsData[0].id }];
               setCookie('history', newHistory);
             } else  {
-              const newHistory = [...navHistory, { name: emissionsData[0].name, id: location.pathname }];
+              const newHistory = [...navHistory, { name: emissionsData[0].name, id: emissionsData[0].id }];
               setCookie('history', newHistory);
             };  
         };
@@ -121,6 +158,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
                 geoData={geoData}
               />
               <SearchPane 
+                entitiesByBusinessType={entitiesByBusinessType}
                 emissionsData={emissionsData}
                 featuredEntities={featuredEntities}
                 navHistory={cookies.history}
