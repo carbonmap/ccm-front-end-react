@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { IonPopover, IonButton } from '@ionic/react';
+import { IonPopover, IonIcon } from '@ionic/react';
 import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
+import { personCircleOutline, informationCircleOutline } from 'ionicons/icons';
 
 interface PageProps {
     popoverState: { showPopover: boolean, event: any },
@@ -9,23 +10,36 @@ interface PageProps {
 
 const PopoverExample: React.FC<PageProps> = (props) => {
     const [displayLogin, setDisplayLogin] = useState(true);
+    const [showLoginPopover, setShowLoginPopover] = useState({ showPopover: false, event: undefined });
+
 
     const switchDisplay = () => {
         setDisplayLogin(!displayLogin);
     };
 
   return (
-      <IonPopover
-        event={props.popoverState.event}
-        isOpen={props.popoverState.showPopover}
-        onDidDismiss={() => props.setShowPopover({ showPopover: false, event: undefined })}
-        showBackdrop={false}
-    >
-        <LoginDisplay 
-            login={displayLogin}
-            switchDisplay={switchDisplay}
+      <div>
+        <IonIcon 
+            icon={personCircleOutline} 
+            className="login-icon" 
+            onClick={(e:any) => {
+                e.persist();
+                setShowLoginPopover({ showPopover: true, event: e })
+            }}
         />
-    </IonPopover>
+        <IonPopover
+            event={showLoginPopover.event}
+            isOpen={showLoginPopover.showPopover}
+            onDidDismiss={() => setShowLoginPopover({ showPopover: false, event: undefined })}
+            showBackdrop={false}
+        >
+            <LoginDisplay 
+                login={displayLogin}
+                switchDisplay={switchDisplay}
+            />
+        </IonPopover>
+
+      </div>
   );
 };
 
