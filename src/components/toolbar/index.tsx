@@ -8,8 +8,10 @@ const Toolbar: React.FC = () => {
         <IonToolbar className="toolbar" color="primary">
             <div className="toolbar-content">
                 <IonTitle>Cambridge Carbon Map</IonTitle>
-                <HelpBtn />
-                <LoginPopover />
+                <div className="icon-container">
+                    <HelpBtn />
+                    <LoginPopover />
+                </div>
             </div>
         </IonToolbar>
     );
