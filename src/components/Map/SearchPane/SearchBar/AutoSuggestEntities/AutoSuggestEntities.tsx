@@ -155,7 +155,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
               style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} 
             />
         </div>
-        <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank" style={{ padding: 8, display: 'flex', alignItems: 'center', marginLeft: 'auto', backgroundColor: '#fff', width: '100%', borderBottomLeftRadius: 20, textDecoration: 'none' }}>
+        <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank" className="addOrgLink" >
           <IonIcon 
             icon={addCircleOutline}
             color="primary"

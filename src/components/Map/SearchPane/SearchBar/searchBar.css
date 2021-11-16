@@ -74,6 +74,17 @@
   margin-right: 20%;
 }
 
+.addOrgLink {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  background-color: #fff;
+  width: 100%;
+  border-bottom-left-radius: 20px;
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 600px) and (orientation: portrait) {
   .search-bar {
     margin-bottom: 2px;
