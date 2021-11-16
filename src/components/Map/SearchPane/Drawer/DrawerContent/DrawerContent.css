@@ -1,9 +1,9 @@
 .entity-details-container {
   padding: 0 16px 16px 16px;
   overflow-y: scroll;
-  height: 84vh;
-  margin-top: 8vh;
-  max-height: 84vh;
+  height: 90vh;
+  margin-top: 6vh;
+  max-height: 90vh;
 }
 .data-accordion {
   border: 2px solid green;

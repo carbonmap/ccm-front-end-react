@@ -1,7 +1,7 @@
-import { IonIcon, IonText, IonRouterLink } from '@ionic/react';
+import { IonIcon } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { arrowBack, searchOutline, close, addCircleOutline } from 'ionicons/icons';
+import { arrowBack, searchOutline, close } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
 interface PageProps {
@@ -136,7 +136,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     };
 
     const renderInputComponent = (inputProps:any) => (
-      <div >
         <div className="search-bar-container" >
             <IonIcon 
               icon={searchIcon} 
@@ -155,15 +154,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
               style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} 
             />
         </div>
-        <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank" className="addOrgLink" >
-          <IonIcon 
-            icon={addCircleOutline}
-            color="primary"
-            style={{ fontSize: 24, marginRight: 8 }}
-          />
-          <IonText color="primary">Add your organisation</IonText>
-        </a>
-      </div>
     );
 
     useEffect(() => {
