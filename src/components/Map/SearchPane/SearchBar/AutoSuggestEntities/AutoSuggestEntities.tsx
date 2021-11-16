@@ -1,7 +1,7 @@
-import { IonIcon } from '@ionic/react';
+import { IonIcon, IonText, IonRouterLink } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { arrowBack, searchOutline, close } from 'ionicons/icons';
+import { arrowBack, searchOutline, close, addCircleOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
 interface PageProps {
@@ -136,23 +136,33 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     };
 
     const renderInputComponent = (inputProps:any) => (
-      <div className="search-bar-container" >
+      <div >
+        <div className="search-bar-container" >
+            <IonIcon 
+              icon={searchIcon} 
+              onClick={() => handleIconClick()}
+              style={{ fontSize: 24, cursor: 'pointer' }} 
+            />
+            <input 
+                {...inputProps} 
+                className="search-bar"
+                style={{ outline: 'none', border: 'none' }}
+                onFocus={() => handleInputFocus()}
+            />
+            <IonIcon 
+              icon={close} 
+              onClick={() => props.setInputVal("")} 
+              style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} 
+            />
+        </div>
+        <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank" style={{ padding: 8, display: 'flex', alignItems: 'center', marginLeft: 'auto', backgroundColor: '#fff', width: '100%', borderBottomLeftRadius: 20, textDecoration: 'none' }}>
           <IonIcon 
-            icon={searchIcon} 
-            onClick={() => handleIconClick()}
-            style={{ fontSize: 24, cursor: 'pointer' }} 
+            icon={addCircleOutline}
+            color="primary"
+            style={{ fontSize: 24, marginRight: 8 }}
           />
-          <input 
-              {...inputProps} 
-              className="search-bar"
-              style={{ outline: 'none', border: 'none' }}
-              onFocus={() => handleInputFocus()}
-          />
-          <IonIcon 
-            icon={close} 
-            onClick={() => props.setInputVal("")} 
-            style={{ fontSize: 24, opacity: props.inputVal !== "" ? 1 : 0, cursor: 'pointer' }} 
-          />
+          <IonText color="primary">Add your organisation</IonText>
+        </a>
       </div>
     );
 
