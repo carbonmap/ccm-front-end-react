@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { IonPopover, IonIcon } from '@ionic/react';
 import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
-import { personCircleOutline, informationCircleOutline } from 'ionicons/icons';
+import { personCircleOutline } from 'ionicons/icons';
+import '../toolbar.css';
 
-interface PageProps {
-    popoverState: { showPopover: boolean, event: any },
-    setShowPopover: (popoverState: { showPopover: boolean, event: any }) => void;
-}
-
-const PopoverExample: React.FC<PageProps> = (props) => {
+const PopoverExample: React.FC = () => {
     const [displayLogin, setDisplayLogin] = useState(true);
     const [showLoginPopover, setShowLoginPopover] = useState({ showPopover: false, event: undefined });
-
 
     const switchDisplay = () => {
         setDisplayLogin(!displayLogin);
@@ -38,7 +33,6 @@ const PopoverExample: React.FC<PageProps> = (props) => {
                 switchDisplay={switchDisplay}
             />
         </IonPopover>
-
       </div>
   );
 };
