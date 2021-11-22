@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { IonPopover, IonIcon } from '@ionic/react';
-import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
 import { personCircleOutline } from 'ionicons/icons';
 import '../toolbar.css';
+import { IonPopover, IonIcon, IonText } from '@ionic/react';
+import { addCircleOutline } from 'ionicons/icons';
+// import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
 
 const LoginPopover: React.FC = () => {
     const [displayLogin, setDisplayLogin] = useState(true);
@@ -28,10 +29,18 @@ const LoginPopover: React.FC = () => {
             onDidDismiss={() => setShowLoginPopover({ showPopover: false, event: undefined })}
             showBackdrop={false}
         >
-            <LoginDisplay 
+            {/* <LoginDisplay 
                 login={displayLogin}
                 switchDisplay={switchDisplay}
-            />
+            /> */}
+            <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank" className="addOrgLink" >
+                <IonIcon 
+                    icon={addCircleOutline}
+                    color="primary"
+                    style={{ fontSize: 24, marginRight: 8 }}
+                />
+                <IonText color="primary">Add your organisation</IonText>
+            </a>
         </IonPopover>
       </div>
   );
