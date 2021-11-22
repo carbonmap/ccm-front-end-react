@@ -4,7 +4,7 @@ import LoginDisplay from 'src/components/UserAuth/LoginDisplay/LoginDisplay';
 import { personCircleOutline } from 'ionicons/icons';
 import '../toolbar.css';
 
-const PopoverExample: React.FC = () => {
+const LoginPopover: React.FC = () => {
     const [displayLogin, setDisplayLogin] = useState(true);
     const [showLoginPopover, setShowLoginPopover] = useState({ showPopover: false, event: undefined });
 
@@ -37,4 +37,4 @@ const PopoverExample: React.FC = () => {
   );
 };
 
-export default PopoverExample;
+export default LoginPopover;
