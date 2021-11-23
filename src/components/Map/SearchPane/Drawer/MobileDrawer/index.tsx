@@ -42,10 +42,10 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       };
 
     useEffect(() => {
-      if(props.selectedLocation || props.entitiesByBusinessType.length > 0) {
+      if(props.emissionsData || props.selectedLocation || props.entitiesByBusinessType.length > 0) {
         openDrawer();
       };
-    }, [props.selectedLocation, props.entitiesByBusinessType]);
+    }, [props.selectedLocation, props.entitiesByBusinessType, props.emissionsData]);
 
     useEffect(() => {
       let c = drawerRef.current;
@@ -80,6 +80,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
 
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
+        {/* <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}> */}
           <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
               <IonIcon 
                 ref={dragRef}
