@@ -80,7 +80,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
 
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
-        {/* <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}> */}
           <div style={{ textAlign: "center", width: '100%', backgroundColor: '#fff' }} >
               <IonIcon 
                 ref={dragRef}

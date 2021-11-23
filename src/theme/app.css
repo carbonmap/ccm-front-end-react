@@ -26,7 +26,7 @@
   cursor: pointer;
   margin-top: 10vh;
 }
-.menu-toggle-wrapper {
+/* .menu-toggle-wrapper {
   transition-duration: 0.3s;
   transition-delay: 0.2s;
   transform-origin: center;
@@ -35,7 +35,7 @@
   height: 28px;
   width: 28px;
   color: rgba(0, 0, 0, 0.4);
-}
+} */
 
 @media only screen and (max-width: 1024px) {
   .menu-container {
