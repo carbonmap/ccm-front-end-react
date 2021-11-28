@@ -25,11 +25,11 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         let c = drawerRef.current;
         if (c.dataset.open === "true") {
           setDrawerClass("drawer-closed");
-          c.style.transform = "";
+          c.style.transform = "translateY(50%)";
           c.dataset.open = "false";
         } else {
           c.style.transition = ".5s ease-in";
-          c.style.transform = `translateY(${-68}vh) `;
+          c.style.transform = `translateY(2%) `;
           c.dataset.open = "true";
         }
       };
@@ -59,6 +59,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
           onMove: event => {
               let position = height - event.currentY;
               if (position > (height * 0.74)) return;
+              // if (position > height) return;
               // closing with a downward swipe
               if (position < 100) {
                 c.style.transform = "";
