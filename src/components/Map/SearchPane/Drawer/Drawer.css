@@ -116,6 +116,20 @@
   border-radius: 3%;
 }
 
+.entity-identificaiton-details {
+  display: inherit;
+}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+  .entity-identificaiton-details {
+    display: flex;
+    flex-direction: row;
+  }
+  .entity-img {
+    width: 50vw;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .entity-details-container {
     padding: 0px 16px 16px 16px;

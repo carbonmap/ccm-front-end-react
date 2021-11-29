@@ -11,16 +11,6 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     const [entityDetails, setEntityDetails] = useState<any>();
     const [descHeight, setDescHeight] = useState('8vh');
     const [seeMoreText, setSeeMoreText] = useState("more");
-    const [isPortrait, setIsPortrait] = useState(true);
-
-    const checkIsPortrait = () => {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-    
-        if(windowWidth > windowHeight) {
-            setIsPortrait(false);
-        }
-    };
 
     const getEntityDetails = async() => {
         const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
@@ -43,15 +33,13 @@ const EntityInfo: React.FC<PageProps> = (props) => {
         if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
             getEntityDetails();
         };
-        checkIsPortrait();
     }, []);
     return (
         <div>
             {entityDetails ?
                 <div>
-                    <div style={{ display: isPortrait ? 'initial' : 'flex', flexDirection: 'row' }}>
+                    <div className="entity-identificaiton-details" >
                         <img 
-                            style={{ width: isPortrait ? 'auto' : '50vw' }}
                             className="entity-img"
                             src={entityDetails.img}
                         />
