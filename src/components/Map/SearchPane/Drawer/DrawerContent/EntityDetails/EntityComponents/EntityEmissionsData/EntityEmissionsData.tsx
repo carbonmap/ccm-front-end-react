@@ -15,19 +15,21 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     const [postData, setPostData] = useState<any>([]);
 
     const getEntityData = async() => {
-        const emissionResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/emission/${props.emissionsData[0].id}.json`);
+        const dbURL = process.env.REACT_APP_DATABASE_URL;
+
+        const emissionResponse = await fetch(`${dbURL}/emission/${props.emissionsData[0].id}.json`);
         const emissionJson = await emissionResponse.json();
         console.log(emissionJson)
 
         setGraphData(emissionJson.emissions);
 
-        const actionRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_action/${props.emissionsData[0].id}.json`);
+        const actionRes = await fetch(`${dbURL}/entity_action/${props.emissionsData[0].id}.json`);
         const actionJson = await actionRes.json();
         console.log(actionJson)
 
         setActionData(actionJson.actions);
 
-        const postRes = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_post/${props.emissionsData[0].id}.json`);
+        const postRes = await fetch(`${dbURL}/entity_post/${props.emissionsData[0].id}.json`);
         const postJson = await postRes.json();
         console.log(postJson)
 
@@ -42,7 +44,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     
     return (
         <div>
-            {!graphData && !actionData && !postData ?
+            {graphData.length === 0 && actionData.length === 0 && postData.length === 0 ?
                 <div>
                     <p>This organisation hasn't submitted any data yet.</p>
                 </div>
