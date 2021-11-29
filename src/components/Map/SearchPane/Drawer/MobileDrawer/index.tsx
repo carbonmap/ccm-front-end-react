@@ -29,7 +29,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
           c.dataset.open = "false";
         } else {
           c.style.transition = ".5s ease-in";
-          c.style.transform = `translateY(2%) `;
+          c.style.transform = `translateY(0%) `;
           // c.style.marginBottom = "46vh";
           c.dataset.open = "true";
         }
@@ -39,7 +39,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       const openDrawer = () => {
         let c = drawerRef.current;
         setDrawerClass("drawer-open")
-        c.dataset.open = "true";
+        // c.dataset.open = "true";
       };
 
     useEffect(() => {
