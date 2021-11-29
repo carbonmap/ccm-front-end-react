@@ -1,3 +1,6 @@
+.toolbar {
+  position: relative;
+}
 .toolbar-content {
   display: flex;
   flex-direction: row;

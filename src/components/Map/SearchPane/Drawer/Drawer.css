@@ -71,7 +71,7 @@
 .drawer-open {
   transition: 0.5s ease-in;
   transform: translateY(46%);
-  z-index: 2000;
+  /* z-index: 2000; */
 }
 .drawer-closed {
   transition: 0.5s ease-out;

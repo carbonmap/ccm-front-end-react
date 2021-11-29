@@ -147,21 +147,21 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     }, [emissionsData])
   
     return (
-      <>
+      <div style={{ height: '100%', position: 'relative' }}>
         {isLoading ?
             <div className="spinner-container">
               <Spinner />
             </div>
           :
             <>
-              <MainMap
-                geoData={geoData}
-              />
               <SearchPane 
                 entitiesByBusinessType={entitiesByBusinessType}
                 emissionsData={emissionsData}
                 featuredEntities={featuredEntities}
                 navHistory={cookies.history}
+              />
+              <MainMap
+                geoData={geoData}
               />
               {displayAlert ? 
                 <AlertMessage>Location not found.</AlertMessage>
@@ -170,7 +170,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
               }
             </>
         }
-      </>
+      </div>
     );
 };
 

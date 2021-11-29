@@ -3,9 +3,9 @@
   min-height: 100%;
   height: fit-content;
   transition-duration: 0.3s;
-  z-index: 1000;
+  z-index: 2000;
   position: absolute;
-  margin-top: 60px;
+  right: 0;
 }
 .spinner-container {
   height: 100vh;
