@@ -19,19 +19,16 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
 
         const emissionResponse = await fetch(`${dbURL}/emission/${props.emissionsData[0].id}.json`);
         const emissionJson = await emissionResponse.json();
-        console.log(emissionJson)
 
         setGraphData(emissionJson.emissions);
 
         const actionRes = await fetch(`${dbURL}/entity_action/${props.emissionsData[0].id}.json`);
         const actionJson = await actionRes.json();
-        console.log(actionJson)
 
         setActionData(actionJson.actions);
 
         const postRes = await fetch(`${dbURL}/entity_post/${props.emissionsData[0].id}.json`);
         const postJson = await postRes.json();
-        console.log(postJson)
 
         setPostData(postJson.posts);
     };
