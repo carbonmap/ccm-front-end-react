@@ -11,6 +11,16 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     const [entityDetails, setEntityDetails] = useState<any>();
     const [descHeight, setDescHeight] = useState('8vh');
     const [seeMoreText, setSeeMoreText] = useState("more");
+    const [isPortrait, setIsPortrait] = useState(true);
+
+    const checkIsPortrait = () => {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+    
+        if(windowWidth > windowHeight) {
+            setIsPortrait(false);
+        }
+    };
 
     const getEntityDetails = async() => {
         const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
@@ -32,24 +42,28 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     useEffect(() => {
         if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
             getEntityDetails();
-        }
+        };
+        checkIsPortrait();
     }, []);
     return (
         <div>
             {entityDetails ?
                 <div>
-                    <img 
-                        className="entity-img"
-                        src={entityDetails.img}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                            <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                    <div style={{ display: isPortrait ? 'initial' : 'flex', flexDirection: 'row' }}>
+                        <img 
+                            style={{ width: isPortrait ? 'auto' : '50vw' }}
+                            className="entity-img"
+                            src={entityDetails.img}
+                        />
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
+                                <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                            </div>
+                            <Link to={`/business-type/${entityDetails.business_type}`}>
+                                <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                            </Link>
                         </div>
-                        <Link to={`/business-type/${entityDetails.business_type}`}>
-                            <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                        </Link>
                     </div>
                     <br />
                     <div className="entity-desc-container" onClick={() => handleReadMore()}>
