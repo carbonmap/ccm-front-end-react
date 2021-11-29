@@ -30,7 +30,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         } else {
           c.style.transition = ".5s ease-in";
           c.style.transform = `translateY(0%) `;
-          // c.style.marginBottom = "46vh";
           c.dataset.open = "true";
         }
       };
@@ -39,7 +38,6 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       const openDrawer = () => {
         let c = drawerRef.current;
         setDrawerClass("drawer-open")
-        // c.dataset.open = "true";
       };
 
     useEffect(() => {
@@ -48,37 +46,37 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       };
     }, [props.selectedLocation, props.entitiesByBusinessType, props.emissionsData]);
 
-    // useEffect(() => {
-    //   let c = drawerRef.current;
-    //   let height = window.innerHeight;
+    useEffect(() => {
+      let c = drawerRef.current;
+      let height = window.innerHeight;
 
-    //   // Change drawer position by dragging - styles ref directly
-    //   const gesture = createGesture({
-    //       el: dragRef.current,
-    //       gestureName: "my-swipe",
-    //       direction: "y",
-    //       onMove: event => {
-    //           let position = height - event.currentY;
-    //           if (position > (height * 0.74)) return;
-    //           // if (position > height) return;
-    //           // closing with a downward swipe
-    //           if (position < 100) {
-    //             c.style.transform = "";
-    //             c.dataset.open = "false";
-    //             return;
-    //           }
-    //           c.style.transform = `translateY(-${position}px)`;
-    //         },
-    //       onEnd: event => {
-    //           let position = height - event.currentY;
-    //           c.style.transition = ".5s ease-out";
-    //           if (position > 100 && c.dataset.open != "true") {
-    //             c.dataset.open = "true";
-    //           }
-    //         }
-    //   });
-    //   gesture.enable(true);
-    // }, []);
+      // Change drawer position by dragging - styles ref directly
+      const gesture = createGesture({
+          el: dragRef.current,
+          gestureName: "my-swipe",
+          direction: "y",
+          onMove: event => {
+              let position = height - event.currentY;
+              if (position > (height * 0.74)) return;
+              // closing with a downward swipe
+              if (position < height * 0.7) {
+                c.style.transform = "translateY(46%)";
+                c.dataset.open = "false";
+                return;
+              }
+
+              c.style.transform = `translateY(0%)`;
+            },
+          onEnd: event => {
+              let position = height - event.currentY;
+              c.style.transition = ".5s ease-out";
+              if (position > 100 && c.dataset.open != "true") {
+                c.dataset.open = "true";
+              }
+            }
+      });
+      gesture.enable(true);
+    }, []);
 
     return (
         <IonCard className={`bottom-drawer ${drawerClass}`} ref={drawerRef}>
