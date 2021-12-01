@@ -25,11 +25,11 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         let c = drawerRef.current;
         if (c.dataset.open === "true") {
           setDrawerClass("drawer-closed");
-          c.style.transform = "";
+          c.style.transform = "translateY(46%)";
           c.dataset.open = "false";
         } else {
           c.style.transition = ".5s ease-in";
-          c.style.transform = `translateY(${-68}vh) `;
+          c.style.transform = `translateY(0%) `;
           c.dataset.open = "true";
         }
       };
@@ -38,14 +38,13 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       const openDrawer = () => {
         let c = drawerRef.current;
         setDrawerClass("drawer-open")
-        c.dataset.open = "true";
       };
 
     useEffect(() => {
-      if(props.selectedLocation || props.entitiesByBusinessType.length > 0) {
+      if(props.emissionsData || props.selectedLocation || props.entitiesByBusinessType.length > 0) {
         openDrawer();
       };
-    }, [props.selectedLocation, props.entitiesByBusinessType]);
+    }, [props.selectedLocation, props.entitiesByBusinessType, props.emissionsData]);
 
     useEffect(() => {
       let c = drawerRef.current;
@@ -60,12 +59,13 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
               let position = height - event.currentY;
               if (position > (height * 0.74)) return;
               // closing with a downward swipe
-              if (position < 100) {
-                c.style.transform = "";
+              if (position < height * 0.7) {
+                c.style.transform = "translateY(46%)";
                 c.dataset.open = "false";
                 return;
               }
-              c.style.transform = `translateY(-${position}px)`;
+
+              c.style.transform = `translateY(0%)`;
             },
           onEnd: event => {
               let position = height - event.currentY;

@@ -50,7 +50,7 @@ const SearchBar: React.FC<PageProps> = (props) => {
     }, [props.inputVal, props.navHistory])
 
     return (
-        <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent' }}>
+        <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent', zIndex: props.isSearching ? 3000 : 1000 }}>
             <AutoSuggestEntities 
                 handleSearchSelect={handleSearchSelect}
                 inputVal={props.inputVal}

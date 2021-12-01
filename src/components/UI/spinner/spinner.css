@@ -1,15 +1,11 @@
 .loading-ellipsis {
-  /* display: inline-block; */
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   height: fit-content;
   width: fit-content;
   position: relative;
 }
 .loading-ellipsis div {
   position: absolute;
-  /* top: 33px; */
   width: 13px;
   height: 13px;
   border-radius: 50%;
