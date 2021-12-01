@@ -116,12 +116,12 @@
   border-radius: 3%;
 }
 
-.entity-identificaiton-details {
+.entity-identification-details {
   display: inherit;
 }
 
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
-  .entity-identificaiton-details {
+  .entity-identification-details {
     display: flex;
     flex-direction: row;
   }

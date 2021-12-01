@@ -38,7 +38,7 @@ const EntityInfo: React.FC<PageProps> = (props) => {
         <div>
             {entityDetails ?
                 <div>
-                    <div className="entity-identificaiton-details" >
+                    <div className="entity-identification-details" >
                         <img 
                             className="entity-img"
                             src={entityDetails.img}
