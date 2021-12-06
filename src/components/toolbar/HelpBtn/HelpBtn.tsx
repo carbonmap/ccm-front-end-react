@@ -17,12 +17,12 @@ const HelpBtn:React.FC = () => {
             />
                 <IonPopover
                     isOpen={showHelpPopover.showPopover}
-                    event={showHelpPopover.event}
+                    // event={showHelpPopover.event}
                     onDidDismiss={() => setShowHelpPopover({ showPopover: false, event: undefined })}
-                    showBackdrop={false}
+                    showBackdrop={true}
                     cssClass="info-popover"
                 >
-                    <div>
+                    <div style={{ padding: 24 }}>
                         <IonText className="info-popover-txt">
                             How to use Cambridge Carbon Map:
                         </IonText>
@@ -43,13 +43,6 @@ const HelpBtn:React.FC = () => {
                             Step 4: Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!
                         </IonText>
                     </div>
-                        {/* Step 2: Educate yourself about the climate actions that organisations have taken and the impacts that they have had
-                        Step 3: Engage by reaching out to the organisations which most interest you. Arrange a conversation!
-                        Step 4: Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!
-                    <div style={{ display: 'flex', flexDirection: 'column', padding: 16, textAlign: 'center' }}>
-                        <IonText style={{ marginBottom: 16, fontWeight: 500 }}>Welcome to the Cambridge Carbon Map!</IonText>
-                        <a href="https://cambridgecarbonmap.org/" target="_blank">Learn More</a>
-                    </div> */}
                 </IonPopover>
         </div>
     );

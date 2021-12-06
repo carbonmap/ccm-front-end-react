@@ -17,14 +17,11 @@
   align-items: center;
   justify-content: center;
 }
-.info-popover-txt {
-  /* font-size: 12px; */
-  margin-bottom: 16px;
+.info-popover {
+  width: 100vw;
 }
 .info-popover .popover-content {
-  width: 500px;
-  margin-left: -200px;
-  /* background-color: red; */
+  min-width: 50vw;
 }
 
 @media only screen and (max-width: 600px) and (orientation: portrait) {
