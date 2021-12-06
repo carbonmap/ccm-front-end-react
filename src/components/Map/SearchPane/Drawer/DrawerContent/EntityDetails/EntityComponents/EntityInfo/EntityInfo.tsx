@@ -32,24 +32,26 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     useEffect(() => {
         if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
             getEntityDetails();
-        }
+        };
     }, []);
     return (
         <div>
             {entityDetails ?
                 <div>
-                    <img 
-                        className="entity-img"
-                        src={entityDetails.img}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                            <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                    <div className="entity-identification-details" >
+                        <img 
+                            className="entity-img"
+                            src={entityDetails.img}
+                        />
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
+                                <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                            </div>
+                            <Link to={`/business-type/${entityDetails.business_type}`}>
+                                <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                            </Link>
                         </div>
-                        <Link to={`/business-type/${entityDetails.business_type}`}>
-                            <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                        </Link>
                     </div>
                     <br />
                     <div className="entity-desc-container" onClick={() => handleReadMore()}>

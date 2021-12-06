@@ -1,5 +1,5 @@
 .toolbar {
-  height: 7vh;
+  position: relative;
 }
 .toolbar-content {
   display: flex;
@@ -55,9 +55,6 @@
 }
 
 @media only screen and (max-width: 600px) and (orientation: portrait) {
-  .toolbar {
-    height: 9vh;
-  }
   .login-icon {
     font-size: 40px;
     padding-left: 0;
