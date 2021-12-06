@@ -22,12 +22,13 @@ const HelpBtn:React.FC = () => {
                     showBackdrop={true}
                     cssClass="info-popover"
                 >
-                    <div style={{ padding: 24, display: 'flex', flexDirection: 'column' }}>
+                    <div className="popover-content-container">
+                        <IonTitle className="info-popover-title">How to use Cambridge Carbon Map:</IonTitle>
                         <ol>
-                            <li>Explore by selecting highlighted areas</li>
-                            <li>Educate yourself about the climate actions that organisations have taken and the impacts that they have had</li>
-                            <li>Engage by reaching out to the organisations which most interest you. Arrange a conversation!</li>
-                            <li>Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!</li>
+                            <li className="info-popover-txt">Explore by selecting highlighted areas</li>
+                            <li className="info-popover-txt">Educate yourself about the climate actions that organisations have taken and the impacts that they have had</li>
+                            <li className="info-popover-txt">Engage by reaching out to the organisations which most interest you. Arrange a conversation!</li>
+                            <li className="info-popover-txt">Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!</li>
                         </ol>
                         <IonButton className="popover-btn">OK</IonButton>
                     </div>

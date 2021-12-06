@@ -21,13 +21,20 @@
   font-size: 20px;
   margin-bottom: 24px;
 }
-.info-popover-txt span {
-  font-weight: 600;
-  color: #008468;
+.info-popover-title {
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-align: left;
 }
 .info-popover .popover-content {
   min-width: 50vw;
   border-radius: 15px;
+}
+.popover-content-container {
+  padding: 24px;
+  /* padding-left: 40px; */
+  display: flex;
+  flex-direction: column;
 }
 .popover-btn {
   width: 25%;
@@ -39,6 +46,7 @@
 }
 .info-popover li {
   counter-increment: elementcounter;
+  margin-left: 50px;
 }
 .info-popover li::marker {
   content: "Step " counter(elementcounter) ". ";
