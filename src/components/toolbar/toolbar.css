@@ -17,11 +17,33 @@
   align-items: center;
   justify-content: center;
 }
-.info-popover {
-  width: 100vw;
+.info-popover .info-popover-txt {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+.info-popover-txt span {
+  font-weight: 600;
+  color: #008468;
 }
 .info-popover .popover-content {
   min-width: 50vw;
+  border-radius: 15px;
+}
+.popover-btn {
+  width: 25%;
+  align-self: center;
+}
+.info-popover ol {
+  list-style-type: none;
+  counter-reset: elementcounter;
+}
+.info-popover li {
+  counter-increment: elementcounter;
+}
+.info-popover li::marker {
+  content: "Step " counter(elementcounter) ". ";
+  font-weight: bold;
+  color: #008468;
 }
 
 @media only screen and (max-width: 600px) and (orientation: portrait) {
