@@ -58,11 +58,13 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                                 src="link.png"
                                 alt="Link Icon"
                                 text="Website"
+                                href=""
                             />
                             <ContactLink 
                                 src="friends.png"
                                 alt="Connect Icon"
                                 text="Connect"
+                                href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
                             />
                         </div>
                     </div>
