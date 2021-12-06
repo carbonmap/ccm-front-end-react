@@ -120,6 +120,12 @@
   display: inherit;
 }
 
+.connect-link-container {
+  display: flex;
+  flex-direction: row;
+  padding: 16px 0 8px 0;
+}
+
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
   .entity-identification-details {
     display: flex;
