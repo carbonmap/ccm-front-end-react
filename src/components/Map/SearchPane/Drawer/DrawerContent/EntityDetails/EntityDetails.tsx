@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EntityInfo from './EntityComponents/EntityInfo/EntityInfo';
 import EntityEmissionsData from './EntityComponents/EntityEmissionsData/EntityEmissionsData';
 
@@ -10,6 +10,7 @@ interface PageProps {
 }
 
 const EntityDetails: React.FC<PageProps> = (props) => {
+    const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
     const mobileMenuStyle = (
         props.isOpen ? 'translateY(0vh)' : 'translateY(42vh)'
@@ -24,10 +25,12 @@ const EntityDetails: React.FC<PageProps> = (props) => {
             <EntityInfo 
                 emissionsData={props.emissionsData}
                 entitiesByBusinessType={props.entitiesByBusinessType}
+                isEmpty={isEmpty}
             />
             <EntityEmissionsData 
                 emissionsData={props.emissionsData}
                 entitiesByBusinessType={props.entitiesByBusinessType}
+                setIsEmpty={setIsEmpty}
             />
         </div>
     );

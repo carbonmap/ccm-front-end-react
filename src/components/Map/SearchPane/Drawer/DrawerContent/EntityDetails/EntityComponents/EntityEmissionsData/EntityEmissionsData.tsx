@@ -7,6 +7,7 @@ import EntityCO2 from './BottomViews/EntityCO2/EntityCO2';
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
     entitiesByBusinessType: object[];
+    setIsEmpty: Function;
 }
 
 const EntityEmissionsData:React.FC<PageProps> = (props) => {
@@ -32,6 +33,12 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
 
         setPostData(postJson.posts);
     };
+
+    useEffect(() => {
+        if(graphData.length === 0 && actionData.length === 0 && postData.length === 0) {
+            props.setIsEmpty(true);
+        }
+    }, [graphData, actionData, postData])
     
     useEffect(() => {
         if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
