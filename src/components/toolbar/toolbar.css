@@ -34,7 +34,6 @@
 }
 .popover-content-container {
   padding: 24px;
-  /* padding-left: 40px; */
   display: flex;
   flex-direction: column;
 }
