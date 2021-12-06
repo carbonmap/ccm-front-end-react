@@ -30,7 +30,7 @@ const HelpBtn:React.FC = () => {
                             <li className="info-popover-txt">Engage by reaching out to the organisations which most interest you. Arrange a conversation!</li>
                             <li className="info-popover-txt">Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!</li>
                         </ol>
-                        <IonButton className="popover-btn">OK</IonButton>
+                        <IonButton onClick={() => setShowHelpPopover({ showPopover: false, event: undefined })} className="popover-btn">OK</IonButton>
                     </div>
                 </IonPopover>
         </div>
