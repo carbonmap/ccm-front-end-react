@@ -1,6 +1,7 @@
 import React from 'react';
 import DesktopDrawer from './DesktopDrawer';
 import MobileDrawer from './MobileDrawer';
+import './Drawer.css'
 
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];

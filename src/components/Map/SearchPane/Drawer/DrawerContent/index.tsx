@@ -1,7 +1,6 @@
 import React from 'react';
 import BusinessTypeEntities from './BusinessTypeEntities/BusinessTypeEntities';
 import EntityDetails from './EntityDetails/EntityDetails';
-import './DrawerContent.css';
 
 interface PageProps {
     isOpen: boolean;

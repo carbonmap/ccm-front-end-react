@@ -12,7 +12,7 @@ interface PageProps {
 const EntityDetails: React.FC<PageProps> = (props) => {
 
     const mobileMenuStyle = (
-        props.isOpen ? 'translateY(6vh)' : 'translateY(42vh)'
+        props.isOpen ? 'translateY(0vh)' : 'translateY(42vh)'
     );
     const desktopMenuStyle = (
         props.isOpen ? 'translateX(0%)' : 'translateX(100%)'
