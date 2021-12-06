@@ -28,7 +28,7 @@ const HelpBtn:React.FC = () => {
                             <li className="info-popover-txt">Explore by selecting highlighted areas</li>
                             <li className="info-popover-txt">Educate yourself about the climate actions that organisations have taken and the impacts that they have had</li>
                             <li className="info-popover-txt">Engage by reaching out to the organisations which most interest you. Arrange a conversation!</li>
-                            <li className="info-popover-txt">Inspire others by sharing your own organisation’s actions on the map. Sign up here or email info@cambridgecarbonmap.org!</li>
+                            <li className="info-popover-txt">Inspire others by sharing your own organisation’s actions on the map. Sign up  <a href="https://cambridgecarbonmap.org/sign-up-to-the-map/" target="_blank">here</a> or email <a href="mailto:info@cambridgecarbonmap.org">info@cambridgecarbonmap.org</a>!</li>
                         </ol>
                         <IonButton onClick={() => setShowHelpPopover({ showPopover: false, event: undefined })} className="popover-btn">OK</IonButton>
                     </div>
