@@ -23,7 +23,7 @@ const HelpBtn:React.FC = () => {
                     cssClass="info-popover"
                 >
                     <div className="popover-content-container">
-                        <IonTitle className="info-popover-title">How to use Cambridge Carbon Map:</IonTitle>
+                        <IonText className="info-popover-title">How to use Cambridge Carbon Map:</IonText>
                         <ol>
                             <li className="info-popover-txt">Explore by selecting highlighted areas</li>
                             <li className="info-popover-txt">Educate yourself about the climate actions that organisations have taken and the impacts that they have had</li>
