@@ -1,5 +1,9 @@
 {"entities": [
     {
+        "name": "Empty State",
+        "id": "emptystate"
+    },    
+    {
         "name": "The Leys School",
         "id": "net.theleys"
     },    
