@@ -14,7 +14,7 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     const [seeMoreText, setSeeMoreText] = useState("more");
 
     const getEntityDetails = async() => {
-        const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
+        const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entity_property/${props.emissionsData[0].id}.json`);
         const data = await response.json();
 
         setEntityDetails(data);
