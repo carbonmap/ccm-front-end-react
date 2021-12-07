@@ -2,6 +2,7 @@ import { IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import Spinner from 'src/components/UI/spinner/spinner';
 import { Link } from 'react-router-dom';
+import ContactLink from './ContactLink/ContactLink';
 
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
@@ -13,9 +14,10 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     const [seeMoreText, setSeeMoreText] = useState("more");
 
     const getEntityDetails = async() => {
-        const response = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${props.emissionsData[0].id}.json`);
+        const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entity_property/${props.emissionsData[0].id}.json`);
         const data = await response.json();
 
+        console.log(data)
         setEntityDetails(data);
     };
 
@@ -51,6 +53,20 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                             <Link to={`/business-type/${entityDetails.business_type}`}>
                                 <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
                             </Link>
+                        </div>
+                        <div className="connect-link-container">
+                            <ContactLink 
+                                src="link.png"
+                                alt="Link Icon"
+                                text="Website"
+                                href={entityDetails.website}
+                            />
+                            <ContactLink 
+                                src="friends.png"
+                                alt="Connect Icon"
+                                text="Connect"
+                                href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
+                            />
                         </div>
                     </div>
                     <br />
