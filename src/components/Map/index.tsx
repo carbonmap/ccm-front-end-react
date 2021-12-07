@@ -26,11 +26,11 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     const history = useHistory();
 
     const getEntityByBusinessType = async(businessType:string) => {
-      const response = await fetch('https://raw.githubusercontent.com/aldjonz/ccm-json/main/entities.json');
+      const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entities.json`);
       const data = await response.json();
 
       const entityData:any = await Promise.all(data.entities.map(async(entity:{name:string, id:string}) => {
-        const entityPropertyResponse = await fetch(`https://raw.githubusercontent.com/aldjonz/ccm-json/main/entity_property/${entity.id}.json`)
+        const entityPropertyResponse = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entity_property/${entity.id}.json`)
         const entityPropertData = await entityPropertyResponse.json();
 
         return entityPropertData;
