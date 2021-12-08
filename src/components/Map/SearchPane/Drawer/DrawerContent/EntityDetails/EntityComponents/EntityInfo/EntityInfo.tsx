@@ -7,6 +7,7 @@ import ContactLink from './ContactLink/ContactLink';
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
     entitiesByBusinessType: object[];
+    isEmpty: boolean;
 }
 const EntityInfo: React.FC<PageProps> = (props) => {
     const [entityDetails, setEntityDetails] = useState<any>();
@@ -30,6 +31,12 @@ const EntityInfo: React.FC<PageProps> = (props) => {
             setSeeMoreText("more");
         }
     };
+
+    useEffect(() => {
+        if(props.isEmpty) {
+            setDescHeight('100vh');
+        }
+    }, [props.isEmpty])
     
     useEffect(() => {
         if(props.emissionsData && props.entitiesByBusinessType.length === 0) {
@@ -75,8 +82,13 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                         <IonText className="entity-desc">{entityDetails.desc}</IonText>
                         <div 
                             className="entity-desc-readmore-container" 
-                            style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}>
-                            <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
+                            style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}
+                        >
+                            {props.isEmpty ?
+                                null
+                            :
+                                <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
+                            }
                         </div>
                         </div>
                     </div>

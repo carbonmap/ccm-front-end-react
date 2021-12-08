@@ -116,6 +116,12 @@
   border-radius: 3%;
 }
 
+.empty-entity-data {
+  margin-top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
 .entity-identification-details {
   display: inherit;
 }

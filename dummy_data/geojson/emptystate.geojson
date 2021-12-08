@@ -1,0 +1,20 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {"id": "net.theleys"},
+        "geometry": {
+          "type": "MultiPolygon",
+          "coordinates": [[
+            [
+              [
+                0.121888,
+                52.205232
+              ]
+              ]
+            ]]
+        }
+      }
+    ]
+  }
