@@ -19,6 +19,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         breakpoints={[ 0.03, 0.4, 0.95 ]}
         initialBreakpoint={0.4}
         backdropBreakpoint={0.4}
+        className="bottom-sheet"
       >
         <DrawerContent 
               entitiesByBusinessType={props.entitiesByBusinessType}

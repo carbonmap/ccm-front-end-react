@@ -141,16 +141,18 @@
   flex-wrap: wrap;
 }
 
-@media only screen and (max-width: 1024px) and (orientation: landscape) {
+ion-modal::part(content) {
+  min-width: 100vw;
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 500px) {
   .entity-identification-details {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-evenly; */
-    /* align-items: center; */
   }
   .entity-img {
     margin-left: auto;
-    max-height: 50vh;
+    max-width: 50%;
   }
 }
 
