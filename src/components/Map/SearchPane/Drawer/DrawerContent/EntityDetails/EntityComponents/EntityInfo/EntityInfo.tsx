@@ -18,23 +18,26 @@ const EntityInfo: React.FC<PageProps> = (props) => {
         const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entity_property/${props.emissionsData[0].id}.json`);
         const data = await response.json();
 
-        console.log(data)
         setEntityDetails(data);
     };
 
     const handleReadMore = () => {
-        if(descHeight !== '100vh') {
-            setDescHeight('100vh');
-            setSeeMoreText("less");
-        } else {
-            setDescHeight('8vh');
-            setSeeMoreText("more");
+        if(!props.isEmpty) {
+            if(descHeight !== '100vh') {
+                setDescHeight('100vh');
+                setSeeMoreText("less");
+            } else {
+                setDescHeight('8vh');
+                setSeeMoreText("more");
+            }
         }
     };
 
     useEffect(() => {
         if(props.isEmpty) {
             setDescHeight('100vh');
+        } else {
+            setDescHeight('8vh');
         }
     }, [props.isEmpty])
     
