@@ -55,7 +55,17 @@ ion-popover::part(content) {
   color: #008468;
 }
 
-@media only screen and (max-width: 600px) and (orientation: portrait) {
+@media only screen and (max-width: 340px) {
+  .toolbar-title {
+    font-size: 16px;
+  }
+  .login-icon {
+    font-size: 24px;
+    padding-left: 0;
+  }
+}
+
+@media only screen and (min-width: 340px) and (max-width: 600px) and (orientation: portrait) {
   .login-icon {
     font-size: 40px;
     padding-left: 0;

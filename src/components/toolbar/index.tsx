@@ -7,7 +7,7 @@ const Toolbar: React.FC = () => {
     return (
         <IonToolbar className="toolbar" color="primary">
             <div className="toolbar-content">
-                <IonTitle>Cambridge Carbon Map</IonTitle>
+                <IonTitle className="toolbar-title">Cambridge Carbon Map</IonTitle>
                 <div className="icon-container">
                     <HelpBtn />
                     <LoginPopover />
