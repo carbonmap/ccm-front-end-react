@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap, ZoomControl } from 'react-leaflet';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'src/redux/store';
@@ -54,6 +54,8 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
     const [geoDataConfig, setGeoDataConfig] = useState([]);
     const [visibleEntity, setVisibleEntity] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+
+    const isMobile = useSelector( (state: RootState) => state.isMobile);
 
     const location = useLocation();
     const history = useHistory();
@@ -114,7 +116,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 style={{height: '100%', width: '100%'}}
                 tap={true}
                 dragging={true}
-
+                zoomControl={false}
             >
                 {geoDataConfig.length > 0 ?
                     geoDataConfig
@@ -162,6 +164,9 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                 :
                     null
                 }
+                <ZoomControl 
+                    position={isMobile ? 'bottomright' : 'topleft'}
+                />
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
