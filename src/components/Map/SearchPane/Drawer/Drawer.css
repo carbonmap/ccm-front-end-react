@@ -142,17 +142,11 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .entity-details-container {
-    padding: 0px 16px 16px 16px;
-    max-height: 70vh;
-  }
-}
 @media only screen and (max-width: 1024px) {
   .entity-details-container {
-    padding: 16px 16px 16px 16px;
-    margin-top: 0;
-    height: 84vh;
-    max-height: 100%;
+    padding: 16px 16px 32px 16px;
+    margin-top: 16px;
+    max-height: 94vh;
+    height: 100%;
   }
 }

@@ -16,8 +16,9 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
       <IonModal 
         isOpen={true}
         swipeToClose={true}
-        breakpoints={[ 0.1, 0.5, 0.95 ]}
-        initialBreakpoint={0.5}
+        breakpoints={[ 0.03, 0.4, 0.95 ]}
+        initialBreakpoint={0.4}
+        backdropBreakpoint={0.4}
       >
         <DrawerContent 
               entitiesByBusinessType={props.entitiesByBusinessType}
