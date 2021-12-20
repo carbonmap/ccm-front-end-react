@@ -48,12 +48,8 @@ const EntityInfo: React.FC<PageProps> = (props) => {
             {entityDetails ?
                 <div>
                     <div className="entity-identification-details" >
-                        <img 
-                            className="entity-img"
-                            src={entityDetails.img}
-                        />
-                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div className="entity-title-container">
+                            <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }}>
                                 <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
                                 <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
                             </div>
@@ -74,7 +70,12 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                                 text="Connect"
                                 href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
                             />
+                           
                         </div>
+                        <img 
+                            className="entity-img"
+                            src={entityDetails.img}
+                        />
                     </div>
                     <br />
                     <div className="entity-desc-container" onClick={() => handleReadMore()}>
