@@ -145,9 +145,12 @@
   .entity-identification-details {
     display: flex;
     flex-direction: row;
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
   }
   .entity-img {
-    width: 50vw;
+    margin-left: auto;
+    max-height: 50vh;
   }
 }
 

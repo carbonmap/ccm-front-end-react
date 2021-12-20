@@ -48,29 +48,31 @@ const EntityInfo: React.FC<PageProps> = (props) => {
             {entityDetails ?
                 <div>
                     <div className="entity-identification-details" >
-                        <div className="entity-title-container">
-                            <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }}>
-                                <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                                <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                        <div>
+                            <div className="entity-title-container">
+                                <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }}>
+                                    <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
+                                    <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                                </div>
+                                <Link to={`/business-type/${entityDetails.business_type}`}>
+                                    <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                                </Link>
                             </div>
-                            <Link to={`/business-type/${entityDetails.business_type}`}>
-                                <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                            </Link>
-                        </div>
-                        <div className="connect-link-container">
-                            <ContactLink 
-                                src="link.png"
-                                alt="Link Icon"
-                                text="Website"
-                                href={entityDetails.website}
-                            />
-                            <ContactLink 
-                                src="friends.png"
-                                alt="Connect Icon"
-                                text="Connect"
-                                href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
-                            />
-                           
+                            <div className="connect-link-container">
+                                <ContactLink 
+                                    src="link.png"
+                                    alt="Link Icon"
+                                    text="Website"
+                                    href={entityDetails.website}
+                                />
+                                <ContactLink 
+                                    src="friends.png"
+                                    alt="Connect Icon"
+                                    text="Connect"
+                                    href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
+                                />
+                            
+                            </div>
                         </div>
                         <img 
                             className="entity-img"
