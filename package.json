@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@capacitor/core": "2.4.7",
-    "@ionic/react": "^5.5.0",
-    "@ionic/react-router": "^5.5.0",
+    "@ionic/react": "^6.0.1",
+    "@ionic/react-router": "^6.0.1",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -51,7 +51,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

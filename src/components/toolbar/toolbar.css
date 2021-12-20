@@ -18,6 +18,10 @@
   justify-content: center;
 }
 
+ion-popover::part(content) {
+  min-width: 50vw;
+  border-radius: 15px;
+}
 .info-popover .info-popover-txt {
   font-size: 20px;
   margin-bottom: 24px;
@@ -27,10 +31,6 @@
   margin-bottom: 24px;
   text-align: left;
   font-weight: 500;
-}
-.info-popover .popover-content {
-  min-width: 50vw;
-  border-radius: 15px;
 }
 .popover-content-container {
   padding: 24px;

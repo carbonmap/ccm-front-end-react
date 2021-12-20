@@ -3,6 +3,7 @@ import { IonApp, IonHeader } from '@ionic/react';
 import { useDispatch } from 'react-redux';
 import Toolbar from 'src/components/toolbar';
 import { handleWindowSizeChange } from 'src/service/general/checkScreenSize/checkScreenSize';
+import Map from 'src/components/Map';
 
 import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
@@ -26,7 +27,11 @@ import {
   Switch, 
   Route, 
 } from 'react-router-dom';
-import Map from 'src/components/Map';
+import { setupIonicReact } from '@ionic/react';
+
+setupIonicReact({
+  mode: 'md'
+});
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
