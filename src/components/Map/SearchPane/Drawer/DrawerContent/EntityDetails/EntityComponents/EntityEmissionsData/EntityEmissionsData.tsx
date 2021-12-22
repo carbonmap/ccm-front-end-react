@@ -37,6 +37,8 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     useEffect(() => {
         if(graphData.length === 0 && actionData.length === 0 && postData.length === 0) {
             props.setIsEmpty(true);
+        } else {
+            props.setIsEmpty(false);
         }
     }, [graphData, actionData, postData])
     

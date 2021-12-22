@@ -18,23 +18,26 @@ const EntityInfo: React.FC<PageProps> = (props) => {
         const response = await fetch(`${process.env.REACT_APP_DATABASE_URL}/entity_property/${props.emissionsData[0].id}.json`);
         const data = await response.json();
 
-        console.log(data)
         setEntityDetails(data);
     };
 
     const handleReadMore = () => {
-        if(descHeight !== '100vh') {
-            setDescHeight('100vh');
-            setSeeMoreText("less");
-        } else {
-            setDescHeight('8vh');
-            setSeeMoreText("more");
+        if(!props.isEmpty) {
+            if(descHeight !== '100vh') {
+                setDescHeight('100vh');
+                setSeeMoreText("less");
+            } else {
+                setDescHeight('8vh');
+                setSeeMoreText("more");
+            }
         }
     };
 
     useEffect(() => {
         if(props.isEmpty) {
             setDescHeight('100vh');
+        } else {
+            setDescHeight('8vh');
         }
     }, [props.isEmpty])
     
@@ -48,33 +51,36 @@ const EntityInfo: React.FC<PageProps> = (props) => {
             {entityDetails ?
                 <div>
                     <div className="entity-identification-details" >
+                        <div>
+                            <div className="entity-title-container">
+                                <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }}>
+                                    <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
+                                    <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
+                                </div>
+                                <Link to={`/business-type/${entityDetails.business_type}`}>
+                                    <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
+                                </Link>
+                            </div>
+                            <div className="connect-link-container">
+                                <ContactLink 
+                                    src="link.png"
+                                    alt="Link Icon"
+                                    text="Website"
+                                    href={entityDetails.website}
+                                />
+                                <ContactLink 
+                                    src="friends.png"
+                                    alt="Connect Icon"
+                                    text="Connect"
+                                    href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
+                                />
+                            
+                            </div>
+                        </div>
                         <img 
                             className="entity-img"
                             src={entityDetails.img}
                         />
-                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                                <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
-                            </div>
-                            <Link to={`/business-type/${entityDetails.business_type}`}>
-                                <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                            </Link>
-                        </div>
-                        <div className="connect-link-container">
-                            <ContactLink 
-                                src="link.png"
-                                alt="Link Icon"
-                                text="Website"
-                                href={entityDetails.website}
-                            />
-                            <ContactLink 
-                                src="friends.png"
-                                alt="Connect Icon"
-                                text="Connect"
-                                href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
-                            />
-                        </div>
                     </div>
                     <br />
                     <div className="entity-desc-container" onClick={() => handleReadMore()}>

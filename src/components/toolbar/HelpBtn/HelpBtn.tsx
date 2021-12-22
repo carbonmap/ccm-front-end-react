@@ -20,7 +20,7 @@ const HelpBtn:React.FC = () => {
                     // event={showHelpPopover.event}
                     onDidDismiss={() => setShowHelpPopover({ showPopover: false, event: undefined })}
                     showBackdrop={true}
-                    cssClass="info-popover"
+                    className="info-popover"
                 >
                     <div className="popover-content-container">
                         <IonText className="info-popover-title">How to use Cambridge Carbon Map:</IonText>
