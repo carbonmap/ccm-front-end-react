@@ -13,24 +13,30 @@ interface PageProps {
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
-  
-  const filteredData = props.graphData.filter((dataItem:any) => {
-    const startDate = new Date(dataItem.period_start);
-    const startYear = startDate.getFullYear();
-  
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear() - 1;
 
-    if(currentYear === startYear) {
-      return dataItem;
-    };    
-  });
+  const sumData = () => {
+    let gasTotal = 0;
+    let electricTotal = 0;
+    const graphData = props.graphData;
+    for(let i = 0; i < graphData.length; i++) {
+      console.log(graphData[i].value)
+      if(graphData[i].measure === "gas") {
+        gasTotal += Number(graphData[i].value);
+      } else if(graphData[i].measure === "electricity") {
+        electricTotal += Number(graphData[i].value);
+      };
+    };
+
+    return [{value: gasTotal, measure: "gas"}, {value: electricTotal, measure: "electricity"}]
+  };
+
+  const emissionData:{value:number, measure:string}[] = sumData();
 
   const data = {
-    labels: filteredData.map((emission:any) => emission.measure),
+    labels: emissionData.map((emission:any) => emission.measure),
     datasets: [
       {
-        data: filteredData.map((dataItem:any) => dataItem.value),
+        data: emissionData.map((dataItem:any) => dataItem.value),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -58,7 +64,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   return (
       <div style={{ width: '100%', height: '100%' }}>
         {props.graphData.length > 0 ?
-           <Pie 
+          <Pie 
             data={data} 
             options={{
               plugins: {
@@ -73,7 +79,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   color: '#000',
                   formatter:(value) => {
                     let sum = 0;
-                    filteredData.map((dataItem:any) => {
+                    props.graphData.map((dataItem:any) => {
                       sum = sum + parseInt(dataItem.value);
                     });
 
