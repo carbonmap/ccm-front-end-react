@@ -1,8 +1,9 @@
 import { Chart } from 'chart.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonText } from '@ionic/react';
+import { IonModal, IonPopover, IonText } from '@ionic/react';
+import ChartPopover from './ChartPopover/ChartPopover';
 
 Chart.register(ChartDataLabels);
 
@@ -13,6 +14,7 @@ interface PageProps {
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
+  const [displayModal, setDisplayModal] = useState(false);
 
   const sumData = () => {
     let gasTotal = 0;
@@ -64,32 +66,39 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   return (
       <div style={{ width: '100%', height: '100%' }}>
         {props.graphData.length > 0 ?
-          <Pie 
-            data={data} 
-            options={{
-              plugins: {
-                tooltip: {
-                  enabled: false
-                },
-                legend: {
-                  position: 'bottom'
-                },
-                datalabels: {
-                  display: true,
-                  color: '#000',
-                  formatter:(value) => {
-                    let sum = 0;
-                    props.graphData.map((dataItem:any) => {
-                      sum = sum + parseInt(dataItem.value);
-                    });
+          <>
+            <Pie 
+              data={data} 
+              options={{
+                plugins: {
+                  tooltip: {
+                    enabled: false
+                  },
+                  legend: {
+                    position: 'bottom'
+                  },
+                  datalabels: {
+                    display: true,
+                    color: '#000',
+                    formatter:(value) => {
+                      let sum = 0;
+                      props.graphData.map((dataItem:any) => {
+                        sum = sum + parseInt(dataItem.value);
+                      });
 
-                    let percentage = ((value / sum) * 100);
-                    return `${percentage.toFixed(2)}%`; 
-                  }
-                },
-              }
-            }}
-          />
+                      let percentage = ((value / sum) * 100);
+                      return `${percentage.toFixed(2)}%`; 
+                    }
+                  },
+                }
+              }}
+            />
+            <IonText style={{ cursor: 'pointer' }} onClick={() => setDisplayModal(true)} color="primary">Show Charts</IonText>
+            <ChartPopover 
+              displayModal={displayModal}
+              setDisplayModal={setDisplayModal}
+            />
+          </>
         :
           <IonText>No emissions data available</IonText>
         }
