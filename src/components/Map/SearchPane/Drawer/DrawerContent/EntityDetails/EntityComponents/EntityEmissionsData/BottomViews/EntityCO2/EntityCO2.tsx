@@ -21,7 +21,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     let electricTotal = 0;
     const graphData = props.graphData;
     for(let i = 0; i < graphData.length; i++) {
-      console.log(graphData[i].value)
       if(graphData[i].measure === "gas") {
         gasTotal += Number(graphData[i].value);
       } else if(graphData[i].measure === "electricity") {
@@ -97,6 +96,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             <ChartPopover 
               displayModal={displayModal}
               setDisplayModal={setDisplayModal}
+              chartData={data}
+              // chartData={props.graphData}
             />
           </>
         :
