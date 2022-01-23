@@ -96,8 +96,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             <ChartPopover 
               displayModal={displayModal}
               setDisplayModal={setDisplayModal}
-              chartData={data}
-              // chartData={props.graphData}
+              // chartData={data}
+              chartData={props.graphData}
             />
           </>
         :

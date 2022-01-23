@@ -61,48 +61,52 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     datasets: [
       {
         data: electricityGroup,
-        // stack: 0,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1, 
+        stack: '0',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgb(255, 99, 132)',
+        // backgroundColor: [
+        //   'rgba(255, 99, 132, 0.2)',
+        //   'rgba(54, 162, 235, 0.2)',
+        //   'rgba(255, 206, 86, 0.2)',
+        //   'rgba(75, 192, 192, 0.2)',
+        //   'rgba(153, 102, 255, 0.2)',
+        //   'rgba(255, 159, 64, 0.2)',
+        // ],
+        // borderColor: [
+        //   'rgba(255, 99, 132, 1)',
+        //   'rgba(54, 162, 235, 1)',
+        //   'rgba(255, 206, 86, 1)',
+        //   'rgba(75, 192, 192, 1)',
+        //   'rgba(153, 102, 255, 1)',
+        //   'rgba(255, 159, 64, 1)',
+        // ],
+        // borderWidth: 1, 
         datalabels: {
           render: 'value'
         }               
       },
       {
         data: gasGroup,
-        // stack: 0,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1, 
+        stack: '0',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        borderColor: 'rgb(255, 159, 64)',
+        // backgroundColor: [
+        //   'rgba(255, 99, 132, 0.2)',
+        //   'rgba(54, 162, 235, 0.2)',
+        //   'rgba(255, 206, 86, 0.2)',
+        //   'rgba(75, 192, 192, 0.2)',
+        //   'rgba(153, 102, 255, 0.2)',
+        //   'rgba(255, 159, 64, 0.2)',
+        // ],
+        // borderColor: [
+        //   'rgba(255, 99, 132, 1)',
+        //   'rgba(54, 162, 235, 1)',
+        //   'rgba(255, 206, 86, 1)',
+        //   'rgba(75, 192, 192, 1)',
+        //   'rgba(153, 102, 255, 1)',
+        //   'rgba(255, 159, 64, 1)',
+        // ],
+        // borderWidth: 1, 
         datalabels: {
           render: 'value'
         }               
@@ -113,6 +117,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   const handleDataGroups = () => {
     let gasData = [];
     let electricityData = [];
+
+    // const chartData = props.chartData.datasets[0]
     
     for(let i = 0; i < props.chartData.length; i++) {
       if(props.chartData[i].measure === "gas") {
@@ -121,14 +127,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
         electricityData.push(props.chartData[i].value);
       };
     };
-
-    console.log(gasData);
-    console.log(electricityData);
-
     // gasData = gasData.map((dataItem) => dataItem[0]);
     // electricityData = electricityData.map((dataItem) => dataItem[0]);
-
-    // console.log(props.data)
     setGasGroup(gasData);
     setElectricityGroup(electricityData);
 
@@ -136,7 +136,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
 
   useEffect(() => {
     handleDataGroups();
-    console.log(props.chartData.datasets[0].data)
   }, [])
     
   return (
@@ -149,17 +148,34 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             <Bar 
               data={data}
               options={{
+                // type: 'bar',
+                // data: data,
+                // options: {
+                plugins: {
+                    title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked'
+                    },
+                    // zoom: zoomOptions
+                },
+                responsive: true,
                 scales: {
-                  y: {
+                    y: {
                     stacked: true
-                  },
-                  x: {
-                    stacked: true
-                  }
-                  // xAxes: {
-                  //   stacked: true
-                  // }
+                    }
                 }
+                // }
+                // scales: {
+                //   // y: {
+                //   //   stacked: true
+                //   // },
+                //   x: {
+                //     stacked: true
+                //   }
+                //   // xAxes: {
+                //   //   stacked: true
+                //   // }
+                // }
               }}
             />
           </div>
