@@ -13,8 +13,16 @@ const EntityActionsList: React.FC<PageProps> = (props) => {
                     {
                         props.actions.map((action, index) => {
                             return (
-                                <a href={action.link} target="_blank" style={{ color: '#000', textDecoration: 'none' }}>
-                                    <li>{action.title}</li>
+                                // <a href={action.link} target="_blank" style={{ color: '#000', textDecoration: 'none' }}>
+                                //     <li>{action.title}</li>
+                                // </a>
+                                <a href={action.link} target="_blank" style={{ display: 'flex', flexDirection: 'row', textDecoration: 'none', alignItems: 'center' }}>
+                                    <img 
+                                        src="/assets/icon/actionIcons/green-energy.png"
+                                        style={{ width: 40, height: 40, marginRight: 8 }}
+
+                                    />
+                                    <p>{action.title}</p>
                                 </a>
                             );
                         })
