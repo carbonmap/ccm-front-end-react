@@ -142,7 +142,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
                                     }}}
                                     key={index}
                                     pathOptions={{
-                                        color: visibleEntity === id ? '#008468' : '#00eab8',
+                                        color: '#0000ff',
                                         fillOpacity: 0.4,
                                     }}
                                     positions={geometry.coordinates}
