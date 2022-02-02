@@ -2,14 +2,16 @@ import { Chart } from 'chart.js';
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonPopover, IonText } from '@ionic/react';
+import { IonPopover, IonText, IonIcon } from '@ionic/react';
+import { closeCircleOutline } from 'ionicons/icons';
 
 Chart.register(ChartDataLabels);
 
 interface PageProps {
   displayModal: boolean,
   setDisplayModal: Function,
-  chartData:any
+  chartData:any,
+  name: string
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
@@ -85,30 +87,29 @@ const EntityCO2: React.FC<PageProps> = (props) => {
         isOpen={props.displayModal}
         className="chart-modal"
     >
-        <div>
-          <div>
-            <Bar 
-              data={data}
-              options={{
-                plugins: {
-                    title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked'
-                    },
+      <div onClick={() => props.setDisplayModal(false)} style={{ position: 'absolute', right: 16, top: 8, cursor: 'pointer' }}>
+        <IonIcon className="ion-align-self-center" icon={closeCircleOutline} color="black" size="large"  />
+      </div>
+      <div>
+        <Bar 
+          data={data}
+          options={{
+            plugins: {
+                title: {
+                display: true,
+                text: props.name
                 },
-                responsive: true,
-                scales: {
-                    y: {
-                    stacked: true
-                    }
+            },
+            responsive: true,
+            scales: {
+                y: {
+                stacked: true
                 }
-              }}
-            />
-          </div>
-          <div>
-            <IonText style={{ cursor: 'pointer' }} onClick={() => props.setDisplayModal(false)}>Close</IonText>
-          </div>
-        </div>
+            }
+          }}
+          style={{ padding: 16}}
+        />
+      </div>
     </IonPopover>
   );
 };

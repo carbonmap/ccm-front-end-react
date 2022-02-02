@@ -10,7 +10,8 @@ Chart.register(ChartDataLabels);
 interface PageProps {
   labels: string[],
   data: number[],
-  graphData: any
+  graphData: any,
+  name: string
 }
 
 const EntityCO2: React.FC<PageProps> = (props) => {
@@ -96,7 +97,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             <ChartPopover 
               displayModal={displayModal}
               setDisplayModal={setDisplayModal}
-              // chartData={data}
+              name={props.name}
               chartData={props.graphData}
             />
           </>

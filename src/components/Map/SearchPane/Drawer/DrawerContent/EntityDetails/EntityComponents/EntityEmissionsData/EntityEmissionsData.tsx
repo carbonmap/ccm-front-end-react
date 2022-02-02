@@ -61,6 +61,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
                     titleData="24t"
                     bottomView={
                         <EntityCO2 
+                            name={props.emissionsData[0].name}
                             graphData={graphData}
                             labels={graphData.map((emission:any) => emission.measure)}
                             data={graphData.map((emission:any) => emission.value)}
