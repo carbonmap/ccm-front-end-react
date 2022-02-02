@@ -2,7 +2,7 @@ import { Chart } from 'chart.js';
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonModal, IonPopover, IonText } from '@ionic/react';
+import { IonPopover, IonText } from '@ionic/react';
 
 Chart.register(ChartDataLabels);
 
@@ -15,72 +15,18 @@ interface PageProps {
 const EntityCO2: React.FC<PageProps> = (props) => {
   const [electricityGroup, setElectricityGroup] = useState<any>([]);
   const [gasGroup, setGasGroup] = useState<any>([]);
-
-  // const data = {
-  //   labels: props.data.labels,
-  //   datasets: [
-  //     // These two will be in the same stack.
-  //     {
-  //       stack: 0,
-  //       label: 'electricity',
-  //       data: electricityGroup,
-  //       backgroundColor: 'rgba(255, 99, 132, 0.2)',
-  //       borderColor: 'rgb(255, 99, 132)',
-  //     },
-  //     {
-  //       stack: 0,
-  //       label: 'gas',
-  //       data: gasGroup,
-  //       backgroundColor: 'rgba(255, 159, 64, 0.2)',
-  //       borderColor: 'rgb(255, 159, 64)'
-  //     }
-  //   }
-
-  // const data = [
-  //   // labels: props.data.labels,
-    
-  //     // These two will be in the same stack.
-  //     {
-  //       stack: 0,
-  //       label: 'electricity',
-  //       data: [0,1],
-  //       backgroundColor: 'rgba(255, 99, 132, 0.2)',
-  //       borderColor: 'rgb(255, 99, 132)',
-  //     },
-  //     {
-  //       stack: 0,
-  //       label: 'gas',
-  //       data: [0,1],
-  //       backgroundColor: 'rgba(255, 159, 64, 0.2)',
-  //       borderColor: 'rgb(255, 159, 64)'
-  //     }
-  //   ]
+  const [labels, setLabels] = useState<string[]>([]);
 
   const data = {
-    labels: ["electricity", "gas"],
+    labels: labels,
     datasets: [
       {
         data: electricityGroup,
+        label: 'electricity',
         stack: '0',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgb(255, 99, 132)',
-        // backgroundColor: [
-        //   'rgba(255, 99, 132, 0.2)',
-        //   'rgba(54, 162, 235, 0.2)',
-        //   'rgba(255, 206, 86, 0.2)',
-        //   'rgba(75, 192, 192, 0.2)',
-        //   'rgba(153, 102, 255, 0.2)',
-        //   'rgba(255, 159, 64, 0.2)',
-        // ],
-        // borderColor: [
-        //   'rgba(255, 99, 132, 1)',
-        //   'rgba(54, 162, 235, 1)',
-        //   'rgba(255, 206, 86, 1)',
-        //   'rgba(75, 192, 192, 1)',
-        //   'rgba(153, 102, 255, 1)',
-        //   'rgba(255, 159, 64, 1)',
-        // ],
-        // borderWidth: 1, 
+        backgroundColor: 'rgba(18, 166, 230, 0.2)',
+        borderColor: 'rgb(18, 166, 230)',
+        borderWidth: 1, 
         datalabels: {
           render: 'value'
         }               
@@ -88,25 +34,10 @@ const EntityCO2: React.FC<PageProps> = (props) => {
       {
         data: gasGroup,
         stack: '0',
-        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderColor: 'rgb(255, 159, 64)',
-        // backgroundColor: [
-        //   'rgba(255, 99, 132, 0.2)',
-        //   'rgba(54, 162, 235, 0.2)',
-        //   'rgba(255, 206, 86, 0.2)',
-        //   'rgba(75, 192, 192, 0.2)',
-        //   'rgba(153, 102, 255, 0.2)',
-        //   'rgba(255, 159, 64, 0.2)',
-        // ],
-        // borderColor: [
-        //   'rgba(255, 99, 132, 1)',
-        //   'rgba(54, 162, 235, 1)',
-        //   'rgba(255, 206, 86, 1)',
-        //   'rgba(75, 192, 192, 1)',
-        //   'rgba(153, 102, 255, 1)',
-        //   'rgba(255, 159, 64, 1)',
-        // ],
-        // borderWidth: 1, 
+        backgroundColor: 'rgba(255, 95, 136, 0.2)',
+        borderColor: 'rgb(255, 95, 136)',
+        label: 'gas',
+        borderWidth: 1, 
         datalabels: {
           render: 'value'
         }               
@@ -114,24 +45,35 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     ],
   };
 
+  const handleLabels = (dateList:any) => {
+    return dateList.map((date:any) => {
+      const d = new Date(date);
+      const formatDate = d.toLocaleDateString("en-EN", { month: '2-digit', year: '2-digit' });
+
+      return formatDate;
+    })
+  }
+
   const handleDataGroups = () => {
     let gasData = [];
     let electricityData = [];
+    let dateList:any = [];
+    const chartData = props.chartData;
 
-    // const chartData = props.chartData.datasets[0]
-    
     for(let i = 0; i < props.chartData.length; i++) {
-      if(props.chartData[i].measure === "gas") {
-        gasData.push(props.chartData[i].value);
+      const dataItem = chartData[i]
+      if(dataItem.measure === "gas") {
+        gasData.push(dataItem.value);
+        dateList.push(dataItem.period_end)
       } else {
-        electricityData.push(props.chartData[i].value);
+        electricityData.push(dataItem.value);
       };
     };
-    // gasData = gasData.map((dataItem) => dataItem[0]);
-    // electricityData = electricityData.map((dataItem) => dataItem[0]);
-    setGasGroup(gasData);
-    setElectricityGroup(electricityData);
 
+    const dateLabels = handleLabels(dateList);
+    setLabels(dateLabels.reverse());
+    setGasGroup(gasData.reverse());
+    setElectricityGroup(electricityData.reverse());
   };
 
   useEffect(() => {
@@ -148,15 +90,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             <Bar 
               data={data}
               options={{
-                // type: 'bar',
-                // data: data,
-                // options: {
                 plugins: {
                     title: {
                     display: true,
                     text: 'Chart.js Bar Chart - Stacked'
                     },
-                    // zoom: zoomOptions
                 },
                 responsive: true,
                 scales: {
@@ -164,18 +102,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                     stacked: true
                     }
                 }
-                // }
-                // scales: {
-                //   // y: {
-                //   //   stacked: true
-                //   // },
-                //   x: {
-                //     stacked: true
-                //   }
-                //   // xAxes: {
-                //   //   stacked: true
-                //   // }
-                // }
               }}
             />
           </div>
