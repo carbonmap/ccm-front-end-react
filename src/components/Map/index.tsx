@@ -126,7 +126,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
 
     useEffect(() => {
       if(emissionsData.length > 0) {
-        document.title = emissionsData[0].name
+        document.title = `${emissionsData[0].name} - Cambridge Carbon Map`
         const navHistory = cookies.history;
         if(navHistory == undefined) {
           setCookie('history', [{ name: emissionsData[0].name, id: emissionsData[0].id }])
