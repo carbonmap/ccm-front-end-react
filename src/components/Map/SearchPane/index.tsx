@@ -25,12 +25,19 @@ const SearchPane: React.FC<PageProps> = (props) => {
         setIsSearching(false);
         setIsOpen(true);
     };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+        setIsSearching(false);
+    };
     
     useEffect(() => {
         if(location.pathname !== "/" && props.emissionsData || props.entitiesByBusinessType.length > 0) {
             openMenu();
-        };
-    }, [props.entitiesByBusinessType, props.emissionsData]);
+        } else {
+            closeMenu();
+        }
+    }, [props.entitiesByBusinessType, props.emissionsData, location]);
 
     return (
         <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
