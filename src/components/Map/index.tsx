@@ -121,10 +121,12 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         const businessType = location.pathname.substring(15, location.pathname.length);
         getEntityByBusinessType(businessType);
       }
+      
     }, [location]);
 
     useEffect(() => {
       if(emissionsData.length > 0) {
+        document.title = `${emissionsData[0].name} - Cambridge Carbon Map`
         const navHistory = cookies.history;
         if(navHistory == undefined) {
           setCookie('history', [{ name: emissionsData[0].name, id: emissionsData[0].id }])
@@ -143,7 +145,9 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
               setCookie('history', newHistory);
             };  
         };
-      };
+      } else {
+        document.title = "Cambridge Carbon Map"
+      }
     }, [emissionsData])
   
     return (
