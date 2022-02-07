@@ -61,6 +61,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     let electricityData = [];
     let dateList:any = [];
     const chartData = props.chartData;
+    console.log(chartData)
 
     for(let i = 0; i < props.chartData.length; i++) {
       const dataItem = chartData[i]
@@ -96,14 +97,43 @@ const EntityCO2: React.FC<PageProps> = (props) => {
           options={{
             plugins: {
                 title: {
-                display: true,
-                text: props.name
+                  display: true,
+                  text: `${props.name} - Type 1 & 2 Emissions`,
+                  font: {
+                    size: 24
+                  }
                 },
+                legend: {
+                  labels: {
+                    font: {
+                      size: 20,
+                    }
+                  }
+                }
             },
             responsive: true,
             scales: {
                 y: {
-                stacked: true
+                  stacked: true,
+                  ticks: {
+                    font: {
+                      size: 20
+                    }
+                  },
+                  title: {
+                    display: true,
+                    text: "kgCO2e",
+                    font: {
+                      size: 20
+                    }
+                  }
+                },
+                x: {
+                  ticks: {
+                    font: {
+                      size: 20
+                    }
+                  }
                 }
             }
           }}
