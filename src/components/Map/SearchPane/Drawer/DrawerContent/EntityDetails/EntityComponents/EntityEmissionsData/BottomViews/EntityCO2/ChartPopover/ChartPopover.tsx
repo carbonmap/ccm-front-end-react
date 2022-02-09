@@ -48,9 +48,33 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   };
 
   const handleLabels = (dateList:any) => {
-    return dateList.map((date:any) => {
+    // console.log(dateList)
+    let displayByYear = false;
+    
+    dateList.map((date:string, index:number) => {
       const d = new Date(date);
-      const formatDate = d.toLocaleDateString("en-EN", { month: '2-digit', year: '2-digit' });
+
+      for(let i = 0; i < dateList.length - 1; i++) {
+        if(i === index) {
+          return null
+        } else {
+          const altDate = new Date(dateList[i]);
+          if(altDate.getFullYear() !== d.getFullYear()) {
+            displayByYear = true; 
+          } else {
+            displayByYear = false;
+          }
+        }
+      }
+    }) 
+    return dateList.map((date:string) => {
+      const d = new Date(date);
+      let formatDate;
+      if(displayByYear) {
+        formatDate = d.getFullYear();
+      } else {
+        formatDate = d.toLocaleDateString("en-EN", { month: '2-digit', year: '2-digit' });
+      }
 
       return formatDate;
     })
@@ -61,15 +85,14 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     let electricityData = [];
     let dateList:any = [];
     const chartData = props.chartData;
-    console.log(chartData)
 
     for(let i = 0; i < props.chartData.length; i++) {
       const dataItem = chartData[i]
       if(dataItem.measure === "gas") {
-        gasData.push(dataItem.value);
+        gasData.push(dataItem.kgco2e);
         dateList.push(dataItem.period_end)
       } else {
-        electricityData.push(dataItem.value);
+        electricityData.push(dataItem.kgco2e);
       };
     };
 
