@@ -49,7 +49,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     }, []);
     
     return (
-        <div>
+        <div className='accordion-list'>
             {graphData.length === 0 && actionData.length === 0 && postData.length === 0 ?
                 <div className="empty-entity-data">
                     <p>This organisation hasn't submitted any data yet.</p>
