@@ -2,7 +2,7 @@ import { Chart } from 'chart.js';
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonPopover, IonText, IonIcon } from '@ionic/react';
+import { IonPopover, IonIcon } from '@ionic/react';
 import { closeCircleOutline } from 'ionicons/icons';
 
 Chart.register(ChartDataLabels);
@@ -48,7 +48,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   };
 
   const handleLabels = (dateList:any) => {
-    // console.log(dateList)
     let displayByYear = false;
     
     dateList.map((date:string, index:number) => {
@@ -143,9 +142,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   ticks: {
                     font: {
                       size: window.innerWidth * 0.02,
-                    },
-                    // count: 5 ,
-                    // stepSize: 50
+                    }
                   },
                   title: {
                     display: true,
@@ -162,7 +159,6 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                     }
                   }
                 },
-                // xAxes: [{}]
             }
           }}
           style={{ padding: 16}}
