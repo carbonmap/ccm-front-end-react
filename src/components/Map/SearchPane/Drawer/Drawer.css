@@ -146,7 +146,7 @@ ion-modal::part(content) {
 
 .chart-modal::part(content) {
   min-width: 96vw;
-  min-height: 96vh;
+  /* min-height: 96vh; */
 }
 
 @media only screen and (max-width: 1024px) and (min-width: 500px) {

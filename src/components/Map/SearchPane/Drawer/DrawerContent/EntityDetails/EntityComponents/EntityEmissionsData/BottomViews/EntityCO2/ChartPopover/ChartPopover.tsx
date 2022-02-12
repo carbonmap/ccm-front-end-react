@@ -114,22 +114,24 @@ const EntityCO2: React.FC<PageProps> = (props) => {
       <div onClick={() => props.setDisplayModal(false)} style={{ position: 'absolute', right: 16, top: 8, cursor: 'pointer' }}>
         <IonIcon className="ion-align-self-center" icon={closeCircleOutline} color="black" size="large"  />
       </div>
-      <div>
+      <div className="chart-container">
         <Bar 
+          height={`${window.innerHeight * 1}px`}
           data={data}
           options={{
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                   display: true,
                   text: `${props.name} - Type 1 & 2 Emissions`,
                   font: {
-                    size: 24
+                    size: window.innerWidth * 0.024
                   }
                 },
                 legend: {
                   labels: {
                     font: {
-                      size: 20,
+                      size: window.innerWidth * 0.02,
                     }
                   }
                 }
@@ -140,14 +142,16 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   stacked: true,
                   ticks: {
                     font: {
-                      size: 20
-                    }
+                      size: window.innerWidth * 0.02,
+                    },
+                    // count: 5 ,
+                    // stepSize: 50
                   },
                   title: {
                     display: true,
                     text: "kgCO2e",
                     font: {
-                      size: 20
+                      size: window.innerWidth * 0.02
                     }
                   }
                 },
@@ -157,7 +161,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                       size: 20
                     }
                   }
-                }
+                },
+                // xAxes: [{}]
             }
           }}
           style={{ padding: 16}}
