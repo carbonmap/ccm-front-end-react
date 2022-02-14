@@ -113,7 +113,7 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
             zoom={13}
             maxZoom={18}
             minZoom={5}
-            style={{height: '100vh', width: '100vw'}}
+            style={{ height: '100%', width: '100vw' }}
             tap={true}
             dragging={true}
             zoomControl={false}
