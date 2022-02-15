@@ -151,13 +151,13 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     }, [emissionsData])
   
     return (
-      <div style={{ height: '100%', position: 'relative' }}>
+      <div style={{ height: '100vh', position: 'relative' }}>
         {isLoading ?
             <div className="spinner-container">
               <Spinner />
             </div>
           :
-            <>
+            <div style={{ height: '100%' }}>
               <SearchPane 
                 entitiesByBusinessType={entitiesByBusinessType}
                 emissionsData={emissionsData}
@@ -172,7 +172,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
               :
                 null
               }
-            </>
+            </div>
         }
       </div>
     );
