@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IonModal } from '@ionic/react';
+import { modalController } from '@ionic/core';
 import DrawerContent from '../DrawerContent';
+import { useLocation } from 'react-router';
 
 interface PageProps {
   isOpen: boolean;
@@ -12,7 +14,26 @@ interface PageProps {
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
 
-    return (
+  const location = useLocation()
+
+  useEffect(() => {
+    modalController.dismiss({
+      'dismissed': true
+    })
+    
+  }, [props.emissionsData, props.entitiesByBusinessType])
+
+  const modalSubject = props.entitiesByBusinessType  || location.pathname === props.emissionsData[0].id ? (
+    <DrawerContent 
+      entitiesByBusinessType={props.entitiesByBusinessType}
+      emissionsData={props.emissionsData}
+      isOpen={props.isOpen}
+      isMobile={props.isMobile}
+    />
+  ) : null
+
+  return (
+    <div>
       <IonModal 
         isOpen={true}
         swipeToClose={true}
@@ -22,15 +43,10 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
         className="bottom-sheet"
         showBackdrop={true}
         backdropDismiss={false}
-      >
-        <DrawerContent 
-          entitiesByBusinessType={props.entitiesByBusinessType}
-          emissionsData={props.emissionsData}
-          isOpen={props.isOpen}
-          isMobile={props.isMobile}
-        />
-      </IonModal>
-    );
+        children={modalSubject}
+      />
+    </div>
+  );
 };
 
 export default MobileDrawer;
