@@ -46,62 +46,96 @@ const EntityInfo: React.FC<PageProps> = (props) => {
             getEntityDetails();
         };
     }, []);
+
+    var isSafari =
+      navigator.vendor &&
+      navigator.vendor.indexOf("Apple") > -1 &&
+      navigator.userAgent &&
+      navigator.userAgent.indexOf("CriOS") == -1 &&
+      navigator.userAgent.indexOf("FxiOS") == -1;
+
     return (
-        <div>
-            {entityDetails ?
-                <div>
-                    <div className="entity-identification-details" >
-                        <div>
-                            <div className="entity-title-container">
-                                <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }}>
-                                    <IonText className="ion-text-capitalize ion-text-left entity-title">{entityDetails.name}</IonText>
-                                    <IonText className="ion-text-capitalize entity-address">{entityDetails.address}</IonText>
-                                </div>
-                                <Link to={`/business-type/${entityDetails.business_type}`}>
-                                    <IonText className="ion-text-capitalize entity-business-type">{entityDetails.business_type}</IonText>
-                                </Link>
-                            </div>
-                            <div className="connect-link-container">
-                                <ContactLink 
-                                    src="link.png"
-                                    alt="Link Icon"
-                                    text="Website"
-                                    href={entityDetails.website}
-                                />
-                                <ContactLink 
-                                    src="friends.png"
-                                    alt="Connect Icon"
-                                    text="Connect"
-                                    href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
-                                />
-                            
-                            </div>
-                        </div>
-                        <img 
-                            className="entity-img"
-                            src={entityDetails.img}
-                        />
-                    </div>
-                    <br />
-                    <div className="entity-desc-container" onClick={() => handleReadMore()}>
-                        <div className="entity-desc-text-container" style={{ maxHeight: descHeight, transitionDuration: '2s', marginBottom: '4vh' }}>
-                        <IonText className="entity-desc">{entityDetails.desc}</IonText>
-                        <div 
-                            className="entity-desc-readmore-container" 
-                            style={{ bottom: descHeight === "8vh" ? '-2vh' : '-2vh', transitionDuration: '1s', height: descHeight === "8vh" ? '140%' : '0%' }}
-                        >
-                            {props.isEmpty ?
-                                null
-                            :
-                                <IonText color="primary" className="entity-desc-readmore">See {seeMoreText}...</IonText>
-                            }
-                        </div>
-                        </div>
-                    </div>
+      <div>
+        {entityDetails ? (
+          <div>
+            <div className="entity-identification-details">
+              <div>
+                <div className="entity-title-container">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginBottom: 8,
+                    }}
+                  >
+                    <IonText className="ion-text-capitalize ion-text-left entity-title">
+                      {entityDetails.name}
+                    </IonText>
+                    <IonText className="ion-text-capitalize entity-address">
+                      {entityDetails.address}
+                    </IonText>
+                  </div>
+                  <Link to={`/business-type/${entityDetails.business_type}`}>
+                    <IonText className="ion-text-capitalize entity-business-type">
+                      {entityDetails.business_type}
+                    </IonText>
+                  </Link>
                 </div>
-            :
-                <Spinner />}
-        </div>
+                <div className="connect-link-container">
+                  <ContactLink
+                    src="link.png"
+                    alt="Link Icon"
+                    text="Website"
+                    href={entityDetails.website}
+                  />
+                  <ContactLink
+                    src="friends.png"
+                    alt="Connect Icon"
+                    text="Connect"
+                    href={`mailto:info@cambridgecarbonmap.org?subject=Please introduce me to ${entityDetails.name}&body=Thank you!`}
+                  />
+                </div>
+              </div>
+              <img className="entity-img" src={entityDetails.img} />
+            </div>
+            <br />
+            <div
+              className="entity-desc-container"
+              onClick={() => handleReadMore()}
+            >
+              <div
+                className="entity-desc-text-container"
+                style={{
+                  maxHeight: descHeight,
+                  transitionDuration: "2s",
+                  marginBottom: "4vh",
+                }}
+              >
+                <IonText className="entity-desc">{entityDetails.desc}</IonText>
+                <div
+                  className="entity-desc-readmore-container"
+                  style={{
+                    bottom: descHeight === "8vh" ? "-2vh" : "-2vh",
+                    transitionDuration: "1s",
+                    height: descHeight === "8vh" ? "140%" : "0%",
+                    backgroundImage: isSafari
+                      ? "none"
+                      : "linear-gradient(transparent, #fff)",
+                  }}
+                >
+                  {props.isEmpty ? null : (
+                    <IonText color="primary" className="entity-desc-readmore">
+                      See {seeMoreText}...
+                    </IonText>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Spinner />
+        )}
+      </div>
     );
 };
 
