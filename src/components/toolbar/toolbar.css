@@ -19,11 +19,12 @@
 }
 
 ion-popover::part(content) {
-  min-width: 50vw;
+  min-width: 70vw;
   border-radius: 15px;
+  padding: 32px;
 }
 .info-popover .info-popover-txt {
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 24px;
 }
 .info-popover-title {
@@ -72,8 +73,13 @@ ion-popover::part(content) {
   }
 }
 @media only screen and (max-width: 999px) {
-  .info-popover .popover-content {
+  .info-popover::part(content) {
     min-width: 94vw;
-    margin-left: 2vw;
+    max-width: 94vw;
+    width: 94vw;
+    padding: 0
+  }
+  .info-popover .info-popover-txt  {
+    font-size: 18px;
   }
 }
