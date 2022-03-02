@@ -107,72 +107,72 @@ const MainMap: React.FC<{geoData:any[]}> = (props) => {
         handleGeoDataCoords();
     }, [props.geoData]);
 
-        return (
-            <MapContainer
-                center={[52.20, 0.12]}
-                zoom={13}
-                maxZoom={18}
-                minZoom={5}
-                style={{height: '100%', width: '100%'}}
-                tap={true}
-                dragging={true}
-                zoomControl={false}
-            >
-                {geoDataConfig.length > 0 ?
-                    geoDataConfig
-                    .map((entity:any, index) => {
-                        const features = entity.features[0];
-                        const geometry = features.geometry;
-                        const id = features.properties.id;
+    return (
+        <MapContainer
+            center={[52.20, 0.12]}
+            zoom={13}
+            maxZoom={18}
+            minZoom={5}
+            style={{ height: '100%', width: '100vw' }}
+            tap={true}
+            dragging={true}
+            zoomControl={false}
+        >
+            {geoDataConfig.length > 0 ?
+                geoDataConfig
+                .map((entity:any, index) => {
+                    const features = entity.features[0];
+                    const geometry = features.geometry;
+                    const id = features.properties.id;
 
-                        if(geometry.type === "Point") {
-                            return (
-                                <Marker position={geometry.coordinates}>
-                                    <Popup>{features.properties.id}</Popup>
-                                </Marker>
-                            );
-                        } else {
+                    if(geometry.type === "Point") {
+                        return (
+                            <Marker position={geometry.coordinates}>
+                                <Popup>{features.properties.id}</Popup>
+                            </Marker>
+                        );
+                    } else {
 
-                            return (
-                                <Polygon 
-                                    eventHandlers={{
-                                        click: (event) => {
-                                            setVisibleEntity(id);
-                                            history.push(`/${id}`)
-                                    }}}
-                                    key={index}
-                                    pathOptions={{
-                                        color: visibleEntity === id ? '#008468' : '#00eab8',
-                                        fillOpacity: 0.4,
-                                    }}
-                                    positions={geometry.coordinates}
-                                >
-                                    <Popup>
-                                            {features.properties.id}
-                                    </Popup>
-                                </Polygon>
-                            );
-                        };
+                        return (
+                            <Polygon 
+                                eventHandlers={{
+                                    click: (event) => {
+                                        setVisibleEntity(id);
+                                        history.push(`/${id}`)
+                                }}}
+                                key={index}
+                                pathOptions={{
+                                    color: '#0000ff',
+                                    fillOpacity: 0.4,
+                                }}
+                                positions={geometry.coordinates}
+                            >
+                                <Popup>
+                                        {features.properties.id}
+                                </Popup>
+                            </Polygon>
+                        );
+                    };
 
-                    })
-                : 
-                    <AlertMessage>{'Location not found'}</AlertMessage>
-                }
+                })
+            : 
+                <AlertMessage>{'Location not found'}</AlertMessage>
+            }
 
-                {props.geoData.length === 1 ?
-                    <AnimateMap geoData={props.geoData} />
-                :
-                    null
-                }
-                <ZoomControl 
-                    position={isMobile ? 'bottomright' : 'topleft'}
-                />
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
-                />
-            </MapContainer>
-        )
+            {props.geoData.length === 1 ?
+                <AnimateMap geoData={props.geoData} />
+            :
+                null
+            }
+            <ZoomControl 
+                position={isMobile ? 'bottomright' : 'topleft'}
+            />
+            <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            />
+        </MapContainer>
+    )
 }
 
 export default MainMap;

@@ -51,7 +51,6 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-image: linear-gradient(transparent, #fff);
   height: 50%;
   align-items: flex-end;
   display: flex;
@@ -91,8 +90,6 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-image: linear-gradient(transparent, #fff);
-  height: 120%;
   align-items: flex-end;
   display: flex;
 }
