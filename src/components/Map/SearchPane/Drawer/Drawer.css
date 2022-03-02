@@ -146,10 +146,6 @@
 ion-modal::part(content) {
   min-width: 100vw;
 }
-/* 
-.chart-modal::part(content) {
-  max-height: 96vw;
-} */
 
 @media only screen and (max-width: 1024px) and (min-width: 500px) {
   .entity-identification-details {
@@ -171,8 +167,11 @@ ion-modal::part(content) {
   }
 }
 
-@media only screen and (orientation: landscape) and (max-width: 1024px) {
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
   .accordion-list {
     flex-direction: row;
+  }
+  .pie-container {
+    max-width: 33vw;
   }
 }
