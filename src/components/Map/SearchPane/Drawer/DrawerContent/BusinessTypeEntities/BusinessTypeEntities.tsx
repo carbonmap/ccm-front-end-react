@@ -1,6 +1,6 @@
 import React from "react";
 import { IonItem, IonText } from "@ionic/react";
-import { useNavigateBottomDrawer } from "../../drawerUtils";
+import { useNavigateBottomDrawer } from "src/components/Map/SearchPane/Drawer/drawerUtils";
 
 interface PageProps {
   entitiesByBusinessType: any;

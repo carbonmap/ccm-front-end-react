@@ -15,13 +15,6 @@ interface PageProps {
 const MobileDrawer: React.FC<PageProps> = (props) => {
   const location = useLocation();
 
-  // useEffect(() => {
-  //   modalController.dismiss({
-  //     'dismissed': true
-  //   })
-
-  // }, [props.emissionsData, props.entitiesByBusinessType])
-
   const modalSubject =
     props.entitiesByBusinessType ||
     location.pathname === props.emissionsData[0].id ? (
