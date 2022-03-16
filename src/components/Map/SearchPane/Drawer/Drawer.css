@@ -174,10 +174,9 @@ ion-modal::part(content) {
 }
 
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
-  .accordion-list {
-    flex-direction: row;
-  }
   .pie-container {
     max-width: 33vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
 }
