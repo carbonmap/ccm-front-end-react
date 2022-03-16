@@ -146,6 +146,12 @@
 ion-modal::part(content) {
   min-width: 100vw;
 }
+.chart-modal::part(content) {
+  min-width: 70vw;
+  border-radius: 15px;
+  padding: 16px;
+  margin-top: 24px;
+}
 
 @media only screen and (max-width: 1024px) and (min-width: 500px) {
   .entity-identification-details {

@@ -18,7 +18,7 @@
   justify-content: center;
 }
 
-ion-popover::part(content) {
+.toolbar ion-popover::part(content) {
   min-width: 70vw;
   border-radius: 15px;
   padding: 32px;
