@@ -7,7 +7,9 @@ export const useNavigateBottomDrawer = () => {
   const isMobile = useSelector((state: RootState) => state.isMobile);
   const history = useHistory();
   const navigateDrawer = async (newUrl: string) => {
-    if (isMobile) {
+    console.log(await modalController.getTop());
+    const modalTop = await modalController.getTop();
+    if (isMobile && modalTop !== undefined) {
       await modalController.dismiss({
         dismissed: true,
       });
