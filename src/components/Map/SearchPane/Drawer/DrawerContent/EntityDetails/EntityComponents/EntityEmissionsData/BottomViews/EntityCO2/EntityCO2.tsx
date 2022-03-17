@@ -98,7 +98,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                     });
 
                     let percentage = (value / sum) * 100;
-                    return `${percentage.toFixed(2)}%`;
+                    return `${percentage.toFixed(1)}%`;
                   },
                   font: {
                     size: fontSize,
