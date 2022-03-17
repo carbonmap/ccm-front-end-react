@@ -30,8 +30,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
         data: electricityGroup,
         label: "electricity",
         stack: "0",
-        backgroundColor: "rgba(18, 166, 230, 0.2)",
-        borderColor: "rgb(18, 166, 230)",
+        backgroundColor: "rgba(136,190,56,0.2)",
+        borderColor: "rgba(136,190,56,1)",
         borderWidth: 1,
         datalabels: {
           render: "value",
@@ -40,8 +40,8 @@ const EntityCO2: React.FC<PageProps> = (props) => {
       {
         data: gasGroup,
         stack: "0",
-        backgroundColor: "rgba(255, 95, 136, 0.2)",
-        borderColor: "rgb(255, 95, 136)",
+        backgroundColor: "rgba(52,116,185,0.2)",
+        borderColor: "rgba(52,116,185,1)",
         label: "gas",
         borderWidth: 1,
         datalabels: {
