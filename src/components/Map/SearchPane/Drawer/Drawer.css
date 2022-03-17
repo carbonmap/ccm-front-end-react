@@ -8,8 +8,14 @@
 .data-accordion {
   border: 2px solid green;
   width: 100%;
+  height: fit-content;
   margin-bottom: 4px;
   border-radius: 8px;
+}
+.accordion-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .accordion-title-container {
   display: flex;
@@ -140,6 +146,12 @@
 ion-modal::part(content) {
   min-width: 100vw;
 }
+.chart-modal::part(content) {
+  min-width: 70vw;
+  border-radius: 15px;
+  padding: 16px;
+  margin-top: 24px;
+}
 
 @media only screen and (max-width: 1024px) and (min-width: 500px) {
   .entity-identification-details {
@@ -158,5 +170,13 @@ ion-modal::part(content) {
     margin-top: 16px;
     max-height: 94vh;
     height: 100%;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  .pie-container {
+    max-width: 33vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
 }

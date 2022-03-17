@@ -20,15 +20,32 @@ const DataAccordion: React.FC<PageProps> = (props) => {
     };
 
     return (
-        <div className="ion-padding data-accordion" >
-            <div className="ion-justify-content-between accordion-title-container" onClick={() => openAccordion()}>
-                <IonText className="accordion-title"><span className="accordion-title-bold">{props.titleData} </span>{props.title}</IonText>
-                <IonIcon className="ion-align-self-center" icon={chevronDown} color="black" />
-            </div>
-            <div style={{ maxHeight: maxHeight, transitionDuration: '1s', overflow: 'hidden' }}>
-                {props.bottomView}
-            </div>
+      <div className="ion-padding data-accordion">
+        <div
+          className="ion-justify-content-between accordion-title-container"
+          onClick={() => openAccordion()}
+        >
+          <IonText className="accordion-title">
+            <span className="accordion-title-bold">{props.titleData} </span>
+            {props.title}
+          </IonText>
+          <IonIcon
+            className="ion-align-self-center"
+            icon={chevronDown}
+            color="black"
+          />
         </div>
+        <div
+          className="bottom-view-container"
+          style={{
+            maxHeight: maxHeight,
+            transitionDuration: "1s",
+            overflow: "hidden",
+          }}
+        >
+          {props.bottomView}
+        </div>
+      </div>
     );
 };
 
