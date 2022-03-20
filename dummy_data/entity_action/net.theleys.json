@@ -2,13 +2,65 @@
     "name": "The Leys School",
     "entity_id": "net.theleys",
     "actions": [
-        {
-            "title": "Green Tariff",
-            "link": "https://cambridgecarbonfootprint.org/actions/renewable_electricity_tariff/"
-        },
-        {
-            "title": "Reduce Food Waste",
-            "link": "https://cambridgecarbonfootprint.org/actions/cut_down_on_waste/"
-        }
+      {
+        "title": "Switch to a green energy supplier",
+        "link": "https://cambridgecarbonfootprint.org/actions/green_energy_supplier_for_business/",
+        "type": "green-energy-supplier"
+      },
+      {
+        "title": "Cut down on waste",
+        "link": "https://cambridgecarbonfootprint.org/actions/cut_down_on_waste/",
+        "type": "waste"
+      },
+      {
+        "title": "Identify & support climate champions",
+        "link": "https://cambridgecarbonfootprint.org/actions/identify_and_support_climate_champions/",
+        "type": "climate-champion"
+      },
+      {
+        "title": "Develop a decarbonisation plan",
+        "link": "https://cambridgecarbonfootprint.org/actions/develop_decarbonisation_plan/",
+        "type": "decarbonisation-plan"
+      },
+      {
+        "title": "Invest in energy efficient appliances & equipment",
+        "link": "https://cambridgecarbonfootprint.org/actions/energy_efficient_appliances_and_equipment/",
+        "type": "green-energy-supplier"
+      },
+      {
+        "title": "Create a sustainable travel plan",
+        "link": "https://cambridgecarbonfootprint.org/actions/create_sustainable_transport_plan/",
+        "type": "sustainable-travel"
+      },
+      {
+        "title": "Reduce how far products travel",
+        "link": "https://cambridgecarbonfootprint.org/actions/reduce_how_far_our_products_travel/",
+        "type": "products-travel"
+      },
+      {
+        "title": "Replace fleet vehicles with electric or hybrid models",
+        "link": "https://cambridgecarbonfootprint.org/actions/replace_vehicles_with_electric_or_hybrid/",
+        "type": "electric-vehicle"
+      },
+      {
+        "title": "Invest in on-site renewable energy generation",
+        "link": "https://cambridgecarbonfootprint.org/actions/on-site_renewable_energy_generation/",
+        "type": "on-site-renewable-energy"
+      },
+      {
+        "title": "Reduce heating demand",
+        "link": "https://cambridgecarbonfootprint.org/actions/reduce_heating_demand_in_business/",
+        "type": "heating"
+      },
+      {
+        "title": "Reduce cooling demand",
+        "link": "https://cambridgecarbonfootprint.org/actions/reduce_cooling_demand_in-business/",
+        "type": "cooling"
+      },
+      {
+        "title": "Reduce lighting demand",
+        "link": "https://cambridgecarbonfootprint.org/actions/reduce_lighting_demand_in_business/",
+        "type": "lighting"
+      }
     ]
 }
