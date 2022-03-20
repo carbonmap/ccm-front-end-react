@@ -3,6 +3,11 @@
     "entity_id": "net.theleys",
     "actions": [
       {
+        "title": "Publish carbon emissions online",
+        "link": "https://cambridgecarbonfootprint.org/actions/publish_carbon_emissions_online/",
+        "type": "publish"
+      },
+      {
         "title": "Switch to a green energy supplier",
         "link": "https://cambridgecarbonfootprint.org/actions/green_energy_supplier_for_business/",
         "type": "green-energy-supplier"
@@ -61,6 +66,11 @@
         "title": "Reduce lighting demand",
         "link": "https://cambridgecarbonfootprint.org/actions/reduce_lighting_demand_in_business/",
         "type": "lighting"
+      },
+      {
+        "title": "Demonstrate climate leadership",
+        "link": "https://cambridgecarbonfootprint.org/business-organisations/",
+        "type": "leadership"
       }
     ]
 }
