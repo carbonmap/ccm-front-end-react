@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.cherry_hinton_library"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.1737642253155769,
+                    52.18704951156512
+                ]
+            }
+        }
+    ]
+}

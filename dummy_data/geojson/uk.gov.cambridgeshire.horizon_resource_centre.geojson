@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.horizon_resource_centre"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.15433434480347494,
+                    52.202431221991596
+                ]
+            }
+        }
+    ]
+}

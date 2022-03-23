@@ -1,0 +1,262 @@
+{
+    "name": "Hawthorns Adolescent Unit (formerly Community Home)",
+    "entity_id": "uk.gov.cambridgeshire.hawthorns-adolescent-unit-(formerly-community-home)",
+    "emissions": [
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "6163",
+            "period_start": "2017-04-01T00:00:00",
+            "period_end": "2017-04-30T00:00:00",
+            "kgco2e": "1134.9780799999999"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "5543",
+            "period_start": "2017-05-01T00:00:00",
+            "period_end": "2017-05-31T00:00:00",
+            "kgco2e": "1020.7988799999999"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "3900",
+            "period_start": "2017-06-01T00:00:00",
+            "period_end": "2017-06-30T00:00:00",
+            "kgco2e": "718.2239999999999"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "4022",
+            "period_start": "2017-07-01T00:00:00",
+            "period_end": "2017-07-31T00:00:00",
+            "kgco2e": "740.69152"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "1946",
+            "period_start": "2017-08-01T00:00:00",
+            "period_end": "2017-08-31T00:00:00",
+            "kgco2e": "358.37536"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "4803",
+            "period_start": "2017-09-01T00:00:00",
+            "period_end": "2017-09-30T00:00:00",
+            "kgco2e": "884.5204799999999"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "6802",
+            "period_start": "2017-10-01T00:00:00",
+            "period_end": "2017-10-31T00:00:00",
+            "kgco2e": "1252.6563199999998"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "6391",
+            "period_start": "2017-11-01T00:00:00",
+            "period_end": "2017-11-30T00:00:00",
+            "kgco2e": "1176.9665599999998"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "11157",
+            "period_start": "2017-12-01T00:00:00",
+            "period_end": "2017-12-31T00:00:00",
+            "kgco2e": "2054.67312"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "10780",
+            "period_start": "2018-01-01T00:00:00",
+            "period_end": "2018-01-31T00:00:00",
+            "kgco2e": "1983.0888000000002"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "10270",
+            "period_start": "2018-02-01T00:00:00",
+            "period_end": "2018-02-28T00:00:00",
+            "kgco2e": "1889.2692000000002"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "10403",
+            "period_start": "2018-03-01T00:00:00",
+            "period_end": "2018-03-31T00:00:00",
+            "kgco2e": "1913.7358800000002"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "7527",
+            "period_start": "2018-04-01T00:00:00",
+            "period_end": "2018-04-30T00:00:00",
+            "kgco2e": "1384.6669200000001"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "5801",
+            "period_start": "2018-05-01T00:00:00",
+            "period_end": "2018-05-31T00:00:00",
+            "kgco2e": "1067.1519600000001"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "4070",
+            "period_start": "2018-06-01T00:00:00",
+            "period_end": "2018-06-30T00:00:00",
+            "kgco2e": "748.7172"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "1629",
+            "period_start": "2018-07-01T00:00:00",
+            "period_end": "2018-07-31T00:00:00",
+            "kgco2e": "299.67084"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "0",
+            "period_start": "2018-08-01T00:00:00",
+            "period_end": "2018-08-31T00:00:00",
+            "kgco2e": "0.0"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "882",
+            "period_start": "2018-09-01T00:00:00",
+            "period_end": "2018-09-30T00:00:00",
+            "kgco2e": "162.25272"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "4787",
+            "period_start": "2018-10-01T00:00:00",
+            "period_end": "2018-10-31T00:00:00",
+            "kgco2e": "880.61652"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "8301",
+            "period_start": "2018-11-01T00:00:00",
+            "period_end": "2018-11-30T00:00:00",
+            "kgco2e": "1527.05196"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "11471",
+            "period_start": "2018-12-01T00:00:00",
+            "period_end": "2018-12-31T00:00:00",
+            "kgco2e": "2110.20516"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "12720",
+            "period_start": "2019-01-01T00:00:00",
+            "period_end": "2019-01-31T00:00:00",
+            "kgco2e": "2338.572"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "12076",
+            "period_start": "2019-02-01T00:00:00",
+            "period_end": "2019-02-28T00:00:00",
+            "kgco2e": "2220.1726000000003"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "13335",
+            "period_start": "2019-03-01T00:00:00",
+            "period_end": "2019-03-31T00:00:00",
+            "kgco2e": "2451.6397500000003"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "6263",
+            "period_start": "2019-04-01T00:00:00",
+            "period_end": "2019-04-30T00:00:00",
+            "kgco2e": "1151.45255"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "6957",
+            "period_start": "2019-05-01T00:00:00",
+            "period_end": "2019-05-31T00:00:00",
+            "kgco2e": "1279.04445"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "1124",
+            "period_start": "2019-06-01T00:00:00",
+            "period_end": "2019-06-30T00:00:00",
+            "kgco2e": "206.6474"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "650",
+            "period_start": "2019-07-01T00:00:00",
+            "period_end": "2019-07-31T00:00:00",
+            "kgco2e": "119.50250000000001"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "592",
+            "period_start": "2019-08-01T00:00:00",
+            "period_end": "2019-08-31T00:00:00",
+            "kgco2e": "108.8392"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "1581",
+            "period_start": "2019-09-01T00:00:00",
+            "period_end": "2019-09-30T00:00:00",
+            "kgco2e": "290.66685"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "5155",
+            "period_start": "2019-10-01T00:00:00",
+            "period_end": "2019-10-31T00:00:00",
+            "kgco2e": "947.74675"
+        },
+        {
+            "measure": "gas",
+            "unit": "kWh",
+            "value": "9005",
+            "period_start": "2019-11-01T00:00:00",
+            "period_end": "2019-11-30T00:00:00",
+            "kgco2e": "1655.56925"
+        }
+    ]
+}

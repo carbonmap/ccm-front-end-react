@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.madingley_road_park_&_ride_site"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.08399282291150102,
+                    52.214798871669586
+                ]
+            }
+        }
+    ]
+}

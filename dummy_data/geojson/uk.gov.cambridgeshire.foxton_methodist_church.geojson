@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.foxton_methodist_church"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.05857135359391183,
+                    52.115621556790856
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.signet_court_units_18-20"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.15117583064109308,
+                    52.2139458803449
+                ]
+            }
+        }
+    ]
+}

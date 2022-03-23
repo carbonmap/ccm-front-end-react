@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.bar_hill_branch_library"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.020720054153369274,
+                    52.25294111849908
+                ]
+            }
+        }
+    ]
+}

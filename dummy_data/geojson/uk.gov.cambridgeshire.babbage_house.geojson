@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.babbage_house"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.11110821367140336,
+                    52.21417867468007
+                ]
+            }
+        }
+    ]
+}

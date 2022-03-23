@@ -1,0 +1,19 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {"id":"uk.gov.cambridgeshire"},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            0.11432983271016708, 52.21329729918599
+          ]
+        }
+      }
+    ]
+}
+  
+  
+  
+  

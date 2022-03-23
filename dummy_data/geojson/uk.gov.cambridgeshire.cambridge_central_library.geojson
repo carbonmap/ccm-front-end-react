@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.cambridge_central_library"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.12058494250657342,
+                    52.20468015636975
+                ]
+            }
+        }
+    ]
+}

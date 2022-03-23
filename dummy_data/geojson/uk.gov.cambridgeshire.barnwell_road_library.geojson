@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.barnwell_road_library"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.16320016764547407,
+                    52.2116394314828
+                ]
+            }
+        }
+    ]
+}

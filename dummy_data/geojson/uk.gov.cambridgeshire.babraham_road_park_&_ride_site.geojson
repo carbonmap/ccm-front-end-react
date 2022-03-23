@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.babraham_road_park_&_ride_site"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.15901241182141115,
+                    52.16894625017219
+                ]
+            }
+        }
+    ]
+}

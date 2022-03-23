@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": "uk.gov.cambridgeshire.trumpington_park_&_ride"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.10806454065687256,
+                    52.16784642954668
+                ]
+            }
+        }
+    ]
+}
