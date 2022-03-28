@@ -18,20 +18,41 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     const getEntityData = async() => {
         const dbURL = process.env.REACT_APP_DATABASE_URL;
 
-        const emissionResponse = await fetch(`${dbURL}/emission/${props.emissionsData[0].id}.json`);
-        const emissionJson = await emissionResponse.json();
+        try {
+          const emissionResponse = await fetch(
+            `${dbURL}/emission/${props.emissionsData[0].id}.json`
+          );
+          const emissionJson = await emissionResponse.json();
 
-        setGraphData(emissionJson.emissions);
+          setGraphData(emissionJson.emissions);
+        } catch (err) {
+          console.log(err);
+          setGraphData([]);
+        }
 
-        const actionRes = await fetch(`${dbURL}/entity_action/${props.emissionsData[0].id}.json`);
-        const actionJson = await actionRes.json();
+        try {
+          const actionRes = await fetch(
+            `${dbURL}/entity_action/${props.emissionsData[0].id}.json`
+          );
+          const actionJson = await actionRes.json();
 
-        setActionData(actionJson.actions);
+          setActionData(actionJson.actions);
+        } catch (err) {
+          console.log(err);
+          setActionData([]);
+        }
 
-        const postRes = await fetch(`${dbURL}/entity_post/${props.emissionsData[0].id}.json`);
-        const postJson = await postRes.json();
+        try {
+          const postRes = await fetch(
+            `${dbURL}/entity_post/${props.emissionsData[0].id}.json`
+          );
+          const postJson = await postRes.json();
 
-        setPostData(postJson.posts);
+          setPostData(postJson.posts);
+        } catch (err) {
+          console.log(err);
+          setPostData([]);
+        }
     };
 
     useEffect(() => {
