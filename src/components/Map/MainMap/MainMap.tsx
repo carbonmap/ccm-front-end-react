@@ -1,8 +1,16 @@
-import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap, ZoomControl } from 'react-leaflet';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from 'src/redux/store';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Popup,
+  Polygon,
+  Marker,
+  useMap,
+  ZoomControl,
+} from "react-leaflet";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "src/redux/store";
 import AlertMessage from "src/components/Message/AlertMessage";
 import { useNavigateBottomDrawer } from "../SearchPane/Drawer/drawerUtils";
 
@@ -55,6 +63,8 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
   const [geoDataConfig, setGeoDataConfig] = useState([]);
   const [visibleEntity, setVisibleEntity] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const popupRef = useRef<any>(null);
 
   const { navigateDrawer } = useNavigateBottomDrawer();
   const isMobile = useSelector((state: RootState) => state.isMobile);
@@ -109,6 +119,11 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
         }
       }
     }
+
+    if (!popupRef.current) return;
+    if (location.pathname !== visibleEntity) {
+      popupRef.current._close();
+    }
   }, [location, geoDataConfig]);
 
   useEffect(() => {
@@ -118,7 +133,6 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
   const handleEntityClick = (id: string) => {
     if (visibleEntity !== id) {
       setVisibleEntity(id);
-      //   history.push(`/${id}`);
       navigateDrawer(`/${id}`);
     }
   };
@@ -143,7 +157,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
           if (geometry.type === "Point") {
             return (
               <Marker position={geometry.coordinates}>
-                <Popup>{features.properties.id}</Popup>
+                <Popup ref={popupRef}>{features.properties.id}</Popup>
               </Marker>
             );
           } else {
@@ -159,7 +173,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 }}
                 positions={geometry.coordinates}
               >
-                <Popup>{features.properties.id}</Popup>
+                <Popup ref={popupRef}>{features.properties.id}</Popup>
               </Polygon>
             );
           }
