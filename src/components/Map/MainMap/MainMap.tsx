@@ -49,6 +49,10 @@ function AnimateMap({ geoData }: any) {
       setTimeout(() => {
         fitMapView([52.2, 0.12]);
       }, 100);
+    } else if (geometry.type === "Point") {
+      setTimeout(() => {
+        fitMapView(coords);
+      }, 100);
     } else {
       setTimeout(() => {
         fitMapBounds();
@@ -77,8 +81,8 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
       let newGeoData: any = props.geoData;
 
       for (let i = 0; i < newGeoData.length; i++) {
-        const geoJsonType = newGeoData[i].features[0].geometry.type;
-        if (geoJsonType === "MultiPolygon") {
+        const geometry = newGeoData[i].features[0].geometry;
+        if (geometry.type === "MultiPolygon") {
           const multiPolygonArr =
             newGeoData[i].features[0].geometry.coordinates;
           for (let i = 0; i < multiPolygonArr.length; i++) {
@@ -86,21 +90,19 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
               return polyCoords.reverse();
             });
           }
-        } else if (
-          newGeoData[i].features[0].geometry.type === "Polygon" ||
-          newGeoData[i].features[0].geometry.type === "Point"
-        ) {
-          newGeoData[i].features[0].geometry.coordinates[0].map(
-            (entity: string[]) => {
-              return entity.reverse();
-            }
-          );
+        } else if (geometry.type === "Polygon") {
+          geometry.coordinates[0].map((entity: string[]) => {
+            return entity.reverse();
+          });
+        } else if (geometry.type === "Point") {
+          geometry.coordinates.reverse();
         }
       }
 
       setGeoDataConfig(newGeoData);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       throw new Error("Location not found");
     }
   };
@@ -131,6 +133,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
   }, [props.geoData]);
 
   const handleEntityClick = (id: string) => {
+    console.log(id)
     if (visibleEntity !== id) {
       setVisibleEntity(id);
       navigateDrawer(`/${id}`);
@@ -156,7 +159,13 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
 
           if (geometry.type === "Point") {
             return (
-              <Marker position={geometry.coordinates}>
+              <Marker
+                eventHandlers={{
+                  click: (event) => handleEntityClick(id),
+                }}
+                key={index}
+                position={geometry.coordinates}
+              >
                 <Popup ref={popupRef}>{features.properties.id}</Popup>
               </Marker>
             );
