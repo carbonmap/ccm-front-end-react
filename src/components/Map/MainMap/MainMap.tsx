@@ -139,7 +139,9 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 eventHandlers={{
                   click: (event) => {
                     setVisibleEntity(id);
-                    history.push(`/${id}`);
+                    if(visibleEntity !== id) {
+                      history.push(`/${id}`);
+                    }
                   },
                 }}
                 key={index}
@@ -154,7 +156,9 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 eventHandlers={{
                   click: (event) => {
                     setVisibleEntity(id);
-                    history.push(`/${id}`);
+                    if(visibleEntity !== id) {
+                      history.push(`/${id}`);
+                    }
                   },
                 }}
                 key={index}
