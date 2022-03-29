@@ -70,7 +70,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
     }, []);
     
     return (
-        <div>
+        <div className='accordion-list'>
             {graphData.length === 0 && actionData.length === 0 && postData.length === 0 ?
                 <div className="empty-entity-data">
                     <p>This organisation hasn't submitted any data yet.</p>
@@ -82,6 +82,7 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
                     titleData="24t"
                     bottomView={
                         <EntityCO2 
+                            name={props.emissionsData[0].name}
                             graphData={graphData}
                             labels={graphData.map((emission:any) => emission.measure)}
                             data={graphData.map((emission:any) => emission.value)}

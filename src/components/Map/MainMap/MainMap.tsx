@@ -1,18 +1,27 @@
-import React, { useState, useEffect} from 'react';
-import { MapContainer, TileLayer, Popup, Polygon, Marker, useMap, ZoomControl } from 'react-leaflet';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from 'src/redux/store';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Popup,
+  Polygon,
+  Marker,
+  useMap,
+  ZoomControl,
+} from "react-leaflet";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "src/redux/store";
 import AlertMessage from "src/components/Message/AlertMessage";
+import { useNavigateBottomDrawer } from "../SearchPane/Drawer/drawerUtils";
 
 interface State {
-    geoData: JSX.Element[],
-    visibleEntity: string
+  geoData: JSX.Element[];
+  visibleEntity: string;
 }
 
 interface GeoDataObject {
-    type: string,
-    features: Array<any>
+  type: string;
+  features: Array<any>;
 }
 
 function AnimateMap({ geoData }: any) {
@@ -59,6 +68,9 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
   const [visibleEntity, setVisibleEntity] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const popupRef = useRef<any>(null);
+
+  const { navigateDrawer } = useNavigateBottomDrawer();
   const isMobile = useSelector((state: RootState) => state.isMobile);
 
   const location = useLocation();
@@ -109,11 +121,24 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
         }
       }
     }
+
+    if (!popupRef.current) return;
+    if (location.pathname !== visibleEntity) {
+      popupRef.current._close();
+    }
   }, [location, geoDataConfig]);
 
   useEffect(() => {
     handleGeoDataCoords();
   }, [props.geoData]);
+
+  const handleEntityClick = (id: string) => {
+    console.log(id)
+    if (visibleEntity !== id) {
+      setVisibleEntity(id);
+      navigateDrawer(`/${id}`);
+    }
+  };
 
   return (
     <MapContainer
@@ -136,29 +161,19 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
             return (
               <Marker
                 eventHandlers={{
-                  click: (event) => {
-                    setVisibleEntity(id);
-                    if(visibleEntity !== id) {
-                      history.push(`/${id}`);
-                    }
-                  },
+                  click: (event) => handleEntityClick(id),
                 }}
                 key={index}
                 position={geometry.coordinates}
               >
-                <Popup>{features.properties.id}</Popup>
+                <Popup ref={popupRef}>{features.properties.id}</Popup>
               </Marker>
             );
           } else {
             return (
               <Polygon
                 eventHandlers={{
-                  click: (event) => {
-                    setVisibleEntity(id);
-                    if(visibleEntity !== id) {
-                      history.push(`/${id}`);
-                    }
-                  },
+                  click: (event) => handleEntityClick(id),
                 }}
                 key={index}
                 pathOptions={{
@@ -167,7 +182,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 }}
                 positions={geometry.coordinates}
               >
-                <Popup>{features.properties.id}</Popup>
+                <Popup ref={popupRef}>{features.properties.id}</Popup>
               </Polygon>
             );
           }
