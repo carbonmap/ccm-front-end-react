@@ -132,7 +132,6 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
           const geometry = features.geometry;
           const id = features.properties.id;
 
-          console.log(id);
           if (geometry.type === "Point") {
             return (
               <Marker

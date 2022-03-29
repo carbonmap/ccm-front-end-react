@@ -72,24 +72,28 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                     {entityDetails.address}
                   </IonText>
                 </div>
-                <IonText
-                  onClick={() =>
-                    navigateDrawer(
-                      `/business-type/${entityDetails.business_type}`
-                    )
-                  }
-                  className="ion-text-capitalize entity-business-type"
-                >
-                  {entityDetails.business_type}
-                </IonText>
+                {entityDetails.business_type ? (
+                  <IonText
+                    onClick={() =>
+                      navigateDrawer(
+                        `/business-type/${entityDetails.business_type}`
+                      )
+                    }
+                    className="ion-text-capitalize entity-business-type"
+                  >
+                    {entityDetails.business_type}
+                  </IonText>
+                ) : null}
               </div>
               <div className="connect-link-container">
-                <ContactLink
-                  src="link.png"
-                  alt="Link Icon"
-                  text="Website"
-                  href={entityDetails.website}
-                />
+                {entityDetails.website ? (
+                  <ContactLink
+                    src="link.png"
+                    alt="Link Icon"
+                    text="Website"
+                    href={entityDetails.website}
+                  />
+                ) : null}
                 <ContactLink
                   src="friends.png"
                   alt="Connect Icon"
