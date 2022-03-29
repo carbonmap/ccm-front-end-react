@@ -36,12 +36,13 @@ function AnimateMap({ geoData }: any) {
   };
 
   useEffect(() => {
-    if (
-      location.pathname.substring(0, 14) === "/business-type" ||
-      geometry.type === "Point"
-    ) {
+    if (location.pathname.substring(0, 14) === "/business-type") {
       setTimeout(() => {
         fitMapView([52.2, 0.12]);
+      }, 100);
+    } else if (geometry.type === "Point") {
+      setTimeout(() => {
+        fitMapView(coords);
       }, 100);
     } else {
       setTimeout(() => {
@@ -131,9 +132,19 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
           const geometry = features.geometry;
           const id = features.properties.id;
 
+          console.log(id);
           if (geometry.type === "Point") {
             return (
-              <Marker position={geometry.coordinates}>
+              <Marker
+                eventHandlers={{
+                  click: (event) => {
+                    setVisibleEntity(id);
+                    history.push(`/${id}`);
+                  },
+                }}
+                key={index}
+                position={geometry.coordinates}
+              >
                 <Popup>{features.properties.id}</Popup>
               </Marker>
             );
