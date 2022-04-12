@@ -1,11 +1,12 @@
-import { Chart } from 'chart.js';
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonPopover, IonIcon } from '@ionic/react';
-import { closeCircleOutline } from 'ionicons/icons';
+import { Chart, TooltipItem } from "chart.js";
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { IonPopover, IonIcon } from "@ionic/react";
+import { closeCircleOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import { NONAME } from "dns";
 
 Chart.register(ChartDataLabels);
 
@@ -137,9 +138,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             maintainAspectRatio: false,
             plugins: {
               datalabels: {
+                display: false,
                 font: {
                   size: fontSize,
                 },
+                formatter: (value) => Math.round(value),
               },
               title: {
                 display: true,
@@ -156,6 +159,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                 },
               },
               tooltip: {
+                enabled: true,
                 titleFont: {
                   size: fontSize - 2,
                 },
@@ -164,6 +168,14 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                 },
                 footerFont: {
                   size: fontSize - 2,
+                },
+                callbacks: {
+                  label: (tooltipItem: any) => {
+                    const integerVal = parseInt(
+                      tooltipItem.formattedValue.split(",").join("")
+                    );
+                    return `${integerVal}`;
+                  },
                 },
               },
             },
