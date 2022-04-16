@@ -94,23 +94,25 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     const chartData = props.chartData.sort((a: any, b: any) => {
       const aDate = new Date(a.period_end);
       const bDate = new Date(b.period_end);
-      return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+      return aDate > bDate ? 1 : aDate < bDate ? -1 : 0;
     });
 
     for (let i = 0; i < props.chartData.length; i++) {
       const dataItem = chartData[i];
+      if (!dateList.includes(dataItem.period_end)) {
+        dateList.push(dataItem.period_end);
+      }
       if (dataItem.measure === "gas") {
         gasData.push(dataItem.kgco2e);
-        dateList.push(dataItem.period_end);
       } else {
         electricityData.push(dataItem.kgco2e);
       }
     }
 
     const dateLabels = handleLabels(dateList);
-    setLabels(dateLabels.reverse());
-    setGasGroup(gasData.reverse());
-    setElectricityGroup(electricityData.reverse());
+    setLabels(dateLabels);
+    setGasGroup(gasData);
+    setElectricityGroup(electricityData);
   };
 
   useEffect(() => {
