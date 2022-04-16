@@ -91,7 +91,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     let gasData = [];
     let electricityData = [];
     let dateList: any = [];
-    const chartData = props.chartData;
+    const chartData = props.chartData.sort((a: any, b: any) => {
+      const aDate = new Date(a.period_end);
+      const bDate = new Date(b.period_end);
+      return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+    });
 
     for (let i = 0; i < props.chartData.length; i++) {
       const dataItem = chartData[i];
