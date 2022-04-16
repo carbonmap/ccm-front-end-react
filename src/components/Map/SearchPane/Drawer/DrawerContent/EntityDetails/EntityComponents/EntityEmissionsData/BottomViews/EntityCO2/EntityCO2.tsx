@@ -27,25 +27,30 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     const graphData = props.graphData;
     for (let i = 0; i < graphData.length; i++) {
       if (graphData[i].measure === "gas") {
-        gasTotal += Number(graphData[i].value);
+        gasTotal += Number(graphData[i].kgco2e);
       } else if (graphData[i].measure === "electricity") {
-        electricTotal += Number(graphData[i].value);
+        electricTotal += Number(graphData[i].kgco2e);
       }
     }
+    const gasDataSet = { kgco2e: gasTotal, measure: "gas" };
+    const electricDataSet = { kgco2e: electricTotal, measure: "electricity" };
 
-    return [
-      { value: gasTotal, measure: "gas" },
-      { value: electricTotal, measure: "electricity" },
-    ];
+    if (gasTotal <= 0) {
+      return [electricDataSet];
+    } else if (electricTotal <= 0) {
+      return [gasDataSet];
+    } else {
+      return [gasDataSet, electricDataSet];
+    }
   };
 
-  const emissionData: { value: number; measure: string }[] = sumData();
+  const emissionData: { kgco2e: number; measure: string }[] = sumData();
 
   const data = {
     labels: emissionData.map((emission: any) => emission.measure),
     datasets: [
       {
-        data: emissionData.map((dataItem: any) => dataItem.value),
+        data: emissionData.map((dataItem: any) => dataItem.kgco2e),
         backgroundColor: ["rgba(136,190,56,0.3)", "rgba(52,116,185,0.3)"],
         borderColor: ["rgba(136,190,56,1)", "rgba(52,116,185,1)"],
         borderWidth: 1,
@@ -94,10 +99,13 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   formatter: (value) => {
                     let sum = 0;
                     props.graphData.map((dataItem: any) => {
-                      sum = sum + parseInt(dataItem.value);
+                      sum = sum + parseInt(dataItem.kgco2e);
                     });
 
                     let percentage = (value / sum) * 100;
+                    if (percentage > 100.0) {
+                      percentage = 100.0;
+                    }
                     return `${percentage.toFixed(1)}%`;
                   },
                   font: {

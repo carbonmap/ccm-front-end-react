@@ -68,48 +68,56 @@ const EntityEmissionsData:React.FC<PageProps> = (props) => {
             getEntityData();
         }
     }, []);
-    
+
+    const sumKgco2e = () => {
+      let yearUsed = new Date().getFullYear();
+
+      let sum = 0;
+      graphData.forEach((dataItem: any) => {
+        const dataDate = new Date(dataItem.period_end).getFullYear();
+        console.log(dataDate);
+
+        sum += parseInt(dataItem.kgco2e);
+      });
+
+      return `${sum}kg`;
+    };
+
     return (
-        <div className='accordion-list'>
-            {graphData.length === 0 && actionData.length === 0 && postData.length === 0 ?
-                <div className="empty-entity-data">
-                    <p>This organisation hasn't submitted any data yet.</p>
-                </div>
-            :
-            <>
-                <DataAccordion 
-                    title="CO2e in 2021"
-                    titleData="24t"
-                    bottomView={
-                        <EntityCO2 
-                            name={props.emissionsData[0].name}
-                            graphData={graphData}
-                            labels={graphData.map((emission:any) => emission.measure)}
-                            data={graphData.map((emission:any) => emission.value)}
-                        />
-                    }
+      <div className="accordion-list">
+        {graphData.length === 0 &&
+        actionData.length === 0 &&
+        postData.length === 0 ? (
+          <div className="empty-entity-data">
+            <p>This organisation hasn't submitted any data yet.</p>
+          </div>
+        ) : (
+          <>
+            <DataAccordion
+              title="CO2e in 2021"
+              titleData={sumKgco2e()}
+              bottomView={
+                <EntityCO2
+                  name={props.emissionsData[0].name}
+                  graphData={graphData}
+                  labels={graphData.map((emission: any) => emission.measure)}
+                  data={graphData.map((emission: any) => emission.value)}
                 />
-                <DataAccordion 
-                    title="actions"
-                    titleData={actionData.length}
-                    bottomView={
-                        <EntityActionsList 
-                            actions={actionData}
-                        />
-                    }
-                />
-                <DataAccordion 
-                    title="posts"
-                    titleData={postData.length} 
-                    bottomView={
-                        <EntityPostsList 
-                            posts={postData}
-                        />
-                    }
-                />
-            </>
-            }
-        </div>
+              }
+            />
+            <DataAccordion
+              title="actions"
+              titleData={actionData.length}
+              bottomView={<EntityActionsList actions={actionData} />}
+            />
+            <DataAccordion
+              title="posts"
+              titleData={postData.length}
+              bottomView={<EntityPostsList posts={postData} />}
+            />
+          </>
+        )}
+      </div>
     );
 };
 
