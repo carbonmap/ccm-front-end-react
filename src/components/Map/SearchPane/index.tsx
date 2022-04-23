@@ -40,29 +40,35 @@ const SearchPane: React.FC<PageProps> = (props) => {
     }, [props.entitiesByBusinessType, props.emissionsData, location]);
 
     return (
-        <div className="ion-align-self-end menu-container" style={{ backgroundColor: isOpen && !isMobile ? '#fff' : 'transparent' }}>
-            <SearchBar 
-                entitiesByBusinessType={props.entitiesByBusinessType}
-                featuredEntities={props.featuredEntities}
-                inputVal={inputVal} 
-                setInputVal={setInputVal} 
-                setIsSearching={setIsSearching} 
-                isSearching={isSearching} 
-                emissionsData={props.emissionsData}
-                selectedLocation={selectedLocation}
-                openMenu={openMenu}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                navHistory={props.navHistory}
-            />
-            <Drawer 
-                 entitiesByBusinessType={props.entitiesByBusinessType}
-                 emissionsData={props.emissionsData}
-                 isOpen={isOpen}
-                 selectedLocation={selectedLocation}
-                 isMobile={isMobile}
-            />
-        </div>
+      <div
+        className="ion-align-self-end menu-container"
+        style={{
+          backgroundColor: isOpen && !isMobile ? "#fff" : "transparent",
+        }}
+      >
+        <SearchBar
+          entitiesByBusinessType={props.entitiesByBusinessType}
+          featuredEntities={props.featuredEntities}
+          inputVal={inputVal}
+          setInputVal={setInputVal}
+          setIsSearching={setIsSearching}
+          isSearching={isSearching}
+          emissionsData={props.emissionsData}
+          selectedLocation={selectedLocation}
+          openMenu={openMenu}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          navHistory={props.navHistory}
+        />
+        <Drawer
+          entitiesByBusinessType={props.entitiesByBusinessType}
+          emissionsData={props.emissionsData}
+          isOpen={isOpen}
+          selectedLocation={selectedLocation}
+          isMobile={isMobile}
+          isSearching={isSearching}
+        />
+      </div>
     );
 };
 
