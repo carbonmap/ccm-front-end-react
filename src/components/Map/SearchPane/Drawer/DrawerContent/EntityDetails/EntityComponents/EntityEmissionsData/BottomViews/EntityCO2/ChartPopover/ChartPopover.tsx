@@ -180,7 +180,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                     const integerVal = parseInt(
                       tooltipItem.formattedValue.split(",").join("")
                     );
-                    return `${integerVal}`;
+                    return `${integerVal}kg`;
                   },
                 },
               },

@@ -84,6 +84,14 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   footerFont: {
                     size: fontSize - 2,
                   },
+                  callbacks: {
+                    label: (tooltipItem: any) => {
+                      const integerVal = parseInt(
+                        tooltipItem.formattedValue.split(",").join("")
+                      );
+                      return `${integerVal}kg`;
+                    },
+                  },
                 },
                 legend: {
                   position: "bottom",
