@@ -124,7 +124,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     : window.innerWidth * 0.012;
 
   return (
-    <IonPopover isOpen={props.displayModal} className="chart-modal">
+    <IonPopover
+      isOpen={props.displayModal}
+      className="chart-modal"
+      onBlur={() => props.setDisplayModal(false)}
+    >
       <div
         onClick={() => props.setDisplayModal(false)}
         style={{ position: "absolute", right: 16, top: 8, cursor: "pointer" }}
