@@ -133,7 +133,6 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
   }, [props.geoData]);
 
   const handleEntityClick = (id: string) => {
-    console.log(id)
     if (visibleEntity !== id) {
       setVisibleEntity(id);
       navigateDrawer(`/${id}`);

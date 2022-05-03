@@ -8,8 +8,9 @@ interface PageProps {
   isOpen: boolean;
   isMobile: boolean;
   selectedLocation: any;
-  emissionsData: {id: string, name: string, emissions: string[]}[];
+  emissionsData: { id: string; name: string; emissions: string[] }[];
   entitiesByBusinessType: object[];
+  isSearching: boolean;
 }
 
 const MobileDrawer: React.FC<PageProps> = (props) => {
@@ -29,6 +30,7 @@ const MobileDrawer: React.FC<PageProps> = (props) => {
   return (
     <div>
       <IonModal
+        style={{ display: props.isSearching ? "none" : "block" }}
         isOpen={true}
         swipeToClose={true}
         breakpoints={[0.05, 0.4, 0.95]}
