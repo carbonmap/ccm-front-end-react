@@ -1,6 +1,7 @@
 import { IonItem } from '@ionic/react';
 import React from 'react';
 import { Link } from 'react-router-dom'; 
+import { useNavigateBottomDrawer } from "../../Drawer/drawerUtils";
 
 interface PageProps {
     emissionsData: {id: string, name: string, emissions: string[]}[];
@@ -21,24 +22,38 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
         transform: 'translateX(-100%)'
     };
 
+    const { navigateDrawer } = useNavigateBottomDrawer();
+
+    const handleClick = (id: string) => {
+      props.setInputVal("");
+      navigateDrawer(`/${id}`);
+    };
+
     return (
         <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
             {props.suggestions ?
                 props.suggestions.map((entity: any, index) => {
                     if(index < 5) {
                         return (
-                            <Link key={index} to={`/${entity.id}`} onClick={() => props.setInputVal("")} >
-                                <IonItem className="search-suggestion-el">{entity.name}</IonItem>
-                            </Link>
+                          <div
+                            key={index}
+                            onClick={() => handleClick(entity.id)}
+                          >
+                            <IonItem className="search-suggestion-el">
+                              {entity.name}
+                            </IonItem>
+                          </div>
                         );
                     };
                 })
             :
                 props.featuredEntities.map((entity: any, index) => {
                     return (
-                        <Link key={index} to={`/${entity.id}`} onClick={() => props.setInputVal("")} >
-                            <IonItem className="search-suggestion-el">{entity.name}</IonItem>
-                        </Link>
+                      <div key={index} onClick={() => handleClick(entity.id)}>
+                        <IonItem className="search-suggestion-el">
+                          {entity.name}
+                        </IonItem>
+                      </div>
                     );
                 })
             }
