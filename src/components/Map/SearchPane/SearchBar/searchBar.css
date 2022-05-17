@@ -63,14 +63,14 @@
 }
 .featured-el-title {
   padding: 0;
-}
-.featured-el-title {
   font-weight: 600;
 }
 .featured-el-details {
+  margin-top: 8px;  
   display: flex;
 }
 .featured-el-text {
+  width: 50%;
   margin-right: 20%;
 }
 
