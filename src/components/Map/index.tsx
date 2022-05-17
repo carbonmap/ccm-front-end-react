@@ -151,29 +151,25 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     }, [emissionsData])
   
     return (
-      <div style={{ height: '100vh', position: 'relative' }}>
-        {isLoading ?
-            <div className="spinner-container">
-              <Spinner />
-            </div>
-          :
-            <div style={{ height: '100%' }}>
-              <SearchPane 
-                entitiesByBusinessType={entitiesByBusinessType}
-                emissionsData={emissionsData}
-                featuredEntities={featuredEntities}
-                navHistory={cookies.history}
-              />
-              <MainMap
-                geoData={geoData}
-              />
-              {displayAlert ? 
-                <AlertMessage>Location not found.</AlertMessage>
-              :
-                null
-              }
-            </div>
-        }
+      <div style={{ height: "100vh", position: "relative" }}>
+        {isLoading ? (
+          <div className="spinner-container">
+            <Spinner />
+          </div>
+        ) : (
+          <div style={{ height: "100%" }}>
+            <SearchPane
+              entitiesByBusinessType={entitiesByBusinessType}
+              emissionsData={emissionsData}
+              featuredEntities={featuredEntities}
+              navHistory={cookies.history}
+            />
+            <MainMap geoData={geoData} emissionsData={emissionsData} />
+            {displayAlert ? (
+              <AlertMessage>Location not found.</AlertMessage>
+            ) : null}
+          </div>
+        )}
       </div>
     );
 };

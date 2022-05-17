@@ -63,7 +63,7 @@ function AnimateMap({ geoData }: any) {
   return null;
 }
 
-const MainMap: React.FC<{ geoData: any[] }> = (props) => {
+const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
   const [geoDataConfig, setGeoDataConfig] = useState([]);
   const [visibleEntity, setVisibleEntity] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -155,6 +155,9 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
           const features = entity.features[0];
           const geometry = features.geometry;
           const id = features.properties.id;
+          const name = props.emissionsData?.filter(
+            (entity) => entity.id === id
+          )[0]?.name;
 
           if (geometry.type === "Point") {
             return (
@@ -165,7 +168,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 key={index}
                 position={geometry.coordinates}
               >
-                <Popup ref={popupRef}>{features.properties.id}</Popup>
+                {name ? <Popup ref={popupRef}>{name}</Popup> : null}
               </Marker>
             );
           } else {
@@ -181,7 +184,7 @@ const MainMap: React.FC<{ geoData: any[] }> = (props) => {
                 }}
                 positions={geometry.coordinates}
               >
-                <Popup ref={popupRef}>{features.properties.id}</Popup>
+                {name ? <Popup ref={popupRef}>{name}</Popup> : null}
               </Polygon>
             );
           }
