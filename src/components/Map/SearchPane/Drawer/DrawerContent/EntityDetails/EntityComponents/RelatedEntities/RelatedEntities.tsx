@@ -113,11 +113,16 @@ const RelatedEntities: React.FC<PageProps> = ({ entityDetails }) => {
   }, [entityDetails]);
 
   return (
-    <DataAccordion
-      title="Related"
-      titleData={""}
-      bottomView={<EntityLinkList entityRelatives={entityRelatives} />}
-    />
+    <>
+      {entityRelatives.parentEntities.length < 1 &&
+      entityRelatives.subEntities.length < 1 ? null : (
+        <DataAccordion
+          title="Related Locations"
+          titleData={""}
+          bottomView={<EntityLinkList entityRelatives={entityRelatives} />}
+        />
+      )}
+    </>
   );
 };
 
