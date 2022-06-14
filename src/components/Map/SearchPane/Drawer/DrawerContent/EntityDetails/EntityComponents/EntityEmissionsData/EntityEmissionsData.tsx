@@ -83,30 +83,6 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
     return totalEmissions;
   };
 
-  const getConsecutiveEmissions = (emissionsData: any[]) => {
-    let dataArr: any[] = [];
-    emissionsData.some((data, idx) => {
-      const currentPeriodEnd = new Date(data.period_end);
-      if (dataArr.length === 0) {
-        dataArr.push(data);
-      } else {
-        const currentPeriodEnd = new Date(data.period_end);
-        const prevPeriodStart = new Date(
-          dataArr[dataArr.length - 1]?.period_start
-        );
-
-        if (currentPeriodEnd.getMonth() === prevPeriodStart.getMonth()) {
-          dataArr.push(data);
-        } else {
-          dataArr = [];
-          return true;
-        }
-      }
-    });
-
-    return dataArr;
-  };
-
   const checkFullYear = () => {
     let totalEmissions = 0;
     let yearOfData;
@@ -159,6 +135,18 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
 
   const { year, emissions } = checkFullYear();
 
+  const displayEmissions = () => {
+    const emissionsNumber = Number(emissions);
+    if (emissionsNumber > 100000) {
+      return `${Math.floor(emissionsNumber / 1000)}t`;
+    } else if (emissionsNumber > 1000) {
+      console.log(emissionsNumber);
+      return `${(emissionsNumber / 1000).toFixed(1)}t`;
+    } else {
+      return `${Math.floor(emissionsNumber)}kg`;
+    }
+  };
+
   return (
     <div className="accordion-list">
       {graphData.length === 0 &&
@@ -171,7 +159,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
         <>
           <DataAccordion
             title={`C02e in ${year}`}
-            titleData={`${emissions}kg`}
+            titleData={displayEmissions()}
             bottomView={
               <EntityCO2
                 name={props.emissionsData[0].name}
