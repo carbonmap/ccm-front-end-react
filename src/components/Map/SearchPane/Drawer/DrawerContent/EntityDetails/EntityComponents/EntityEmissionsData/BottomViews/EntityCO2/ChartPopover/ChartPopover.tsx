@@ -6,7 +6,6 @@ import { IonPopover, IonIcon } from "@ionic/react";
 import { closeCircleOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { NONAME } from "dns";
 
 Chart.register(ChartDataLabels);
 

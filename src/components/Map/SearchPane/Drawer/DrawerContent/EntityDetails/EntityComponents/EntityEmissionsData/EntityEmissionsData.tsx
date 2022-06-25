@@ -129,7 +129,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
 
     return {
       year: yearOfData,
-      emissions: Math.round(totalEmissions).toString(),
+      emissions: Math.round(totalEmissions),
     };
   };
 
@@ -138,12 +138,11 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
   const displayEmissions = () => {
     const emissionsNumber = Number(emissions);
     if (emissionsNumber > 100000) {
-      return `${Math.floor(emissionsNumber / 1000)}t`;
+      return `${Math.round(emissionsNumber / 1000)}t`;
     } else if (emissionsNumber > 1000) {
-      console.log(emissionsNumber);
       return `${(emissionsNumber / 1000).toFixed(1)}t`;
     } else {
-      return `${Math.floor(emissionsNumber)}kg`;
+      return `${Math.round(emissionsNumber)}kg`;
     }
   };
 
@@ -158,8 +157,8 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
       ) : (
         <>
           <DataAccordion
-            title={`C02e in ${year}`}
-            titleData={displayEmissions()}
+            title={emissions > 0 ? `C02e in ${year}` : "No C02e data yet"}
+            titleData={emissions ? displayEmissions() : ""}
             bottomView={
               <EntityCO2
                 name={props.emissionsData[0].name}
