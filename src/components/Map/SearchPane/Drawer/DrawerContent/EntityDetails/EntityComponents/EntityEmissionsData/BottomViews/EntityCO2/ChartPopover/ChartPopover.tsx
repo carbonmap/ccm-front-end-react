@@ -1,9 +1,9 @@
-import { Chart } from 'chart.js';
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonPopover, IonIcon } from '@ionic/react';
-import { closeCircleOutline } from 'ionicons/icons';
+import { Chart, TooltipItem } from "chart.js";
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { IonPopover, IonIcon } from "@ionic/react";
+import { closeCircleOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
@@ -90,22 +90,28 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     let gasData = [];
     let electricityData = [];
     let dateList: any = [];
-    const chartData = props.chartData;
+    const chartData = props.chartData.sort((a: any, b: any) => {
+      const aDate = new Date(a.period_end);
+      const bDate = new Date(b.period_end);
+      return aDate > bDate ? 1 : aDate < bDate ? -1 : 0;
+    });
 
     for (let i = 0; i < props.chartData.length; i++) {
       const dataItem = chartData[i];
+      if (!dateList.includes(dataItem.period_end)) {
+        dateList.push(dataItem.period_end);
+      }
       if (dataItem.measure === "gas") {
         gasData.push(dataItem.kgco2e);
-        dateList.push(dataItem.period_end);
       } else {
         electricityData.push(dataItem.kgco2e);
       }
     }
 
     const dateLabels = handleLabels(dateList);
-    setLabels(dateLabels.reverse());
-    setGasGroup(gasData.reverse());
-    setElectricityGroup(electricityData.reverse());
+    setLabels(dateLabels);
+    setGasGroup(gasData);
+    setElectricityGroup(electricityData);
   };
 
   useEffect(() => {
@@ -117,7 +123,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     : window.innerWidth * 0.012;
 
   return (
-    <IonPopover isOpen={props.displayModal} className="chart-modal">
+    <IonPopover
+      isOpen={props.displayModal}
+      className="chart-modal"
+      onBlur={() => props.setDisplayModal(false)}
+    >
       <div
         onClick={() => props.setDisplayModal(false)}
         style={{ position: "absolute", right: 16, top: 8, cursor: "pointer" }}
@@ -137,9 +147,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
             maintainAspectRatio: false,
             plugins: {
               datalabels: {
+                display: false,
                 font: {
                   size: fontSize,
                 },
+                formatter: (value) => Math.round(value),
               },
               title: {
                 display: true,
@@ -156,6 +168,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                 },
               },
               tooltip: {
+                enabled: true,
                 titleFont: {
                   size: fontSize - 2,
                 },
@@ -164,6 +177,14 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                 },
                 footerFont: {
                   size: fontSize - 2,
+                },
+                callbacks: {
+                  label: (tooltipItem: any) => {
+                    const integerVal = parseInt(
+                      tooltipItem.formattedValue.split(",").join("")
+                    );
+                    return `${integerVal}kg`;
+                  },
                 },
               },
             },
