@@ -51,3 +51,10 @@ export function hideError(){
     }
 
 }
+
+export function setCurrentUser(user: object) {
+  return {
+    type: Constants.SET_CURRENT_USER,
+    payload: user,
+  };
+}

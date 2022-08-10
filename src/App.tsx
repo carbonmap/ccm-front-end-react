@@ -54,11 +54,11 @@ const App: React.FC = () => {
             <Toolbar />
           </IonHeader>
 
-          <Switch>
+          {/* <Switch>
             <Route path="/" exact component={Map} />
             <Route path="/:id" component={Map} />
             <Route path="/business-type" component={Map} />
-          </Switch>
+          </Switch> */}
         </>
       </IonApp>
     </Router>
