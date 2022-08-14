@@ -57,6 +57,47 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
       });
   };
 
+  const loginUser = () => {
+    fetch(`${process.env.REACT_APP_DATABASE_URL}/token-auth/`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    })
+      .then(async (res) => {
+        const result = await res.json();
+        dispatch(
+          authSlice.actions.loginUser({
+            token: result.token,
+            user: result.user,
+          })
+        );
+        fetchUserDetails(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const registerUser = () => {
+    fetch(`${process.env.REACT_APP_DATABASE_URL}/carbonmap/users/`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    })
+      .then((res) => {
+        loginUser();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleClick = async () => {
     if (!email) {
       setMessage("Please enter a valid email");
@@ -84,43 +125,9 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
     }
 
     if (props.login) {
-      fetch(`${process.env.REACT_APP_DATABASE_URL}/token-auth/`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      })
-        .then(async (res) => {
-          const result = await res.json();
-          dispatch(
-            authSlice.actions.loginUser({
-              token: result.token,
-              user: result.user,
-            })
-          );
-          fetchUserDetails(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      loginUser();
     } else {
-      // register
-      fetch(`${process.env.REACT_APP_DATABASE_URL}/carbonmap/users/`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      registerUser();
     }
   };
 
