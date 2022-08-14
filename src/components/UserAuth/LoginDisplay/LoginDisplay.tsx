@@ -21,7 +21,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [iserror, setIserror] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const authDetails = useSelector((state: RootState) => state.auth);
@@ -39,9 +39,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `JWT ${auth.token}`,
-        // "Proxy-Authorization": `Bearer ${authDetails.token}`,
       },
-      //   body: JSON.stringify(authDetails),
     })
       .then(async (res) => {
         const result = await res.json();
@@ -62,27 +60,27 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   const handleClick = async () => {
     if (!email) {
       setMessage("Please enter a valid email");
-      setIserror(true);
+      setIsError(true);
       return;
     } else {
       setMessage("");
-      setIserror(false);
+      setIsError(false);
     }
     if (validateEmail(email) === false) {
       setMessage("Please enter a valid email");
-      setIserror(true);
+      setIsError(true);
       return;
     } else {
       setMessage("");
-      setIserror(false);
+      setIsError(false);
     }
     if (!password || password.length < 6) {
       setMessage("Please enter a valid password");
-      setIserror(true);
+      setIsError(true);
       return;
     } else {
       setMessage("");
-      setIserror(false);
+      setIsError(false);
     }
 
     if (props.login) {
@@ -157,7 +155,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
           </IonItem>
         </IonCol>
       </IonRow>
-      {iserror ? (
+      {isError ? (
         <IonRow>
           <IonText className="login-warn">{message}</IonText>
         </IonRow>
