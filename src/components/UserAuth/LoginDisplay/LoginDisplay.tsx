@@ -10,6 +10,12 @@ interface PageProps {
   switchDisplay: Function;
   login: boolean;
 }
+interface InputProps {
+  label: string;
+  type: any;
+  value: string;
+  onChange: EventListener;
+}
 
 function validateEmail(email: string) {
   const re =
@@ -17,9 +23,27 @@ function validateEmail(email: string) {
   return re.test(String(email).toLowerCase());
 }
 
+const FormInput: React.FC<InputProps> = ({ label, type, value, onChange }) => {
+  return (
+    <IonRow>
+      <IonCol>
+        <IonItem>
+          <IonLabel position="floating">{label}</IonLabel>
+          <IonInput type={type} value={value} onIonChange={onChange} />
+        </IonItem>
+      </IonCol>
+    </IonRow>
+  );
+};
+
 const LoginDisplay: React.FC<PageProps> = (props) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userDetails, setUserDetails] = useState<any>({
+    organisation: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
   const [message, setMessage] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -27,9 +51,9 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   const authDetails = useSelector((state: RootState) => state.auth);
 
   const loginData = {
-    username: email,
-    email: email,
-    password: password,
+    username: userDetails.email,
+    email: userDetails.email,
+    password: userDetails.password,
   };
 
   const fetchUserDetails = (auth: any) => {
@@ -46,7 +70,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
         dispatch({
           type: SET_CURRENT_USER,
           payload: {
-            firstName: result?.first_name,
+            first_name: result?.first_name,
             lastName: result?.last_name,
             username: result?.username,
           },
@@ -88,7 +112,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify({ ...userDetails, username: userDetails.email }),
     })
       .then((res) => {
         loginUser();
@@ -99,7 +123,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   };
 
   const handleClick = async () => {
-    if (!email) {
+    if (!userDetails.email) {
       setMessage("Please enter a valid email");
       setIsError(true);
       return;
@@ -107,7 +131,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
       setMessage("");
       setIsError(false);
     }
-    if (validateEmail(email) === false) {
+    if (validateEmail(userDetails.email) === false) {
       setMessage("Please enter a valid email");
       setIsError(true);
       return;
@@ -115,7 +139,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
       setMessage("");
       setIsError(false);
     }
-    if (!password || password.length < 6) {
+    if (!userDetails.password || userDetails.password.length < 6) {
       setMessage("Please enter a valid password");
       setIsError(true);
       return;
@@ -131,37 +155,52 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
     }
   };
 
-  const handleLogOut = () => {
-    dispatch(authSlice.actions.logout());
-  };
-
   return (
     <div style={{ padding: 10 }}>
-      <IonRow>
-        <IonCol>
-          <IonItem>
-            <IonLabel position="floating"> Email</IonLabel>
-            <IonInput
-              type="email"
-              value={email}
-              onIonChange={(e) => setEmail(e.detail.value!)}
-            />
-          </IonItem>
-        </IonCol>
-      </IonRow>
-
-      <IonRow>
-        <IonCol>
-          <IonItem>
-            <IonLabel position="floating"> Password</IonLabel>
-            <IonInput
-              type="password"
-              value={password}
-              onIonChange={(e) => setPassword(e.detail.value!)}
-            />
-          </IonItem>
-        </IonCol>
-      </IonRow>
+      {!props.login ? (
+        <>
+          <FormInput
+            label="Organisation"
+            type="text"
+            value={userDetails.organisation}
+            onChange={(e: any) =>
+              setUserDetails({ ...userDetails, organisation: e.detail.value! })
+            }
+          />
+          <FormInput
+            label="First Name"
+            type="text"
+            value={userDetails.first_name}
+            onChange={(e: any) =>
+              setUserDetails({ ...userDetails, first_name: e.detail.value! })
+            }
+          />
+          <FormInput
+            label="last_name"
+            type="text"
+            value={userDetails.last_name}
+            onChange={(e: any) =>
+              setUserDetails({ ...userDetails, last_name: e.detail.value! })
+            }
+          />
+        </>
+      ) : null}
+      <FormInput
+        label="Email"
+        type="email"
+        value={userDetails.email}
+        onChange={(e: any) =>
+          setUserDetails({ ...userDetails, email: e.detail.value! })
+        }
+      />
+      <FormInput
+        label="Password"
+        type="password"
+        value={userDetails.password}
+        onChange={(e: any) =>
+          setUserDetails({ ...userDetails, password: e.detail.value! })
+        }
+      />
       {isError ? (
         <IonRow>
           <IonText className="login-warn">{message}</IonText>
@@ -194,20 +233,6 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
               </span>
             )}
           </p>
-          {/* {props.login ? (
-            <p
-              onClick={() => handleLogOut()}
-              style={{
-                textDecoration: "underline",
-                textAlign: "center",
-                color: "red",
-                fontSize: 14,
-                cursor: "pointer",
-              }}
-            >
-              Log Out
-            </p>
-          ) : null} */}
         </IonCol>
       </IonRow>
     </div>
