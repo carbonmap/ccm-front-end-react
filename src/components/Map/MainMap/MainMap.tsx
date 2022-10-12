@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -22,17 +22,20 @@ function AnimateMap({ geoData }: any) {
   const location = useLocation();
   const map = useMap();
 
-  const fitMapBounds = () => {
+  const fitMapBounds = useCallback(() => {
     map.fitBounds(coords, {
       paddingBottomRight: isMobile ? [0, 0] : [220, 0],
       animate: true,
     });
-  };
-  const fitMapView = (centerCoords: any) => {
-    map.setView(centerCoords, 14, {
-      animate: true,
-    });
-  };
+  }, [coords, isMobile, map]);
+  const fitMapView = useCallback(
+    (centerCoords: any) => {
+      map.setView(centerCoords, 14, {
+        animate: true,
+      });
+    },
+    [map]
+  );
 
   useEffect(() => {
     if (location.pathname.substring(0, 14) === "/business-type") {
@@ -48,7 +51,7 @@ function AnimateMap({ geoData }: any) {
         fitMapBounds();
       }, 100);
     }
-  }, [location, geoData]);
+  }, [location, geoData, coords, fitMapBounds, fitMapView, geometry.type]);
 
   return null;
 }
@@ -64,7 +67,7 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
 
   const location = useLocation();
 
-  const handleGeoDataCoords = async () => {
+  const handleGeoDataCoords = useCallback(async () => {
     try {
       let newGeoData: any = props.geoData;
 
@@ -92,7 +95,7 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
       console.log(error);
       throw new Error("Location not found");
     }
-  };
+  }, [props.geoData]);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -113,11 +116,11 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
     if (location.pathname !== visibleEntity) {
       popupRef.current._close();
     }
-  }, [location, geoDataConfig]);
+  }, [location, geoDataConfig, visibleEntity]);
 
   useEffect(() => {
     handleGeoDataCoords();
-  }, [props.geoData]);
+  }, [props.geoData, handleGeoDataCoords]);
 
   const handleEntityClick = (id: string) => {
     if (visibleEntity !== id) {

@@ -1,5 +1,5 @@
 import { Chart } from "chart.js";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { IonPopover, IonIcon } from "@ionic/react";
@@ -86,7 +86,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     });
   };
 
-  const handleDataGroups = () => {
+  const handleDataGroups = useCallback(() => {
     let gasData = [];
     let electricityData = [];
     let dateList: any = [];
@@ -112,11 +112,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     setLabels(dateLabels);
     setGasGroup(gasData);
     setElectricityGroup(electricityData);
-  };
+  }, [props.chartData]);
 
   useEffect(() => {
     handleDataGroups();
-  }, []);
+  }, [handleDataGroups]);
 
   const fontSize = isMobile
     ? window.innerWidth * 0.02

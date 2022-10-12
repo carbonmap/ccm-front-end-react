@@ -36,14 +36,15 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     handleWindowSizeChange(dispatch);
-    
-    window.addEventListener('resize', () => handleWindowSizeChange(dispatch));
+
+    window.addEventListener("resize", () => handleWindowSizeChange(dispatch));
     return () => {
-        window.removeEventListener('resize', () => handleWindowSizeChange(dispatch));
-    }
-  },[]);
+      window.removeEventListener("resize", () =>
+        handleWindowSizeChange(dispatch)
+      );
+    };
+  }, [dispatch]);
 
   return (
     <Router>

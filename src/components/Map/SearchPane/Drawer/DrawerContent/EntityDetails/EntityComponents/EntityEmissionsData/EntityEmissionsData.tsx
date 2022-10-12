@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import DataAccordion from './DataAccordion/DataAccordion';
-import EntityActionsList from './BottomViews/EntityActions/EntityActionsList';
-import EntityPostsList from './BottomViews/EntityPosts/EntityPostsList';
-import EntityCO2 from './BottomViews/EntityCO2/EntityCO2';
+import React, { useCallback, useEffect, useState } from "react";
+import DataAccordion from "./DataAccordion/DataAccordion";
+import EntityActionsList from "./BottomViews/EntityActions/EntityActionsList";
+import EntityPostsList from "./BottomViews/EntityPosts/EntityPostsList";
+import EntityCO2 from "./BottomViews/EntityCO2/EntityCO2";
 
 interface PageProps {
   emissionsData: { id: string; name: string; emissions: string[] }[];
@@ -10,17 +10,21 @@ interface PageProps {
   setIsEmpty: Function;
 }
 
-const EntityEmissionsData: React.FC<PageProps> = (props) => {
+const EntityEmissionsData: React.FC<PageProps> = ({
+  emissionsData,
+  entitiesByBusinessType,
+  setIsEmpty,
+}) => {
   const [graphData, setGraphData] = useState<any>([]);
   const [actionData, setActionData] = useState<any>([]);
   const [postData, setPostData] = useState<any>([]);
 
-  const getEntityData = async () => {
+  const getEntityData = useCallback(async () => {
     const dbURL = process.env.REACT_APP_DATABASE_URL;
 
     try {
       const emissionResponse = await fetch(
-        `${dbURL}/emission/${props.emissionsData[0].id}.json`
+        `${dbURL}/emission/${emissionsData[0].id}.json`
       );
       const emissionJson = await emissionResponse.json();
 
@@ -32,7 +36,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
 
     try {
       const actionRes = await fetch(
-        `${dbURL}/entity_action/${props.emissionsData[0].id}.json`
+        `${dbURL}/entity_action/${emissionsData[0].id}.json`
       );
       const actionJson = await actionRes.json();
 
@@ -44,7 +48,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
 
     try {
       const postRes = await fetch(
-        `${dbURL}/entity_post/${props.emissionsData[0].id}.json`
+        `${dbURL}/entity_post/${emissionsData[0].id}.json`
       );
       const postJson = await postRes.json();
 
@@ -53,7 +57,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
       console.log(err);
       setPostData([]);
     }
-  };
+  }, [emissionsData]);
 
   useEffect(() => {
     if (
@@ -61,17 +65,17 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
       actionData.length === 0 &&
       postData.length === 0
     ) {
-      props.setIsEmpty(true);
+      setIsEmpty(true);
     } else {
-      props.setIsEmpty(false);
+      setIsEmpty(false);
     }
-  }, [graphData, actionData, postData]);
+  }, [graphData, actionData, postData, setIsEmpty]);
 
   useEffect(() => {
-    if (props.emissionsData && props.entitiesByBusinessType.length === 0) {
+    if (emissionsData && entitiesByBusinessType.length === 0) {
       getEntityData();
     }
-  }, []);
+  }, [emissionsData, entitiesByBusinessType.length, getEntityData]);
 
   const sumEmissions = (emissionEntries: any[]) => {
     let totalEmissions = 0;
@@ -96,6 +100,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
     });
 
     recentYears.some((year) => {
+      let yearEmissionOver0 = false;
       const gasData = sortedData.filter(
         (item: any) =>
           item.measure === "gas" &&
@@ -113,8 +118,9 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
       if (yearEmissions > 0) {
         totalEmissions = yearEmissions;
         yearOfData = year;
-        return true;
+        yearEmissionOver0 = true;
       }
+      return yearEmissionOver0;
     });
     if (totalEmissions === 0 && sortedData.length) {
       const mostRecentYear = new Date(sortedData[0].period_end).getFullYear();
@@ -161,7 +167,7 @@ const EntityEmissionsData: React.FC<PageProps> = (props) => {
             titleData={emissions ? displayEmissions() : ""}
             bottomView={
               <EntityCO2
-                name={props.emissionsData[0].name}
+                name={emissionsData[0].name}
                 graphData={graphData}
                 labels={graphData.map((emission: any) => emission.measure)}
                 data={graphData.map((emission: any) => emission.value)}

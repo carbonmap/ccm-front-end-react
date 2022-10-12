@@ -1,5 +1,5 @@
 import { IonText } from '@ionic/react';
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Spinner from "src/components/UI/spinner/spinner";
 import ContactLink from "./ContactLink/ContactLink";
 import { useNavigateBottomDrawer } from "../../../../drawerUtils";
@@ -16,14 +16,14 @@ const EntityInfo: React.FC<PageProps> = (props) => {
 
   const { navigateDrawer } = useNavigateBottomDrawer();
 
-  const getEntityDetails = async () => {
+  const getEntityDetails = useCallback(async () => {
     const response = await fetch(
       `${process.env.REACT_APP_DATABASE_URL}/entity_property/${props.emissionsData[0].id}.json`
     );
     const data = await response.json();
 
     setEntityDetails(data);
-  };
+  }, [props.emissionsData]);
 
   const handleReadMore = () => {
     if (!props.isEmpty) {
@@ -49,7 +49,7 @@ const EntityInfo: React.FC<PageProps> = (props) => {
     if (props.emissionsData && props.entitiesByBusinessType.length === 0) {
       getEntityDetails();
     }
-  }, []);
+  }, [getEntityDetails, props.emissionsData, props.entitiesByBusinessType]);
 
   return (
     <div>

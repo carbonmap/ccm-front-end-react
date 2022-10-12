@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import SearchPane from './SearchPane';
+import React, { useCallback, useEffect, useState } from "react";
+import SearchPane from "./SearchPane";
 import MainMap from "./MainMap/MainMap";
-import Spinner from '../UI/spinner/spinner';
-import { fetchIndividualEntityData } from 'src/service/fetchURL/entityData/fetchIndividualEntityData';
-import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
-import AlertMessage from '../Message/AlertMessage';
-import { useCookies } from 'react-cookie';
-import { 
-    RouteComponentProps,
-    useLocation,
-    useHistory,
-  } from 'react-router-dom';
+import Spinner from "../UI/spinner/spinner";
+import { fetchIndividualEntityData } from "src/service/fetchURL/entityData/fetchIndividualEntityData";
+import { fetchFeatured } from "src/service/fetchURL/featuredEntities/fetchFeatured";
+import AlertMessage from "../Message/AlertMessage";
+import { useCookies } from "react-cookie";
+import { RouteComponentProps, useLocation, useHistory } from "react-router-dom";
 
-const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
+const Map: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const [featuredEntities, setFeaturedEntities] = useState<
     { id: string; name: string; emissions: string[] }[]
   >([]);
@@ -87,7 +83,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     setIsLoading(false);
   };
 
-  const handleIndividualEntity = async () => {
+  const handleIndividualEntity = useCallback(async () => {
     const entityID = location.pathname.substring(1, location.pathname.length);
     const fetchedGeoData: any[] = await fetchIndividualEntityData(
       "geojson",
@@ -130,7 +126,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         setIsLoading(false);
       }
     }
-  };
+  }, [location, history]);
 
   useEffect(() => {
     if (location.pathname.substring(0, 14) !== "/business-type") {
@@ -151,7 +147,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
       );
       getEntityByBusinessType(businessType);
     }
-  }, [location]);
+  }, [location, handleIndividualEntity]);
 
   useEffect(() => {
     if (emissionsData.length > 0) {
@@ -187,6 +183,7 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
     } else {
       document.title = "Cambridge Carbon Map";
     }
+    // eslint-disable-next-line
   }, [emissionsData, setCookie]);
 
   return (
