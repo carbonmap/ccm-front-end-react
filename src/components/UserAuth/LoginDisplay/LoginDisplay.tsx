@@ -32,7 +32,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   };
 
   const fetchUserDetails = (auth: any) => {
-    fetch(`${process.env.REACT_APP_DATABASE_URL}/carbonmap/current_user/`, {
+    fetch(`${process.env.REACT_APP_AUTH_URL}/carbonmap/current_user/`, {
       method: "get",
       headers: {
         Accept: "application/json",
@@ -57,7 +57,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   };
 
   const loginUser = () => {
-    fetch(`${process.env.REACT_APP_DATABASE_URL}/token-auth/`, {
+    fetch(`${process.env.REACT_APP_AUTH_URL}/token-auth/`, {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -66,6 +66,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
       body: JSON.stringify(loginData),
     })
       .then(async (res) => {
+        // user details returned here after login
         const result = await res.json();
         dispatch(
           authSlice.actions.loginUser({
@@ -81,7 +82,7 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   };
 
   const registerUser = () => {
-    fetch(`${process.env.REACT_APP_DATABASE_URL}/carbonmap/users/`, {
+    fetch(`${process.env.REACT_APP_AUTH_URL}/carbonmap/users/`, {
       method: "post",
       headers: {
         Accept: "application/json",
