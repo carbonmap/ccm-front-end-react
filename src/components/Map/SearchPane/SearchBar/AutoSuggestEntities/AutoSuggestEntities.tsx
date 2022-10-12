@@ -128,6 +128,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
   };
 
   const onSuggestionsClearRequested = () => {
+    console.log("onSuggestionsClearRequested");
     props.setAutoSuggestions([]);
   };
 
@@ -198,7 +199,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     <Autosuggest
       suggestions={suggestions}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
       inputProps={inputProps}
