@@ -28,13 +28,11 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
   const history = useHistory();
 
   const getEntityByBusinessType = async (businessType: string) => {
-    console.log("getEntityByBusinessType");
     const response = await fetch(
       `${process.env.REACT_APP_DATABASE_URL}/entities.json`
     );
     const data = await response.json();
 
-    console.log("getEntityByBusinessType" + 1);
     const entityData: any = await Promise.all(
       data.entities.map(async (entity: { name: string; id: string }) => {
         const entityPropertyResponse = await fetch(
@@ -45,7 +43,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         return entityPropertData;
       })
     );
-    console.log("getEntityByBusinessType" + 2);
 
     const filteredEntityData = entityData.filter(
       (entity: any) => entity.business_type === businessType
@@ -61,7 +58,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         return geoData;
       })
     );
-    console.log("getEntityByBusinessType" + 3);
 
     const filteredGeoData = entityGeoData.filter((geoData: any) => geoData);
 
@@ -137,7 +133,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
   };
 
   useEffect(() => {
-    console.log("here");
     if (location.pathname.substring(0, 14) !== "/business-type") {
       setEmissionsData([]);
       if (location.pathname === "/") {
@@ -154,7 +149,6 @@ const Map: React.FC<RouteComponentProps<{id:string}>> = (props) => {
         15,
         location.pathname.length
       );
-      console.log("here" + 1);
       getEntityByBusinessType(businessType);
     }
   }, [location]);

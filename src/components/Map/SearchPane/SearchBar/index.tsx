@@ -38,7 +38,6 @@ const SearchBar: React.FC<PageProps> = (props) => {
     };
 
     useEffect(() => {
-      console.log("here");
       if (props.inputVal !== "") {
         setSuggestions(autoSuggestions);
       } else {

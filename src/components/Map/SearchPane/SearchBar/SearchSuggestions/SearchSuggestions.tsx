@@ -24,6 +24,7 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
     const { navigateDrawer } = useNavigateBottomDrawer();
 
     const handleClick = (id: string) => {
+      console.log("HERE");
       props.setInputVal("");
       navigateDrawer(`/${id}`);
     };
