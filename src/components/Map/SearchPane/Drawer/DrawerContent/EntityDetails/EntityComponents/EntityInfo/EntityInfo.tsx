@@ -102,7 +102,11 @@ const EntityInfo: React.FC<PageProps> = (props) => {
                 />
               </div>
             </div>
-            <img className="entity-img" src={entityDetails.img} />
+            <img
+              alt={entityDetails.name}
+              className="entity-img"
+              src={entityDetails.img}
+            />
           </div>
           <br />
           <div

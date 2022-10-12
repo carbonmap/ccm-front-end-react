@@ -1,4 +1,4 @@
-import { Chart, TooltipItem } from "chart.js";
+import { Chart } from "chart.js";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -54,7 +54,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   const handleLabels = (dateList: any) => {
     let displayByYear = false;
 
-    dateList.map((date: string, index: number) => {
+    dateList.forEach((date: string, index: number) => {
       const d = new Date(date);
 
       for (let i = 0; i < dateList.length - 1; i++) {

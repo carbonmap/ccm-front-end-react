@@ -2,8 +2,8 @@ import { Chart } from 'chart.js';
 import React, { useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IonModal, IonPopover, IonText } from '@ionic/react';
-import ChartPopover from './ChartPopover/ChartPopover';
+import { IonText } from "@ionic/react";
+import ChartPopover from "./ChartPopover/ChartPopover";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
@@ -106,7 +106,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
                   color: "#000",
                   formatter: (value) => {
                     let sum = 0;
-                    props.graphData.map((dataItem: any) => {
+                    props.graphData.forEach((dataItem: any) => {
                       sum = sum + parseInt(dataItem.kgco2e);
                     });
 

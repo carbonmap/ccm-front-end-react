@@ -24,7 +24,6 @@ const LoginDisplay: React.FC<PageProps> = (props) => {
   const [isError, setIsError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const authDetails = useSelector((state: RootState) => state.auth);
 
   const loginData = {
     username: email,

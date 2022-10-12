@@ -47,7 +47,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
             } else {
               if (strippedName.startsWith("the")) {
                 if (punctuationless.startsWith("the")) {
-                  if (strippedName.slice(0, inputLength) == punctuationless) {
+                  if (strippedName.slice(0, inputLength) === punctuationless) {
                     return entity;
                   }
                 } else {
@@ -59,7 +59,7 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
                   }
                 }
               } else {
-                if (strippedName.slice(0, inputLength) == punctuationless) {
+                if (strippedName.slice(0, inputLength) === punctuationless) {
                   return entity;
                 } else if (
                   entity.name.toLowerCase().slice(0, inputLength) === inputValue

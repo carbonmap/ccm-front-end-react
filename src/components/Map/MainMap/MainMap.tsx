@@ -8,21 +8,11 @@ import {
   useMap,
   ZoomControl,
 } from "react-leaflet";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "src/redux/store";
 import AlertMessage from "src/components/Message/AlertMessage";
 import { useNavigateBottomDrawer } from "../SearchPane/Drawer/drawerUtils";
-
-interface State {
-  geoData: JSX.Element[];
-  visibleEntity: string;
-}
-
-interface GeoDataObject {
-  type: string;
-  features: Array<any>;
-}
 
 function AnimateMap({ geoData }: any) {
   const geometry = geoData[0].features[0].geometry;
@@ -66,7 +56,6 @@ function AnimateMap({ geoData }: any) {
 const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
   const [geoDataConfig, setGeoDataConfig] = useState([]);
   const [visibleEntity, setVisibleEntity] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   const popupRef = useRef<any>(null);
 
@@ -74,7 +63,6 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
   const isMobile = useSelector((state: RootState) => state.isMobile);
 
   const location = useLocation();
-  const history = useHistory();
 
   const handleGeoDataCoords = async () => {
     try {
@@ -100,7 +88,6 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
       }
 
       setGeoDataConfig(newGeoData);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
       throw new Error("Location not found");
@@ -116,7 +103,7 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
           (entity: any) =>
             `/${entity.features[0].properties.id}` === location.pathname
         );
-        if (matchedEntity != undefined) {
+        if (matchedEntity !== undefined) {
           setVisibleEntity(matchedEntity.features[0].properties.id);
         }
       }

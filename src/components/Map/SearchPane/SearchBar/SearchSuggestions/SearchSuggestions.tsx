@@ -1,6 +1,5 @@
 import { IonItem } from '@ionic/react';
-import React from 'react';
-import { Link } from 'react-router-dom'; 
+import React from "react";
 import { useNavigateBottomDrawer } from "../../Drawer/drawerUtils";
 
 interface PageProps {

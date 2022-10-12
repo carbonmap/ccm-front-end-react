@@ -5,7 +5,6 @@ import Toolbar from 'src/components/toolbar';
 import { handleWindowSizeChange } from 'src/service/general/checkScreenSize/checkScreenSize';
 import Map from 'src/components/Map';
 
-import { fetchFeatured } from 'src/service/fetchURL/featuredEntities/fetchFeatured';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 /* Basic CSS for apps built with Ionic */
@@ -54,11 +53,11 @@ const App: React.FC = () => {
             <Toolbar />
           </IonHeader>
 
-          {/* <Switch>
+          <Switch>
             <Route path="/" exact component={Map} />
             <Route path="/:id" component={Map} />
             <Route path="/business-type" component={Map} />
-          </Switch> */}
+          </Switch>
         </>
       </IonApp>
     </Router>

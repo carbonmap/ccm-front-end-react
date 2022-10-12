@@ -7,7 +7,14 @@ interface PageProps {
 
 const EntityAction: React.FC<PageProps> = (props) => {
     return (
-        <a href={props.action.link} target="_blank" style={{ color: '#000', textDecoration: 'none' }}><li>{props.action.title}</li></a>
+      <a
+        href={props.action.link}
+        target="_blank"
+        rel="noreferrer"
+        style={{ color: "#000", textDecoration: "none" }}
+      >
+        <li>{props.action.title}</li>
+      </a>
     );
 };
 
