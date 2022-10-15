@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { IonModal } from '@ionic/react';
-import { modalController } from '@ionic/core';
-import DrawerContent from '../DrawerContent';
-import { useLocation } from 'react-router';
+import React from "react";
+import { IonModal } from "@ionic/react";
+import DrawerContent from "../DrawerContent";
+import { useLocation } from "react-router";
 
 interface PageProps {
   isOpen: boolean;

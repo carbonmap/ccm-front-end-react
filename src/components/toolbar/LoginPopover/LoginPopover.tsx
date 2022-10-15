@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { personCircleOutline } from 'ionicons/icons';
 import '../toolbar.css';
-import { IonPopover, IonIcon, IonText } from '@ionic/react';
-import { addCircleOutline } from 'ionicons/icons';
+import { IonPopover, IonIcon, IonText } from "@ionic/react";
+import { addCircleOutline } from "ionicons/icons";
 import LoginDisplay from "src/components/UserAuth/LoginDisplay/LoginDisplay";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/reducers";
 
 const LoginPopover: React.FC = () => {
   const [displayLogin, setDisplayLogin] = useState(true);
@@ -14,22 +12,12 @@ const LoginPopover: React.FC = () => {
     event: undefined,
   });
 
-  const user: any = useSelector((state: RootState) => state.currentUser);
-
   const switchDisplay = () => {
     setDisplayLogin(!displayLogin);
   };
 
   return (
     <div>
-      {/* {user ? (
-        <div>
-          <p>
-            {user.firstName[0]?.toUpperCase()}
-            {user.lastName[0].toUpperCase()}
-          </p>
-        </div>
-      ) : ( */}
       <IonIcon
         icon={personCircleOutline}
         className="login-icon"
@@ -48,9 +36,10 @@ const LoginPopover: React.FC = () => {
         showBackdrop={false}
       >
         <LoginDisplay login={displayLogin} switchDisplay={switchDisplay} />
-        {/* <a
+        <a
           href="https://cambridgecarbonmap.org/sign-up-to-the-map/"
           target="_blank"
+          rel="noreferrer"
           className="addOrgLink"
         >
           <IonIcon
@@ -59,7 +48,7 @@ const LoginPopover: React.FC = () => {
             style={{ fontSize: 24, marginRight: 8 }}
           />
           <IonText color="primary">Add your organisation</IonText>
-        </a> */}
+        </a>
       </IonPopover>
     </div>
   );

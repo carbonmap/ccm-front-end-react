@@ -1,5 +1,5 @@
-import { Chart, TooltipItem } from "chart.js";
-import React, { useEffect, useState } from "react";
+import { Chart } from "chart.js";
+import React, { useCallback, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { IonPopover, IonIcon } from "@ionic/react";
@@ -54,7 +54,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
   const handleLabels = (dateList: any) => {
     let displayByYear = false;
 
-    dateList.map((date: string, index: number) => {
+    dateList.forEach((date: string, index: number) => {
       const d = new Date(date);
 
       for (let i = 0; i < dateList.length - 1; i++) {
@@ -86,7 +86,7 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     });
   };
 
-  const handleDataGroups = () => {
+  const handleDataGroups = useCallback(() => {
     let gasData = [];
     let electricityData = [];
     let dateList: any = [];
@@ -112,11 +112,11 @@ const EntityCO2: React.FC<PageProps> = (props) => {
     setLabels(dateLabels);
     setGasGroup(gasData);
     setElectricityGroup(electricityData);
-  };
+  }, [props.chartData]);
 
   useEffect(() => {
     handleDataGroups();
-  }, []);
+  }, [handleDataGroups]);
 
   const fontSize = isMobile
     ? window.innerWidth * 0.02

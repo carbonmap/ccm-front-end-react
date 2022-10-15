@@ -1,5 +1,5 @@
 import React from "react";
-import {IonHeader, IonText, IonButton, IonContent, IonAlert} from "@ionic/react";
+import { IonHeader, IonContent, IonAlert } from "@ionic/react";
 import Toolbar from "../toolbar";
 import "./ErrorFallback.css";
 import {MapContainer, TileLayer} from "react-leaflet";

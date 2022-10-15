@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,21 +8,11 @@ import {
   useMap,
   ZoomControl,
 } from "react-leaflet";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "src/redux/store";
 import AlertMessage from "src/components/Message/AlertMessage";
 import { useNavigateBottomDrawer } from "../SearchPane/Drawer/drawerUtils";
-
-interface State {
-  geoData: JSX.Element[];
-  visibleEntity: string;
-}
-
-interface GeoDataObject {
-  type: string;
-  features: Array<any>;
-}
 
 function AnimateMap({ geoData }: any) {
   const geometry = geoData[0].features[0].geometry;
@@ -32,17 +22,20 @@ function AnimateMap({ geoData }: any) {
   const location = useLocation();
   const map = useMap();
 
-  const fitMapBounds = () => {
+  const fitMapBounds = useCallback(() => {
     map.fitBounds(coords, {
       paddingBottomRight: isMobile ? [0, 0] : [220, 0],
       animate: true,
     });
-  };
-  const fitMapView = (centerCoords: any) => {
-    map.setView(centerCoords, 14, {
-      animate: true,
-    });
-  };
+  }, [coords, isMobile, map]);
+  const fitMapView = useCallback(
+    (centerCoords: any) => {
+      map.setView(centerCoords, 14, {
+        animate: true,
+      });
+    },
+    [map]
+  );
 
   useEffect(() => {
     if (location.pathname.substring(0, 14) === "/business-type") {
@@ -58,7 +51,7 @@ function AnimateMap({ geoData }: any) {
         fitMapBounds();
       }, 100);
     }
-  }, [location, geoData]);
+  }, [location, geoData, coords, fitMapBounds, fitMapView, geometry.type]);
 
   return null;
 }
@@ -66,7 +59,6 @@ function AnimateMap({ geoData }: any) {
 const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
   const [geoDataConfig, setGeoDataConfig] = useState([]);
   const [visibleEntity, setVisibleEntity] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   const popupRef = useRef<any>(null);
 
@@ -74,9 +66,8 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
   const isMobile = useSelector((state: RootState) => state.isMobile);
 
   const location = useLocation();
-  const history = useHistory();
 
-  const handleGeoDataCoords = async () => {
+  const handleGeoDataCoords = useCallback(async () => {
     try {
       let newGeoData: any = props.geoData;
 
@@ -100,12 +91,11 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
       }
 
       setGeoDataConfig(newGeoData);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
       throw new Error("Location not found");
     }
-  };
+  }, [props.geoData]);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -116,7 +106,7 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
           (entity: any) =>
             `/${entity.features[0].properties.id}` === location.pathname
         );
-        if (matchedEntity != undefined) {
+        if (matchedEntity !== undefined) {
           setVisibleEntity(matchedEntity.features[0].properties.id);
         }
       }
@@ -126,11 +116,11 @@ const MainMap: React.FC<{ geoData: any[]; emissionsData: any[] }> = (props) => {
     if (location.pathname !== visibleEntity) {
       popupRef.current._close();
     }
-  }, [location, geoDataConfig]);
+  }, [location, geoDataConfig, visibleEntity]);
 
   useEffect(() => {
     handleGeoDataCoords();
-  }, [props.geoData]);
+  }, [props.geoData, handleGeoDataCoords]);
 
   const handleEntityClick = (id: string) => {
     if (visibleEntity !== id) {

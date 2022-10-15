@@ -32,10 +32,13 @@ const SearchPane: React.FC<PageProps> = (props) => {
     };
     
     useEffect(() => {
-        if(location.pathname !== "/" && props.emissionsData || props.entitiesByBusinessType.length > 0) {
-            openMenu();
+        if (
+          (location.pathname !== "/" && props.emissionsData) ||
+          props.entitiesByBusinessType.length > 0
+        ) {
+          openMenu();
         } else {
-            closeMenu();
+          closeMenu();
         }
     }, [props.entitiesByBusinessType, props.emissionsData, location]);
 

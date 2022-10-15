@@ -38,16 +38,21 @@ const SearchBar: React.FC<PageProps> = (props) => {
     };
 
     useEffect(() => {
-        if(props.inputVal !== "") {
-            setSuggestions(autoSuggestions);
+      if (props.inputVal !== "") {
+        setSuggestions(autoSuggestions);
+      } else {
+        if (props.navHistory) {
+          setSuggestions([...props.navHistory].reverse());
         } else {
-            if(props.navHistory) {
-                setSuggestions([...props.navHistory].reverse());
-            } else {
-                setSuggestions(props.featuredEntities);
-            }
+          setSuggestions(props.featuredEntities);
         }
-    }, [props.inputVal, props.navHistory])
+      }
+    }, [
+      props.inputVal,
+      props.navHistory,
+      props.featuredEntities,
+      autoSuggestions,
+    ]);
 
     return (
         <div className="search-overlay-container" style={{ backgroundColor: props.isSearching ? '#fff' : 'transparent', zIndex: props.isSearching ? 3000 : 1000 }}>

@@ -18,7 +18,6 @@ interface PageProps {
 }
 
 const AutoSuggestEntities: React.FC<PageProps> = (props) => {
-  const [suggestions, setSuggestions] = useState<any>("");
   const [searchIcon, setSearchIcon] = useState(searchOutline);
   const [entityList, setEntityList] = useState<any>();
 
@@ -30,13 +29,14 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     let matchedArr: any = [];
 
     const punctuationless = inputValue
-      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+      .replace(/[.,#!$%&;:{}=\-_`~()]/g, "")
       .replace(/\s+/g, " ");
 
     const filter =
       inputLength === 0
         ? []
         : entityList.filter((entity: any) => {
+            let filteredEntity;
             const strippedName = entity.name
               .toLowerCase()
               .replace(/[^\w\s]|_/g, "")
@@ -47,24 +47,24 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
             } else {
               if (strippedName.startsWith("the")) {
                 if (punctuationless.startsWith("the")) {
-                  if (strippedName.slice(0, inputLength) == punctuationless) {
-                    return entity;
+                  if (strippedName.slice(0, inputLength) === punctuationless) {
+                    filteredEntity = entity;
                   }
                 } else {
                   if (
                     strippedName.substring(4, 4 + inputLength) ===
                     punctuationless
                   ) {
-                    return entity;
+                    filteredEntity = entity;
                   }
                 }
               } else {
-                if (strippedName.slice(0, inputLength) == punctuationless) {
-                  return entity;
+                if (strippedName.slice(0, inputLength) === punctuationless) {
+                  filteredEntity = entity;
                 } else if (
                   entity.name.toLowerCase().slice(0, inputLength) === inputValue
                 ) {
-                  return entity;
+                  filteredEntity = entity;
                 } else {
                   const splitWordArr = punctuationless.split(" ");
                   const splitEntityString = strippedName.split(" ");
@@ -76,13 +76,14 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
                           splitWordArr[i].length
                         ) === splitWordArr[i]
                       ) {
-                        return entity;
+                        filteredEntity = entity;
                       }
                     }
                   }
                 }
               }
             }
+            return filteredEntity;
           });
 
     filter.sort((a: any, b: any) => {
@@ -125,10 +126,6 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
   const onSuggestionsFetchRequested = ({ value }: any) => {
     props.setAutoSuggestions(getSuggestions(value));
-  };
-
-  const onSuggestionsClearRequested = () => {
-    props.setAutoSuggestions([]);
   };
 
   const inputProps = {
@@ -196,15 +193,14 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
 
   return (
     <Autosuggest
-      suggestions={suggestions}
+      suggestions={[]}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
       inputProps={inputProps}
       renderInputComponent={renderInputComponent}
     />
   );
-};
+};;;
 
 export default AutoSuggestEntities;

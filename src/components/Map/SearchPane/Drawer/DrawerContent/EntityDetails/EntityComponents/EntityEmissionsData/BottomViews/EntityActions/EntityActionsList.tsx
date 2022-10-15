@@ -23,6 +23,7 @@ const EntityActionsList: React.FC<PageProps> = (props) => {
               <a
                 href={action.link}
                 target="_blank"
+                rel="noreferrer"
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -31,6 +32,7 @@ const EntityActionsList: React.FC<PageProps> = (props) => {
                 }}
               >
                 <img
+                  alt={action.title}
                   src={iconForActionType(action.type)}
                   style={{
                     width: 40,

@@ -1,6 +1,5 @@
 import { IonItem } from '@ionic/react';
-import React from 'react';
-import { Link } from 'react-router-dom'; 
+import React from "react";
 import { useNavigateBottomDrawer } from "../../Drawer/drawerUtils";
 
 interface PageProps {
@@ -30,35 +29,22 @@ const SearchSuggestions: React.FC<PageProps> = (props) => {
     };
 
     return (
-        <div className="suggestion-container" style={ props.isSearching ? searchStyles : hiddenStyles }>
-            {props.suggestions ?
-                props.suggestions.map((entity: any, index) => {
-                    if(index < 5) {
-                        return (
-                          <div
-                            key={index}
-                            onClick={() => handleClick(entity.id)}
-                          >
-                            <IonItem className="search-suggestion-el">
-                              {entity.name}
-                            </IonItem>
-                          </div>
-                        );
-                    };
-                })
-            :
-                props.featuredEntities.map((entity: any, index) => {
-                    return (
-                      <div key={index} onClick={() => handleClick(entity.id)}>
-                        <IonItem className="search-suggestion-el">
-                          {entity.name}
-                        </IonItem>
-                      </div>
-                    );
-                })
-            }
-        </div>
-    )
+      <div
+        className="suggestion-container"
+        style={props.isSearching ? searchStyles : hiddenStyles}
+      >
+        {props.suggestions &&
+          props.suggestions.map((entity: any, index) => {
+            return (
+              <div key={index} onClick={() => handleClick(entity.id)}>
+                <IonItem className="search-suggestion-el">
+                  {entity.name}
+                </IonItem>
+              </div>
+            );
+          })}
+      </div>
+    );
 }
 
 export default SearchSuggestions;

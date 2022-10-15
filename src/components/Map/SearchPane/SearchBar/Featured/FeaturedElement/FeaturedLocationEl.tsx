@@ -1,5 +1,5 @@
 import { IonText } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigateBottomDrawer } from "../../../Drawer/drawerUtils";
 
@@ -36,17 +36,17 @@ const FeaturedLocationEl: React.FC<PageProps> = (props) => {
     return data;
   };
 
-  const handleMetaData = async () => {
+  const handleMetaData = useCallback(async () => {
     const actions = await getDataCount(props.entity, "entity_action");
     const posts = await getDataCount(props.entity, "entity_post");
 
     setActionCount(actions.actions.length);
     setPostCount(posts.posts.length);
-  };
+  }, [props.entity]);
 
   useEffect(() => {
     handleMetaData();
-  }, [props.entity]);
+  }, [props.entity, handleMetaData]);
 
   return (
     <div
