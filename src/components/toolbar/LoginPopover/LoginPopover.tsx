@@ -3,18 +3,21 @@ import { personCircleOutline } from 'ionicons/icons';
 import '../toolbar.css';
 import { IonPopover, IonIcon, IonText } from "@ionic/react";
 import { addCircleOutline } from "ionicons/icons";
-import LoginDisplay from "src/components/UserAuth/LoginDisplay/LoginDisplay";
+
+// NOTE: Commented out code is to be used in future
+
+// import LoginDisplay from "src/components/UserAuth/LoginDisplay/LoginDisplay";
 
 const LoginPopover: React.FC = () => {
-  const [displayLogin, setDisplayLogin] = useState(true);
+  // const [displayLogin, setDisplayLogin] = useState(true);
   const [showLoginPopover, setShowLoginPopover] = useState({
     showPopover: false,
     event: undefined,
   });
 
-  const switchDisplay = () => {
-    setDisplayLogin(!displayLogin);
-  };
+  // const switchDisplay = () => {
+  //   setDisplayLogin(!displayLogin);
+  // };
 
   return (
     <div>
