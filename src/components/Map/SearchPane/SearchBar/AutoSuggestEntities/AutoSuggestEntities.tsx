@@ -4,6 +4,8 @@ import Autosuggest from 'react-autosuggest';
 import { arrowBack, searchOutline, close } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 import { modalController } from "@ionic/core";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/reducers";
 
 interface PageProps {
   isOpen: boolean;
@@ -20,6 +22,7 @@ interface PageProps {
 const AutoSuggestEntities: React.FC<PageProps> = (props) => {
   const [searchIcon, setSearchIcon] = useState(searchOutline);
   const [entityList, setEntityList] = useState<any>();
+  const isMobile = useSelector((state: RootState) => state.isMobile);
 
   const history = useHistory();
 
@@ -149,7 +152,9 @@ const AutoSuggestEntities: React.FC<PageProps> = (props) => {
     if (props.isSearching) {
       props.setIsSearching(false);
     } else {
-      await modalController.dismiss({ dismissed: true });
+      if (isMobile) {
+        await modalController.dismiss({ dismissed: true });
+      }
       if (props.entitiesByBusinessType.length > 0) {
         history.goBack();
       } else {
