@@ -35,7 +35,7 @@ const LoginPopover: React.FC = () => {
         }
         showBackdrop={false}
       >
-        <LoginDisplay login={displayLogin} switchDisplay={switchDisplay} />
+        {/* <LoginDisplay login={displayLogin} switchDisplay={switchDisplay} /> */}
         <a
           href="https://cambridgecarbonmap.org/sign-up-to-the-map/"
           target="_blank"
