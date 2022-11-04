@@ -18,11 +18,12 @@
   justify-content: center;
 }
 
-.toolbar ion-popover::part(content) {
+ion-popover::part(content) {
   min-width: 70vw;
   border-radius: 15px;
   padding: 32px;
 }
+
 .info-popover .info-popover-txt {
   font-size: 24px;
   margin-bottom: 24px;
@@ -80,6 +81,6 @@
     padding: 0
   }
   .info-popover .info-popover-txt  {
-    font-size: 18px;
+    font-size: 16px;
   }
 }

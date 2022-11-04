@@ -42,7 +42,7 @@ const HelpBtn:React.FC = () => {
               </li>
               <li className="info-popover-txt">
                 Inspire others by sharing your own organisation’s actions on the
-                map. Sign up{" "}
+                map! Sign up{" "}
                 <a
                   href="https://cambridgecarbonmap.org/sign-up-to-the-map/"
                   target="_blank"
@@ -54,7 +54,6 @@ const HelpBtn:React.FC = () => {
                 <a href="mailto:info@cambridgecarbonmap.org">
                   info@cambridgecarbonmap.org
                 </a>
-                !
               </li>
             </ol>
             <IonButton
