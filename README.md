@@ -43,14 +43,14 @@ We need to put the dummy_data directory onto a local server so that we can make 
 
 2. In a terminal in the repository root, run:
 ```
-   http-server ./dummy_data --cors -a localhost -p 5000
+   http-server ./dummy_data --cors -a localhost -p 8001
 ```
 Or
 
 1. Run the command using npx
 ```
-   npx http-server ./dummy_data --cors -a localhost -p 5000
+   npx http-server ./dummy_data --cors -a localhost -p 8001
 ```
-There should now be a localhost directory for the data in one of the links presented (e.g. http://localhost:5000)
+There should now be a localhost directory for the data in one of the links presented (e.g. http://localhost:8001)
 
 This is emulating the data AWS bucket that we will be using
